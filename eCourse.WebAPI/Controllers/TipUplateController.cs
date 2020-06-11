@@ -4,31 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using eCourse.Models.Helpers;
 using eCourse.Services.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCourse.WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
-    public class KlijentKursInstancaController : ControllerBase
+    public class TipUplateController : ControllerBase
     {
-        private readonly IKlijentKursInstanca _klijentKursInstancaService;
+        private readonly ITipUplate _tipUplateService;
 
-        public KlijentKursInstancaController(IKlijentKursInstanca klijentKursInstancaService)
+        public TipUplateController(ITipUplate tipUplateService)
         {
-            _klijentKursInstancaService = klijentKursInstancaService;
+            _tipUplateService = tipUplateService;
         }
 
         [HttpGet]
-        [Route("[action]/{id}")] //id = id Klijenta
-        public async Task<IActionResult> GetForUplata(int id)
+        public async Task<ActionResult> Get()
         {
             try
             {
-                return Ok(await _klijentKursInstancaService.GetForUplata(id));
+                return Ok(await _tipUplateService.Get());
             }
             catch (Exception ex)
             {

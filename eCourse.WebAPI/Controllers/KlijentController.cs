@@ -37,5 +37,18 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult> GetKlijentiSimple()
+        {
+            try
+            {
+                return Ok(await _userService.GetKlijentiSimple());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
     }
 }

@@ -65,7 +65,7 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateOsoblje(int id, [FromBody] OsobljeUpdateModel model)
         {
             try

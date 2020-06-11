@@ -92,6 +92,30 @@
     <Compile Include="Klijenti\frmUplate.Designer.cs">
       <DependentUpon>frmUplate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Kursevi\KurseviOpcenito\frmKursDetalji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\KurseviOpcenito\frmKursDetalji.Designer.cs">
+      <DependentUpon>frmKursDetalji.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\KurseviOpcenito\frmKursevi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\KurseviOpcenito\frmKursevi.Designer.cs">
+      <DependentUpon>frmKursevi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\Tagovi\frmDetaljiTaga.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\Tagovi\frmDetaljiTaga.Designer.cs">
+      <DependentUpon>frmDetaljiTaga.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\Tagovi\frmTagovi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\Tagovi\frmTagovi.Designer.cs">
+      <DependentUpon>frmTagovi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Osoblje\frmUposlenikDetalji.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +145,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Klijenti\frmUplate.resx">
       <DependentUpon>frmUplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\KurseviOpcenito\frmKursDetalji.resx">
+      <DependentUpon>frmKursDetalji.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\KurseviOpcenito\frmKursevi.resx">
+      <DependentUpon>frmKursevi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\Tagovi\frmDetaljiTaga.resx">
+      <DependentUpon>frmDetaljiTaga.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\Tagovi\frmTagovi.resx">
+      <DependentUpon>frmTagovi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Osoblje\frmOsoblje.resx">
       <DependentUpon>frmOsoblje.cs</DependentUpon>
@@ -157,5 +193,6 @@
       <Name>eCourse.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eCourse.Database.Entities
+namespace eCourse.Models.Tag
 {
-    public class Tag
+    public class TagModel
     {
         public int Id { get; set; }
         public string Naziv { get; set; }
-        public virtual List<KursTag> KurseviSaTagom { get; set; }
     }
 }

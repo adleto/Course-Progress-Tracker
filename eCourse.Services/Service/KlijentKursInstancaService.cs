@@ -28,8 +28,8 @@ namespace eCourse.Services.Service
                     .Include(k => k.KursInstanca)
                         .ThenInclude(ki => ki.Kurs)
                     .Where(k => k.KlijentId == klijentId &&
-                    k.UplataIzvrsena != null &&
-                    k.UplataIzvrsena == false)
+                        k.UplataIzvrsena != null &&
+                        k.UplataIzvrsena == false)
                     .ToListAsync();
                 var returnModel = new List<KlijentKursInstancaForUplataModel>();
                 instance.ForEach(i => returnModel.Add(MapToKlijentKursInstancaModel(i)));

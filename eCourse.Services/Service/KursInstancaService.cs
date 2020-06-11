@@ -25,8 +25,8 @@ namespace eCourse.Services.Service
             try
             {
                 var query = _context.KursInstanca
-                .Include(ki => ki.Kurs)
-                .AsQueryable();
+                    .Include(ki => ki.Kurs)
+                    .AsQueryable();
                 if (!roles.Contains("AdministrativnoOsoblje"))
                 {
                     query = query.Where(k => k.UposlenikId == userId);

@@ -159,8 +159,6 @@ namespace eCourse.WinUI.Osoblje
 
                     comboOpcina.SelectedValue = uposlenik.OpcinaId;
                     comboUloga.SelectedValue = uposlenik.Role[0].Id;
-                    //comboOpcina.SelectedIndex = uposlenik.OpcinaId -1;
-                    //comboUloga.SelectedIndex = uposlenik.Role[0].Id -1;
                 }
                 catch(ApiException ex)
                 {

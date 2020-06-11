@@ -14,5 +14,6 @@ namespace eCourse.Services.Interface
         Task<List<OsobljeModel>> GetOsoblje(UserSearchRequestModel model = null);
         Task<OsobljeModel> UpdateOsoblje(int id, OsobljeUpdateModel model);
         Task<List<KlijentModel>> GetKlijenti(int userId, List<string> roles, KlijentSearchRequestModel model = null);
+        Task<List<KlijentSimpleModel>> GetKlijentiSimple();
     }
 }

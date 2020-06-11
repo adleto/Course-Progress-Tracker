@@ -61,7 +61,11 @@ namespace eCourse.WinUI.Klijenti
                 gridKlijenti.Columns[nameof(KlijentModel.UkupnoUplaceno)].HeaderText = "Ukupno uplaćeno";
                 gridKlijenti.Columns[nameof(KlijentModel.OpcinaNaziv)].HeaderText = "Općina";
                 gridKlijenti.Columns[nameof(KlijentModel.DatumRodjenja)].HeaderText = "Datum Rodjenja";
-                gridKlijenti.Columns[nameof(KlijentModel.UkupnoUplaceno)].DisplayIndex = 6;
+                gridKlijenti.Columns[nameof(KlijentModel.UkupnoUplaceno)].DisplayIndex = 8;
+                gridKlijenti.Columns[nameof(KlijentModel.ClanarinaAktivna)].HeaderText = "Članarina aktivna";
+                gridKlijenti.Columns[nameof(KlijentModel.ClanarinaAktivna)].DisplayIndex = 9;
+                gridKlijenti.Columns[nameof(KlijentModel.DatumIstekaClanarine)].HeaderText = "Datum isteka članarine";
+                gridKlijenti.Columns[nameof(KlijentModel.DatumIstekaClanarine)].DisplayIndex = 10;
 
                 if (gridKlijenti.Columns["UplataColumn"] == null)
                 {

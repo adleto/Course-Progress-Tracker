@@ -383,6 +383,22 @@ namespace eCourse.Services.Service
                     {
                         var k = MapKlijentToKlijentModel(r);
                         k.UkupnoUplaceno = GetUkupnoUplaceno(k.KlijentId);
+                        var clanarinaKlijenta = await _context.Clanarina
+                            .Where(c => c.KlijentId == k.KlijentId)
+                            .OrderByDescending(c => c.Id)
+                            .ToListAsync();
+                        if (clanarinaKlijenta.Count == 0 || clanarinaKlijenta[0].DatumIsteka < DateTime.Now)
+                        {
+                            k.ClanarinaAktivna = "Neaktivna";
+                        }
+                        else
+                        {
+                            k.DatumIstekaClanarine = clanarinaKlijenta[0].DatumIsteka;
+                            if (clanarinaKlijenta[0].DatumIsteka > DateTime.Now)
+                            {
+                                k.ClanarinaAktivna = "Aktivna";
+                            }
+                        }
                         returnModel.Add(k);
                     }
                 }
@@ -429,6 +445,33 @@ namespace eCourse.Services.Service
                 }
             }
             return false;
+        }
+
+        public async Task<List<KlijentSimpleModel>> GetKlijentiSimple()
+        {
+            try
+            {
+                var result = await _context.Klijent
+                    .Include(r => r.ApplicationUser)
+                    .ToListAsync();
+                var resultModel = new List<KlijentSimpleModel>();
+                result.ForEach(r => resultModel.Add(MapKlijentToKlijentSimpleModel(r)));
+                return resultModel;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        private KlijentSimpleModel MapKlijentToKlijentSimpleModel(Klijent k)
+        {
+            return new KlijentSimpleModel
+            {
+                ApplicationUserId = k.ApplicationUserId,
+                DatumRodjenja = k.ApplicationUser.DatumRodjenja,
+                ImeIPrezime = k.ApplicationUser.Ime + " " + k.ApplicationUser.Prezime,
+                KlijentId = k.Id
+            };
         }
     }
 }

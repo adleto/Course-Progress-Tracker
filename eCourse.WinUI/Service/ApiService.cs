@@ -75,7 +75,7 @@ namespace eCourse.WinUI.Service
         {
             try
             {
-                return await $"{Properties.Settings.Default.APIUrl}/{_route}/{id}".WithBasicAuth(Username, Password).PatchJsonAsync(request).ReceiveJson<T>();
+                return await $"{Properties.Settings.Default.APIUrl}/{_route}/{id}".WithBasicAuth(Username, Password).PutJsonAsync(request).ReceiveJson<T>();
             }
             catch (FlurlHttpException ex)
             {

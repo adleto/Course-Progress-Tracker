@@ -10,6 +10,6 @@ namespace eCourse.Services.Interface
     public interface IUplata
     {
         Task<List<UplataModel>> Get(int? klijentId = null);
-        Task<UplataModel> Add(UplataInsertModel model);
+        Task<UplataSimpleModel> Add(UplataInsertModel model);
     }
 }

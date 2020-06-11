@@ -21,7 +21,7 @@ namespace eCourse.Services.Service
             _context = context;
         }
 
-        public async Task<UplataModel> Add(UplataInsertModel model)
+        public async Task<UplataSimpleModel> Add(UplataInsertModel model)
         {
             try
             {
@@ -53,6 +53,8 @@ namespace eCourse.Services.Service
                 else
                 {
                     //clanarina je, dodaj clanarinu, izracunaj do kad traje po iznos mjesecno iz tabele...
+                    var mjesecniIznos = _context.TipUplate.Find(model.TipUplate).Cijena;
+                    if (model.Iznos < mjesecniIznos) throw new Exception("Iznos je manji od minimalnog za mjesečnu članarinu.");
                     novaUplata.TipUplateId = model.TipUplate;
                     var novaClanarina = new Clanarina
                     {
@@ -69,7 +71,7 @@ namespace eCourse.Services.Service
                     {
                         zadnjiDatum = clanarine[0].DatumIsteka;
                     }
-                    var mjesecniIznos = _context.TipUplate.Find(model.TipUplate).Cijena;
+                    
                     decimal uplacenoUOdnosuNaMjesecnuCijenu = model.Iznos / (decimal)mjesecniIznos;
                     int brojDanaZaDodat = (int) uplacenoUOdnosuNaMjesecnuCijenu * 31;
                     DateTime? noviDatum = null;
@@ -87,7 +89,12 @@ namespace eCourse.Services.Service
                     _context.Clanarina.Add(novaClanarina);
                 }
                 await _context.SaveChangesAsync();
-                return MapUplataToUplataModel(novaUplata);
+                return new UplataSimpleModel
+                {
+                    Iznos = novaUplata.Iznos,
+                    UplataId = novaUplata.Id,
+                    KlijentId = novaUplata.KlijentId
+                };
             }
             catch(Exception ex)
             {

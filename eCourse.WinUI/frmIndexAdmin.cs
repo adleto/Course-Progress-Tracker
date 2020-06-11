@@ -1,4 +1,6 @@
 ﻿using eCourse.WinUI.Klijenti;
+using eCourse.WinUI.Kursevi.KurseviOpcenito;
+using eCourse.WinUI.Kursevi.Tagovi;
 using eCourse.WinUI.Osoblje;
 using System;
 using System.Collections.Generic;
@@ -99,7 +101,39 @@ namespace eCourse.WinUI
         {
             var frm = new frmUplataDetalji();
             frm.MdiParent = this;
-            frm.WindowState = FormWindowState.Maximized;
+            frm.WindowState = FormWindowState.Normal;
+            frm.Show();
+        }
+
+        private void pregledTagovaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmTagovi();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Normal;
+            frm.Show();
+        }
+
+        private void dodajTagToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmDetaljiTaga();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Normal;
+            frm.Show();
+        }
+
+        private void pregledKursevaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmKursevi();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Normal;
+            frm.Show();
+        }
+
+        private void dodajKursToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmKursDetalji();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Normal;
             frm.Show();
         }
     }

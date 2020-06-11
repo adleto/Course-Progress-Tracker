@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace eCourse.WebAPI.Helpers
 {
@@ -378,6 +379,38 @@ namespace eCourse.WebAPI.Helpers
                 }
                 context.SaveChanges();
             }
+            //seeding kurstag
+            if (context.KursTag.Count() == 0)
+            {
+                var list = new List<KursTag>
+                {
+                    new KursTag
+                    {
+                        KursId = 1,
+                        TagId = 1
+                    },
+                    new KursTag
+                    {
+                        KursId = 1,
+                        TagId = 2
+                    },
+                    new KursTag
+                    {
+                        KursId = 2,
+                        TagId = 3
+                    },
+                    new KursTag
+                    {
+                        KursId = 3,
+                        TagId = 3
+                    },
+                };
+                foreach (var item in list)
+                {
+                    context.KursTag.Add(item);
+                }
+                context.SaveChanges();
+            }
             //seeding instance kursa
             if (context.KursInstanca.Count() == 0)
             {
@@ -432,6 +465,30 @@ namespace eCourse.WebAPI.Helpers
                 {
                     context.KursInstanca.Add(item);
                 }
+                context.SaveChanges();
+            }
+            //seeding klijente na kurs instance
+            if (context.KlijentKursInstanca.Count() == 0)
+            {
+                var kursInstanca = new KursInstanca
+                {
+                    BrojCasova = 10,
+                    PocetakDatum = DateTime.Now.AddMonths(1),
+                    KursId = 5,
+                    PrijaveDoDatum = DateTime.Now.AddMonths(1),
+                    UposlenikId = 3,
+                    Cijena = 300,
+                    Kapacitet = 3
+                };
+                var klijentKursInstnaca = new KlijentKursInstanca
+                {
+                    Active = false,
+                    KlijentId = 1,
+                    KursInstanca = kursInstanca,
+                    UplataIzvrsena = false
+                };
+                context.Add(kursInstanca);
+                context.Add(klijentKursInstnaca);
                 context.SaveChanges();
             }
         }
