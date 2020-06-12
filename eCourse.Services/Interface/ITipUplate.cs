@@ -9,5 +9,6 @@ namespace eCourse.Services.Interface
     public interface ITipUplate
     {
         Task<List<TipUplateModel>> Get();
+        Task<TipUplateModel> SetCijenaClanarine(int id, decimal cijena);
     }
 }

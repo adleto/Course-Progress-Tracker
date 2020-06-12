@@ -27,6 +27,23 @@ namespace eCourse.Services.Service
             result.ForEach(r => returnModel.Add(MapTipToModel(r)));
             return returnModel;
         }
+
+        public async Task<TipUplateModel> SetCijenaClanarine(int id, decimal cijena)
+        {
+            try
+            {
+                var clanarina = _context.TipUplate
+                .Find(id);
+                clanarina.Cijena = cijena;
+                await _context.SaveChangesAsync();
+                return MapTipToModel(clanarina);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         private TipUplateModel MapTipToModel(TipUplate tip)
         {
             return new TipUplateModel

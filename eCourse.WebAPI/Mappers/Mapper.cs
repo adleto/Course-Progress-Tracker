@@ -23,6 +23,7 @@ namespace eCourse.WebAPI.Mappers
             CreateMap<Tag, TagModel>();
             CreateMap<TagUpsertModel, Tag>();
             CreateMap<Kurs, KursModel>();
+            CreateMap<Kurs, KursProsireniModel>().ReverseMap();
         }
     }
 }

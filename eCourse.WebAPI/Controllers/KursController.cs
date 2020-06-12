@@ -36,47 +36,59 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
-        //[Authorize(Roles ="AdministrativnoOsoblje, Predavač")]
-        //[HttpPost]
-        //public async Task<ActionResult> Add([FromBody] KursInsertModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var item = await _kursService.Add(model);
-        //            return Ok(item);
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(model);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
-        //    }
-        //}
-        //[Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> UpdateOsoblje(int id, [FromBody] KursUpdateModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var item = await _kursService.Update(id, model);
-        //            return Ok(item);
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(model);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
-        //    }
-        //}
+        [HttpGet("{id}")]
+        public ActionResult Get(int id)
+        {
+            try
+            {
+                return Ok(_kursService.Get(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
+        [HttpPost]
+        public async Task<ActionResult> Add([FromBody] KursProsireniModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = await _kursService.Add(model);
+                    return Ok(item);
+                }
+                else
+                {
+                    return BadRequest(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateOsoblje(int id, [FromBody] KursProsireniModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = await _kursService.Update(id, model);
+                    return Ok(item);
+                }
+                else
+                {
+                    return BadRequest(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
     }
 }

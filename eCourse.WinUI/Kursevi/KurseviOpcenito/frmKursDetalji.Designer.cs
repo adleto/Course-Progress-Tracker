@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtNaziv = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -37,6 +38,8 @@
             this.listTagovi = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnPotvrdi = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNaziv
@@ -45,6 +48,7 @@
             this.txtNaziv.Name = "txtNaziv";
             this.txtNaziv.Size = new System.Drawing.Size(254, 20);
             this.txtNaziv.TabIndex = 0;
+            this.txtNaziv.Validating += new System.ComponentModel.CancelEventHandler(this.txtNaziv_Validating);
             // 
             // label1
             // 
@@ -70,6 +74,7 @@
             this.txtSkraceniNaziv.Name = "txtSkraceniNaziv";
             this.txtSkraceniNaziv.Size = new System.Drawing.Size(254, 20);
             this.txtSkraceniNaziv.TabIndex = 2;
+            this.txtSkraceniNaziv.Validating += new System.ComponentModel.CancelEventHandler(this.txtSkraceniNaziv_Validating);
             // 
             // label3
             // 
@@ -87,6 +92,7 @@
             this.txtOpis.Name = "txtOpis";
             this.txtOpis.Size = new System.Drawing.Size(254, 86);
             this.txtOpis.TabIndex = 4;
+            this.txtOpis.Validating += new System.ComponentModel.CancelEventHandler(this.txtOpis_Validating);
             // 
             // listTagovi
             // 
@@ -113,6 +119,11 @@
             this.btnPotvrdi.TabIndex = 8;
             this.btnPotvrdi.Text = "Potvrdi";
             this.btnPotvrdi.UseVisualStyleBackColor = true;
+            this.btnPotvrdi.Click += new System.EventHandler(this.btnPotvrdi_Click);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // frmKursDetalji
             // 
@@ -130,6 +141,8 @@
             this.Controls.Add(this.txtNaziv);
             this.Name = "frmKursDetalji";
             this.Text = "Detalji kursa";
+            this.Load += new System.EventHandler(this.frmKursDetalji_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,5 +159,6 @@
         private System.Windows.Forms.CheckedListBox listTagovi;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnPotvrdi;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

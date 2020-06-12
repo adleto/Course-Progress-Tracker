@@ -2,6 +2,7 @@
 using eCourse.WinUI.Kursevi.KurseviOpcenito;
 using eCourse.WinUI.Kursevi.Tagovi;
 using eCourse.WinUI.Osoblje;
+using eCourse.WinUI.Ostalo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -132,6 +133,14 @@ namespace eCourse.WinUI
         private void dodajKursToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmKursDetalji();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Normal;
+            frm.Show();
+        }
+
+        private void cijenaČlanarineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmCijenaClanarine();
             frm.MdiParent = this;
             frm.WindowState = FormWindowState.Normal;
             frm.Show();

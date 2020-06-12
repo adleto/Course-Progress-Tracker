@@ -10,5 +10,8 @@ namespace eCourse.Services.Interface
     public interface IKurs
     {
         Task<List<KursModel>> Get(List<TagModel> tagovi);
+        KursProsireniModel Get(int id);
+        Task<KursProsireniModel> Add(KursProsireniModel model);
+        Task<KursProsireniModel> Update(int id, KursProsireniModel model);
     }
 }
