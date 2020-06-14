@@ -48,6 +48,8 @@
             this.mojiKurseviToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ostaloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cijenaČlanarineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pregledMojihKursevaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dodajNovuInstancuKursaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,7 +136,7 @@
             this.pregledTagovaToolStripMenuItem,
             this.dodajTagToolStripMenuItem});
             this.tagoviToolStripMenuItem.Name = "tagoviToolStripMenuItem";
-            this.tagoviToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.tagoviToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.tagoviToolStripMenuItem.Text = "Tagovi";
             // 
             // pregledTagovaToolStripMenuItem
@@ -157,25 +159,28 @@
             this.pregledKursevaToolStripMenuItem,
             this.dodajKursToolStripMenuItem});
             this.kurseviToolStripMenuItem1.Name = "kurseviToolStripMenuItem1";
-            this.kurseviToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
+            this.kurseviToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.kurseviToolStripMenuItem1.Text = "Kursevi";
             // 
             // pregledKursevaToolStripMenuItem
             // 
             this.pregledKursevaToolStripMenuItem.Name = "pregledKursevaToolStripMenuItem";
-            this.pregledKursevaToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.pregledKursevaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pregledKursevaToolStripMenuItem.Text = "Pregled kurseva";
             this.pregledKursevaToolStripMenuItem.Click += new System.EventHandler(this.pregledKursevaToolStripMenuItem_Click);
             // 
             // dodajKursToolStripMenuItem
             // 
             this.dodajKursToolStripMenuItem.Name = "dodajKursToolStripMenuItem";
-            this.dodajKursToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.dodajKursToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.dodajKursToolStripMenuItem.Text = "Dodaj kurs";
             this.dodajKursToolStripMenuItem.Click += new System.EventHandler(this.dodajKursToolStripMenuItem_Click);
             // 
             // mojiKurseviToolStripMenuItem
             // 
+            this.mojiKurseviToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pregledMojihKursevaToolStripMenuItem,
+            this.dodajNovuInstancuKursaToolStripMenuItem});
             this.mojiKurseviToolStripMenuItem.Name = "mojiKurseviToolStripMenuItem";
             this.mojiKurseviToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.mojiKurseviToolStripMenuItem.Text = "Moji kursevi";
@@ -191,9 +196,23 @@
             // cijenaČlanarineToolStripMenuItem
             // 
             this.cijenaČlanarineToolStripMenuItem.Name = "cijenaČlanarineToolStripMenuItem";
-            this.cijenaČlanarineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cijenaČlanarineToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.cijenaČlanarineToolStripMenuItem.Text = "Cijena članarine";
             this.cijenaČlanarineToolStripMenuItem.Click += new System.EventHandler(this.cijenaČlanarineToolStripMenuItem_Click);
+            // 
+            // pregledMojihKursevaToolStripMenuItem
+            // 
+            this.pregledMojihKursevaToolStripMenuItem.Name = "pregledMojihKursevaToolStripMenuItem";
+            this.pregledMojihKursevaToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.pregledMojihKursevaToolStripMenuItem.Text = "Pregled mojih kurseva";
+            this.pregledMojihKursevaToolStripMenuItem.Click += new System.EventHandler(this.pregledMojihKursevaToolStripMenuItem_Click);
+            // 
+            // dodajNovuInstancuKursaToolStripMenuItem
+            // 
+            this.dodajNovuInstancuKursaToolStripMenuItem.Name = "dodajNovuInstancuKursaToolStripMenuItem";
+            this.dodajNovuInstancuKursaToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.dodajNovuInstancuKursaToolStripMenuItem.Text = "Dodaj novu instancu kursa";
+            this.dodajNovuInstancuKursaToolStripMenuItem.Click += new System.EventHandler(this.dodajNovuInstancuKursaToolStripMenuItem_Click);
             // 
             // frmIndexAdmin
             // 
@@ -232,6 +251,8 @@
         private System.Windows.Forms.ToolStripMenuItem mojiKurseviToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ostaloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cijenaČlanarineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pregledMojihKursevaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dodajNovuInstancuKursaToolStripMenuItem;
     }
 }
 

@@ -10,5 +10,7 @@ namespace eCourse.Models.ApplicationUser
         public string Username { get; set; }
         public List<RoleModel> ApplicationUserRoles { get; set; }
         public string Email { get; set; }
+        public int? KlijentId { get; set; }
+        public int? UposlenikId { get; set; }
     }
 }

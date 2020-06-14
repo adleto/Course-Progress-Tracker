@@ -1,5 +1,6 @@
 ﻿using eCourse.Models.Kurs;
 using eCourse.Models.Tag;
+using eCourse.WinUI.Kursevi.MojiKursevi;
 using eCourse.WinUI.Service;
 using System;
 using System.Collections.Generic;
@@ -59,10 +60,35 @@ namespace eCourse.WinUI.Kursevi.KurseviOpcenito
                 gridKursevi.Columns[nameof(KursModel.SkraceniNaziv)].HeaderText = "Skraćeni naziv";
                 gridKursevi.Columns[nameof(KursModel.Id)].Visible = false;
                 gridKursevi.Columns[nameof(KursModel.Opis)].Visible = false;
+
+                if (gridKursevi.Columns["DodajInstancuColumn"] == null)
+                {
+                    DataGridViewButtonColumn instancaButton = new DataGridViewButtonColumn()
+                    {
+                        Name = "DodajInstancuColumn",
+                        HeaderText = "Akcija",
+                        Text = "Dodaj instancu kursa",
+                        UseColumnTextForButtonValue = true
+                    };
+                    gridKursevi.CellClick += gridKursevi_CellClick;
+                    gridKursevi.Columns.Add(instancaButton);
+                }
+                gridKursevi.Columns["DodajInstancuColumn"].DisplayIndex = 4;
+                gridKursevi.Columns["DodajInstancuColumn"].Width = 150;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void gridKursevi_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == gridKursevi.Columns["DodajInstancuColumn"].Index)
+            {
+                var idSelected = gridKursevi.SelectedRows[0].Cells[gridKursevi.Columns[nameof(KursModel.Id)].Index].Value;
+                var frm = new frmAddInstancaKursa(int.Parse(idSelected.ToString()));
+                frm.Show();
             }
         }
 
@@ -73,7 +99,7 @@ namespace eCourse.WinUI.Kursevi.KurseviOpcenito
 
         private void gridKursevi_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var idSelected = gridKursevi.SelectedRows[0].Cells[0].Value;
+            var idSelected = gridKursevi.SelectedRows[0].Cells[gridKursevi.Columns[nameof(KursModel.Id)].Index].Value;
             var frm = new frmKursDetalji(int.Parse(idSelected.ToString()));
             frm.Show();
         }

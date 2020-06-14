@@ -104,6 +104,24 @@
     <Compile Include="Kursevi\KurseviOpcenito\frmKursevi.Designer.cs">
       <DependentUpon>frmKursevi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmAddInstancaKursa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmAddInstancaKursa.Designer.cs">
+      <DependentUpon>frmAddInstancaKursa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmInstanca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmInstanca.Designer.cs">
+      <DependentUpon>frmInstanca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmMojiKursevi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmMojiKursevi.Designer.cs">
+      <DependentUpon>frmMojiKursevi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Kursevi\Tagovi\frmDetaljiTaga.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +175,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Kursevi\KurseviOpcenito\frmKursevi.resx">
       <DependentUpon>frmKursevi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\MojiKursevi\frmAddInstancaKursa.resx">
+      <DependentUpon>frmAddInstancaKursa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\MojiKursevi\frmMojiKursevi.resx">
+      <DependentUpon>frmMojiKursevi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kursevi\Tagovi\frmDetaljiTaga.resx">
       <DependentUpon>frmDetaljiTaga.cs</DependentUpon>

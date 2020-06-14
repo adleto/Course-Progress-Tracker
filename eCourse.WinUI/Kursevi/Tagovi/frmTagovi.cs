@@ -29,7 +29,7 @@ namespace eCourse.WinUI.Kursevi.Tagovi
 
         private void gridTagovi_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var idSelected = gridTagovi.SelectedRows[0].Cells[0].Value;
+            var idSelected = gridTagovi.SelectedRows[0].Cells[gridTagovi.Columns[nameof(TagModel.Id)].Index].Value;
             var frm = new frmDetaljiTaga(int.Parse(idSelected.ToString()));
             frm.Show();
         }

@@ -16,7 +16,7 @@ namespace eCourse.WinUI.Klijenti
 {
     public partial class frmKlijenti : Form
     {
-        private readonly ApiService _kursInstancaService = new ApiService("KursInstanca");
+        private readonly ApiService _kursInstancaService = new ApiService("KursInstanca/GetSveInstance");
         private readonly ApiService _klijentService = new ApiService("Klijent");
         public frmKlijenti()
         {
@@ -90,7 +90,7 @@ namespace eCourse.WinUI.Klijenti
         {
             if (e.ColumnIndex == gridKlijenti.Columns["UplataColumn"].Index)
             {
-                var idSelected = gridKlijenti.SelectedRows[0].Cells[0].Value;
+                var idSelected = gridKlijenti.SelectedRows[0].Cells[gridKlijenti.Columns[nameof(KlijentModel.KlijentId)].Index].Value;
                 var frm = new frmUplataDetalji(int.Parse(idSelected.ToString()));
                 frm.Show();
             }

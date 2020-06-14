@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eCourse.Models.Helpers;
+using eCourse.Models.KursInstanca;
 using eCourse.Services.Interface;
 using eCourse.WebAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -24,13 +25,76 @@ namespace eCourse.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        [Route("[action]")]
+        public async Task<ActionResult> GetSveInstance()
         {
             try
             {
                 return Ok(await _kursInstancaService.Get(UserResolver.GetUserRoles(HttpContext.User), UserResolver.GetUserId(HttpContext.User)));
             }
             catch(Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult> GetMojeInstance()
+        {
+            try
+            {
+                return Ok(await _kursInstancaService.GetMojiKursevi(UserResolver.GetUserId(HttpContext.User)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> DodajInstancu(KursInstancaInsertModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return Ok(await _kursInstancaService.DodajInstancu(UserResolver.GetUposlenikId(HttpContext.User), model));
+                }
+                else
+                {
+                    return BadRequest(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [HttpGet("{id}")]
+        public ActionResult GetInstanca(int id)
+        {
+            try
+            {
+                return Ok(_kursInstancaService.GetInstanca(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateInstanca(int id, KursInstancaUpdateModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return Ok(await _kursInstancaService.UpdateInstanca(UserResolver.GetUposlenikId(HttpContext.User), id, model));
+                }
+                else
+                {
+                    return BadRequest(model);
+                }
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }

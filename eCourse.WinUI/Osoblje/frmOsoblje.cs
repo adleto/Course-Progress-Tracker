@@ -78,8 +78,7 @@ namespace eCourse.WinUI.Osoblje
 
         private void gridOsoblje_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //3 is index of cell with id
-            var idSelected = gridOsoblje.SelectedRows[0].Cells[3].Value;
+            var idSelected = gridOsoblje.SelectedRows[0].Cells[gridOsoblje.Columns[nameof(OsobljeModel.Id)].Index].Value;
             var frm = new frmUposlenikDetalji(int.Parse(idSelected.ToString()));
             frm.Show();
         }

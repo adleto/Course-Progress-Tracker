@@ -20,5 +20,6 @@ namespace eCourse.Database.Entities
         [ForeignKey(nameof(Uposlenik))]
         public int UposlenikId { get; set; }
         public int BrojCasova { get; set; }
+        public virtual List<Cas> Casovi { get; set; }
     }
 }

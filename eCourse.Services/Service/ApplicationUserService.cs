@@ -126,13 +126,22 @@ namespace eCourse.Services.Service
                             Id = x.RoleId
                         });
                     }
-                    return new ApplicationUserModel
+                    var model = new ApplicationUserModel
                     {
                         ApplicationUserRoles = rolesModel,
                         Email = user.Email,
                         Id = user.Id,
                         Username = user.Username
                     };
+                    if(rolesModel.Where(r => r.Naziv == "Klijent").Any())
+                    {
+                        model.KlijentId = _context.Klijent.Where(k => k.ApplicationUserId == model.Id).First().Id;
+                    }
+                    else if(rolesModel.Where(r => r.Naziv == "AdministrativnoOsoblje" || r.Naziv == "Predavač").Any())
+                    {
+                        model.UposlenikId = _context.Uposlenik.Where(k => k.ApplicationUserId == model.Id).First().Id;
+                    }
+                    return model;
                 }
             }
             return null;

@@ -278,7 +278,7 @@ namespace eCourse.WinUI.Osoblje
         {
             try {
                 var result = await _ulogeService.Get<List<RoleModel>>(null);
-                result.Remove(result[2]);
+                result.Remove(result.Where(r => r.Naziv == "Klijent").FirstOrDefault());
                 comboUloga.DisplayMember = "Naziv";
                 comboUloga.ValueMember = "Id";
                 comboUloga.DataSource = result;

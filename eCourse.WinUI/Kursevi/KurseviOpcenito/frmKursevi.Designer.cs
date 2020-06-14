@@ -41,14 +41,14 @@
             this.gridKursevi.Location = new System.Drawing.Point(12, 40);
             this.gridKursevi.Name = "gridKursevi";
             this.gridKursevi.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridKursevi.Size = new System.Drawing.Size(584, 423);
+            this.gridKursevi.Size = new System.Drawing.Size(778, 423);
             this.gridKursevi.TabIndex = 0;
             this.gridKursevi.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridKursevi_CellMouseDoubleClick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(629, 12);
+            this.label1.Location = new System.Drawing.Point(803, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 1;
@@ -57,14 +57,14 @@
             // listTagovi
             // 
             this.listTagovi.FormattingEnabled = true;
-            this.listTagovi.Location = new System.Drawing.Point(622, 40);
+            this.listTagovi.Location = new System.Drawing.Point(796, 40);
             this.listTagovi.Name = "listTagovi";
             this.listTagovi.Size = new System.Drawing.Size(130, 394);
             this.listTagovi.TabIndex = 2;
             // 
             // butonFiltriraj
             // 
-            this.butonFiltriraj.Location = new System.Drawing.Point(650, 440);
+            this.butonFiltriraj.Location = new System.Drawing.Point(824, 440);
             this.butonFiltriraj.Name = "butonFiltriraj";
             this.butonFiltriraj.Size = new System.Drawing.Size(75, 23);
             this.butonFiltriraj.TabIndex = 3;
@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(773, 475);
+            this.ClientSize = new System.Drawing.Size(938, 474);
             this.Controls.Add(this.butonFiltriraj);
             this.Controls.Add(this.listTagovi);
             this.Controls.Add(this.label1);

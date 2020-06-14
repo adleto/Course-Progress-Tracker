@@ -78,6 +78,7 @@ namespace eCourse.WebAPI
             services.AddScoped<ITipUplate, TipUplateService>();
             services.AddScoped<ICrudService<TagModel, object, TagUpsertModel, TagUpsertModel>, BaseCrudService<TagModel, object, Tag, TagUpsertModel, TagUpsertModel>>();
             services.AddScoped<IKurs, KursService>();
+            services.AddScoped<ICas, CasService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eCourse.Database.Entities;
 using eCourse.Models.ApplicationUser;
+using eCourse.Models.Cas;
 using eCourse.Models.Kurs;
 using eCourse.Models.KursInstanca;
 using eCourse.Models.Opcina;
@@ -24,6 +25,9 @@ namespace eCourse.WebAPI.Mappers
             CreateMap<TagUpsertModel, Tag>();
             CreateMap<Kurs, KursModel>();
             CreateMap<Kurs, KursProsireniModel>().ReverseMap();
+            CreateMap<Cas, CasModel>();
+            CreateMap<CasUpsertModel, Cas>();
+            CreateMap<MojaKursInstanca, MojaKursInstancaProsireniModel>();
         }
     }
 }
