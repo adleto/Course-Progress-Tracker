@@ -30,19 +30,19 @@ namespace eCourse.WebAPI.Controllers
         {
             try
             {
-                return Ok(await _kursInstancaService.Get(UserResolver.GetUserRoles(HttpContext.User), UserResolver.GetUserId(HttpContext.User)));
+                return Ok(await _kursInstancaService.Get(UserResolver.GetUserRoles(HttpContext.User), UserResolver.GetUposlenikId(HttpContext.User)));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
         [HttpGet]
-        public async Task<ActionResult> GetMojeInstance()
+        public async Task<ActionResult> GetMojeInstance([FromQuery] MojaKursInstancaFilter model)
         {
             try
             {
-                return Ok(await _kursInstancaService.GetMojiKursevi(UserResolver.GetUserId(HttpContext.User)));
+                return Ok(await _kursInstancaService.GetMojiKursevi(UserResolver.GetUposlenikId(HttpContext.User), model));
             }
             catch (Exception ex)
             {
@@ -93,6 +93,18 @@ namespace eCourse.WebAPI.Controllers
                 {
                     return BadRequest(model);
                 }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> ZavrsiInstancu(int id, [FromBody] bool postaviZaKlijenteKaoPolozili = true)
+        {
+            try
+            {
+                return Ok(await _kursInstancaService.ZavrsiInstancu(UserResolver.GetUposlenikId(HttpContext.User), id, postaviZaKlijenteKaoPolozili));
             }
             catch (Exception ex)
             {

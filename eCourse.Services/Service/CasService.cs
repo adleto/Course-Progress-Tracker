@@ -24,6 +24,7 @@ namespace eCourse.Services.Service
             try {
                 var result = await _context.Cas
                     .Where(c => c.KursInstancaId == instancaId)
+                    .OrderByDescending(c => c.DatumVrijemeOdrzavanja)
                     .ToListAsync();
                 return _mapper.Map<List<CasModel>>(result);
             }

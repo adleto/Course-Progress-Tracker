@@ -18,19 +18,33 @@ namespace eCourse.WinUI.Klijenti
     {
         private readonly ApiService _kursInstancaService = new ApiService("KursInstanca/GetSveInstance");
         private readonly ApiService _klijentService = new ApiService("Klijent");
-        public frmKlijenti()
+        int? instancaId = null;
+        public frmKlijenti(int? instancaId = null)
         {
             InitializeComponent();
+            this.instancaId = instancaId;
         }
 
         private async void frmKlijenti_Load(object sender, EventArgs e)
         {
             await LoadKursInstance();
-            await LoadKlijents();
+            if (instancaId != null)
+            {
+                await LoadKlijents(new KlijentSearchRequestModel
+                {
+                    KursInstancaId = instancaId
+                });
+            }
+            else
+            {
+                await LoadKlijents();
+            }
+            comboKursInstanca.SelectedIndex = 0;
         }
         private async Task LoadKursInstance()
         {
-            try {
+            try
+            {
                 var result = await _kursInstancaService.Get<List<KursInstancaModel>>(null);
                 result.Insert(0, new KursInstancaModel
                 {

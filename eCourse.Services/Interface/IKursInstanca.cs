@@ -9,10 +9,11 @@ namespace eCourse.Services.Interface
     public interface IKursInstanca
     {
         KursInstancaSimpleModel GetInstancaSimple(int id);
-        Task<List<KursInstancaModel>> Get(List<string> roles, int userId);
-        Task<List<MojaKursInstanca>> GetMojiKursevi(int userId);
+        Task<List<KursInstancaModel>> Get(List<string> roles, int uposlenikId);
+        Task<List<MojaKursInstanca>> GetMojiKursevi(int uposlenikId, MojaKursInstancaFilter model);
         Task<KursInstancaSimpleModel> DodajInstancu(int uposlenikId, KursInstancaInsertModel model);
         MojaKursInstancaProsireniModel GetInstanca(int id);
         Task<KursInstancaSimpleModel> UpdateInstanca(int uposlenikId, int id, KursInstancaUpdateModel model);
+        Task<KursInstancaSimpleModel> ZavrsiInstancu(int uposlenikId, int id, bool postaviZaKlijenteKaoPolozili = true);
     }
 }

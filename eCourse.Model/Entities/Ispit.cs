@@ -13,5 +13,6 @@ namespace eCourse.Database.Entities
         public int KursInstancaId { get; set; }
         public DateTime DatumVrijemeIspita { get; set; }
         public string Lokacija { get; set; }
+        public virtual List<IspitKlijentKursInstanca> KlijentiNaIspitu { get; set; }
     }
 }

@@ -90,5 +90,24 @@ namespace eCourse.WinUI.Service
                 }
             }
         }
+        public async Task<T> UpdatePatch<T>(object id, object request)
+        {
+            try
+            {
+                return await $"{Properties.Settings.Default.APIUrl}/{_route}/{id}".WithBasicAuth(Username, Password).PatchJsonAsync(request).ReceiveJson<T>();
+            }
+            catch (FlurlHttpException ex)
+            {
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    throw new ApiException(ex.Message, ex.Call.HttpStatus);
+                }
+                else
+                {
+                    var errors = await ex.GetResponseJsonAsync<ApiException>();
+                    throw new ApiException(errors.Message, ex.Call.HttpStatus);
+                }
+            }
+        }
     }
 }

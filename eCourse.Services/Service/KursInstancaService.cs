@@ -24,7 +24,7 @@ namespace eCourse.Services.Service
             _mapper = mapper;
         }
 
-        public async Task<List<KursInstancaModel>> Get(List<string> roles, int userId)
+        public async Task<List<KursInstancaModel>> Get(List<string> roles, int uposlenikId)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace eCourse.Services.Service
                     .AsQueryable();
                 if (!roles.Contains("AdministrativnoOsoblje"))
                 {
-                    query = query.Where(k => k.UposlenikId == userId);
+                    query = query.Where(k => k.UposlenikId == uposlenikId);
                 }
                 var result = await query.ToListAsync();
                 var returnModel = new List<KursInstancaModel>();
@@ -49,17 +49,33 @@ namespace eCourse.Services.Service
             }
         }
 
-        public async Task<List<MojaKursInstanca>> GetMojiKursevi(int userId)
+        public async Task<List<MojaKursInstanca>> GetMojiKursevi(int uposlenikId, MojaKursInstancaFilter model)
         {
             try
             {
-                var result = await _context.KursInstanca
+                var query = _context.KursInstanca
                     .Include(ki => ki.Kurs)
                     .Include(ki => ki.Uposlenik)
                         .ThenInclude(u => u.ApplicationUser)
-                    .Where(ki => ki.Uposlenik.ApplicationUserId == userId)
+                    .Where(ki => ki.UposlenikId == uposlenikId)
                     .OrderByDescending(ki => ki.PocetakDatum)
-                    .ToListAsync();
+                    .AsQueryable();
+                if (model != null) 
+                {
+                    if (model.Zavrseni && !model.NisuZavrseni)
+                    {
+                        query = query.Where(r => r.KrajDatum != null);
+                    }
+                    else if (model.NisuZavrseni && !model.Zavrseni)
+                    {
+                        query = query.Where(r => r.KrajDatum == null);
+                    }
+                    else if(!model.Zavrseni && !model.NisuZavrseni)
+                    {
+                        query = query.Take(0);
+                    }
+                }
+                var result = await query.ToListAsync();
                 var returnModel = new List<MojaKursInstanca>();
                 foreach (var r in result)
                 {
@@ -88,13 +104,28 @@ namespace eCourse.Services.Service
                     UposlenikId = model.UposlenikId,
                     UposlenikIme = model.Uposlenik.ApplicationUser.Ime,
                     UposlenikPrezime = model.Uposlenik.ApplicationUser.Prezime,
-                    PrijaveDo = model.PrijaveDoDatum
+                    PrijaveDo = model.PrijaveDoDatum,
+                    Kapacitet = model.Kapacitet,
+                    KrajDate = model.KrajDatum,
+                    BrojCasova = model.BrojCasova
                 };
+                var ispit = _context.Ispit
+                    .Where(i => i.KursInstancaId == model.Id)
+                    .FirstOrDefault();
+                if (ispit != null)
+                {
+                    returnModel.IspitOrganizovan = true;
+                    returnModel.IspitId = ispit.Id;
+                }
+                else
+                {
+                    returnModel.IspitOrganizovan = false;
+                }
                 if (model.Kapacitet != null) returnModel.KapacitetOpis = model.Kapacitet.ToString();
                 else returnModel.KapacitetOpis = "Neograničen";
                 if (model.KrajDatum != null) returnModel.KrajOpis = model.KrajDatum.ToString();
                 else returnModel.KrajOpis = "Nije upisan";
-                if (model.PocetakDatum < DateTime.Now && model.KrajDatum == null || model.KrajDatum > DateTime.Now) returnModel.ZavrsenOpis = "U trajanju";
+                if (model.PocetakDatum < DateTime.Now && model.KrajDatum == null || model.KrajDatum > DateTime.Now) returnModel.ZavrsenOpis = "U toku";
                 else if (model.PocetakDatum > DateTime.Now) returnModel.ZavrsenOpis = "Još nije započet";
                 else returnModel.ZavrsenOpis = "Završen";
                 return returnModel;
@@ -121,6 +152,9 @@ namespace eCourse.Services.Service
         {
             try
             {
+                if (model.DatumPocetka.Date < DateTime.Now.Date) throw new Exception("Datum početka ne može biti manji od današnjeg.");
+                if (model.DatumPrijaveDo.Date > model.DatumPocetka.Date) throw new Exception("Krajnji rok za prijave ne može biti noviji od datuma početka.");
+
                 var novaInstanca = new KursInstanca
                 {
                     BrojCasova = model.BrojCasova,
@@ -192,11 +226,48 @@ namespace eCourse.Services.Service
                 if (instanca.KrajDatum?.Date <= DateTime.Now.Date) throw new Exception("Kurs je već završen.");
                 if (instanca.PocetakDatum.Date < DateTime.Now.Date) throw new Exception("Kurs je već započeo.");
                 if(model.PocetakDatum.Date < DateTime.Now.Date) throw new Exception("Datum početka ne može biti manji od današnjeg.");
-                if(model.PrijaveDoDatum > model.PocetakDatum) throw new Exception("Krajnji rok za prijave ne može biti noviji od datuma početka.");
-                if (model.Kapacitet <= 0) throw new Exception("Kapacitet ne može biti manji ili jednak nuli.");
+                if(model.PrijaveDoDatum.Date > model.PocetakDatum.Date) throw new Exception("Krajnji rok za prijave ne može biti noviji od datuma početka.");
+                var brojStudenata = _context.KlijentKursInstanca.Where(k => k.KursInstancaId == instanca.Id).Count();
+                if (model.Kapacitet != null && brojStudenata > model.Kapacitet) throw new Exception("Kapacitet ne može biti niži od trenutnog broja upisanih studenata.");
+                if (model.Kapacitet != null && model.Kapacitet <= 0) throw new Exception("Kapacitet ne može biti manji ili jednak nuli.");
                 instanca.Kapacitet = model.Kapacitet;
-                instanca.PocetakDatum = model.PocetakDatum;
-                instanca.PrijaveDoDatum = model.PrijaveDoDatum;
+                instanca.PocetakDatum = model.PocetakDatum.Date;
+                instanca.PrijaveDoDatum = model.PrijaveDoDatum.Date;
+                await _context.SaveChangesAsync();
+                return new KursInstancaSimpleModel
+                {
+                    KursInstancaId = instanca.Id,
+                    UposlenikId = instanca.UposlenikId
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<KursInstancaSimpleModel> ZavrsiInstancu(int uposlenikId, int id, bool postaviZaKlijenteKaoPolozili = true)
+        {
+            try
+            {
+                var instanca = _context.KursInstanca.Find(id);
+                if (instanca.UposlenikId != uposlenikId) throw new Exception("Instanca ne pripada uposleniku.");
+                if (instanca.KrajDatum!=null) throw new Exception("Kurs je već završen.");
+                instanca.KrajDatum = DateTime.Now;
+                if (instanca.BrojCasova >= _context.Cas.Where(c=>c.KursInstanca == instanca).Count() || postaviZaKlijenteKaoPolozili)
+                {
+                    var klijentiInstance = await _context.KlijentKursInstanca
+                        .Where(k => k.KursInstanca == instanca)
+                        .ToListAsync();
+                    klijentiInstance.ForEach(k =>
+                    {
+                        if(k.UplataIzvrsena == null || k.UplataIzvrsena == true)
+                        {
+                            k.Polozen = true;
+                            k.Active = false;
+                        }
+                    });
+                }
                 await _context.SaveChangesAsync();
                 return new KursInstancaSimpleModel
                 {

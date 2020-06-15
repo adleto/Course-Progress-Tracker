@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eCourse.Database.Entities;
+using eCourse.Models.Helpers;
 using eCourse.Models.Tag;
 using eCourse.Services.Repository;
 using eCourse.WebAPI.Controllers.Base;
@@ -22,13 +23,41 @@ namespace eCourse.WebAPI.Controllers
         [HttpPost]
         public override async Task<TagModel> Insert(TagUpsertModel obj)
         {
-            return await base._service.Insert(obj);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return await base._service.Insert(obj);
+                }
+                else
+                {
+                    throw new Exception("Invalid model");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
         [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
         [HttpPut("{id}")]
         public override async Task<TagModel> Update(int id, [FromBody] TagUpsertModel obj)
         {
-            return await base._service.Update(id, obj);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return await base._service.Update(id, obj);
+                }
+                else
+                {
+                    throw new Exception("Invalid model");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

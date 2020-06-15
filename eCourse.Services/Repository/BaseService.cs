@@ -25,9 +25,9 @@ namespace eCourse.Services.Repository
             return _mapper.Map<List<TModel>>(await _context.Set<TEntity>().ToListAsync());
         }
 
-        public virtual async Task<TModel> Get(int id)
+        public virtual TModel Get(int id)
         {
-            return _mapper.Map<TModel>(await _context.Set<TEntity>().FindAsync(id));
+            return _mapper.Map<TModel>(_context.Set<TEntity>().Find(id));
         }
     }
 }

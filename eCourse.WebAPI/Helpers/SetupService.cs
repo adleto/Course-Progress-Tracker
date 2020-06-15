@@ -480,15 +480,47 @@ namespace eCourse.WebAPI.Helpers
                     Cijena = 300,
                     Kapacitet = 3
                 };
+                var kursInstanca2 = new KursInstanca
+                {
+                    BrojCasova = 10,
+                    PocetakDatum = DateTime.Now.AddMonths(1),
+                    KursId = 3,
+                    PrijaveDoDatum = DateTime.Now.AddMonths(1),
+                    UposlenikId = 2,
+                    Cijena = 300,
+                    Kapacitet = 3
+                };
+
                 var klijentKursInstnaca = new KlijentKursInstanca
                 {
-                    Active = false,
+                    Active = true,
                     KlijentId = 1,
-                    KursInstanca = kursInstanca,
-                    UplataIzvrsena = false
+                    KursInstanca = kursInstanca2,
+                    UplataIzvrsena = true
                 };
+                var klijentKursInstnaca2 = new KlijentKursInstanca
+                {
+                    Active = true,
+                    KlijentId = 2,
+                    KursInstanca = kursInstanca2,
+                    UplataIzvrsena = true
+                };
+                var klijentKursInstnaca3 = new KlijentKursInstanca
+                {
+                    Active = true,
+                    KlijentId = 3,
+                    KursInstanca = kursInstanca2,
+                    UplataIzvrsena = true
+                };
+
+
                 context.Add(kursInstanca);
                 context.Add(klijentKursInstnaca);
+
+                context.Add(kursInstanca2);
+                context.Add(klijentKursInstnaca2);
+                context.Add(klijentKursInstnaca3);
+
                 context.SaveChanges();
             }
         }

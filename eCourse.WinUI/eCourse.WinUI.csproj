@@ -74,6 +74,8 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MyDataGridViewButtonCell.cs" />
+    <Compile Include="Helpers\MyDataGridViewButtonColumn.cs" />
     <Compile Include="Klijenti\frmKlijenti.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +106,12 @@
     <Compile Include="Kursevi\KurseviOpcenito\frmKursevi.Designer.cs">
       <DependentUpon>frmKursevi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmCasDetalji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmCasDetalji.Designer.cs">
+      <DependentUpon>frmCasDetalji.cs</DependentUpon>
+    </Compile>
     <Compile Include="Kursevi\MojiKursevi\frmAddInstancaKursa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +129,24 @@
     </Compile>
     <Compile Include="Kursevi\MojiKursevi\frmMojiKursevi.Designer.cs">
       <DependentUpon>frmMojiKursevi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmPostavkeInstance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\frmPostavkeInstance.Designer.cs">
+      <DependentUpon>frmPostavkeInstance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\Ispit\frmIspitDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\Ispit\frmIspitDetail.Designer.cs">
+      <DependentUpon>frmIspitDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\Ispit\frmIspitView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kursevi\MojiKursevi\Ispit\frmIspitView.Designer.cs">
+      <DependentUpon>frmIspitView.cs</DependentUpon>
     </Compile>
     <Compile Include="Kursevi\Tagovi\frmDetaljiTaga.cs">
       <SubType>Form</SubType>
@@ -179,8 +205,23 @@
     <EmbeddedResource Include="Kursevi\MojiKursevi\frmAddInstancaKursa.resx">
       <DependentUpon>frmAddInstancaKursa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\MojiKursevi\frmCasDetalji.resx">
+      <DependentUpon>frmCasDetalji.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\MojiKursevi\frmInstanca.resx">
+      <DependentUpon>frmInstanca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Kursevi\MojiKursevi\frmMojiKursevi.resx">
       <DependentUpon>frmMojiKursevi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\MojiKursevi\frmPostavkeInstance.resx">
+      <DependentUpon>frmPostavkeInstance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\MojiKursevi\Ispit\frmIspitDetail.resx">
+      <DependentUpon>frmIspitDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kursevi\MojiKursevi\Ispit\frmIspitView.resx">
+      <DependentUpon>frmIspitView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kursevi\Tagovi\frmDetaljiTaga.resx">
       <DependentUpon>frmDetaljiTaga.cs</DependentUpon>
@@ -226,6 +267,8 @@
       <Name>eCourse.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Izvjestaji\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

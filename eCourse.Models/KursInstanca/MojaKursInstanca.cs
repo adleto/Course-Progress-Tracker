@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Text;
 
 namespace eCourse.Models.KursInstanca
@@ -19,5 +20,10 @@ namespace eCourse.Models.KursInstanca
         public string ZavrsenOpis { get; set; }
         public DateTime PrijaveDo { get; set; }
         public string KapacitetOpis { get; set; }
+        public int? Kapacitet { get; set; }
+        public DateTime? KrajDate { get; set; }
+        public int BrojCasova { get; set; }
+        public bool IspitOrganizovan { get; set; }
+        public int? IspitId { get; set; }
     }
 }

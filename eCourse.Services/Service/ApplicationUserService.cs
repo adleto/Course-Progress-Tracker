@@ -335,7 +335,7 @@ namespace eCourse.Services.Service
             }
         }
 
-        public async Task<List<KlijentModel>> GetKlijenti(int userId, List<string> roles, KlijentSearchRequestModel model = null)
+        public async Task<List<KlijentModel>> GetKlijenti(int uposlenikId, List<string> roles, KlijentSearchRequestModel model = null)
         {
             try
             {
@@ -364,7 +364,7 @@ namespace eCourse.Services.Service
                 bool isPredavacOnCourse = false;
                 if(model?.KursInstancaId != null)
                 {
-                    isPredavacOnCourse = IsPredavacOnCourse(userId, (int)model.KursInstancaId);
+                    isPredavacOnCourse = IsPredavacOnCourse(uposlenikId, (int)model.KursInstancaId);
                 }
 
                 var returnModel = new List<KlijentModel>();
@@ -382,7 +382,7 @@ namespace eCourse.Services.Service
                         if (isAdmin) {
                             passed = true;
                         }
-                        else if(IsKlijentOnAnyCourseFromUposlenik(r, userId))
+                        else if(IsKlijentOnAnyCourseFromUposlenik(r, uposlenikId))
                         {
                             passed = true;
                         }

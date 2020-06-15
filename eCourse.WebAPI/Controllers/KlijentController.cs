@@ -30,7 +30,7 @@ namespace eCourse.WebAPI.Controllers
         {
             try
             {
-                return Ok(await _userService.GetKlijenti(UserResolver.GetUserId(HttpContext.User), UserResolver.GetUserRoles(HttpContext.User), model));
+                return Ok(await _userService.GetKlijenti(UserResolver.GetUposlenikId(HttpContext.User), UserResolver.GetUserRoles(HttpContext.User), model));
             }
             catch(Exception ex)
             {

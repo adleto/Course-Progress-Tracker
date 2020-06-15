@@ -14,7 +14,7 @@ namespace eCourse.Database.Entities
         public virtual KlijentKursInstanca KlijentKursInstanca { get; set; }
         [ForeignKey(nameof(KlijentKursInstanca))]
         public int KlijentKursInstancaId { get; set; }
-        public bool? Prisustvovao { get; set; }
+        public bool Prisustvovao { get; set; }
         public decimal? Bodovi { get; set; }
     }
 }

@@ -24,9 +24,9 @@ namespace eCourse.WebAPI.Controllers.Base
             return await _service.Get(search);
         }
         [HttpGet("{id}")]
-        public async Task<T> Get(int id)
+        public T Get(int id)
         {
-            return await _service.Get(id);
+            return _service.Get(id);
         }
     }
 }

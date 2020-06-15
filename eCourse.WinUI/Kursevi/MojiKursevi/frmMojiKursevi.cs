@@ -18,6 +18,8 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
         public frmMojiKursevi()
         {
             InitializeComponent();
+            checkedFilter.Items.Add("Završeni", true);
+            checkedFilter.Items.Add("Nisu završeni", true);
         }
 
         private async void frmMojiKursevi_Load(object sender, EventArgs e)
@@ -29,12 +31,22 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
         {
             try
             {
-                var result = await _kursInstancaService.Get<List<MojaKursInstanca>>(null);
+                var filter = new MojaKursInstancaFilter
+                {
+                    NisuZavrseni = checkedFilter.GetItemChecked(1),
+                    Zavrseni = checkedFilter.GetItemChecked(0)
+                };
+                var result = await _kursInstancaService.Get<List<MojaKursInstanca>>(filter);
                 gridInstance.DataSource = result;
                 gridInstance.Columns[nameof(MojaKursInstanca.KursInstancaId)].Visible = false;
                 gridInstance.Columns[nameof(MojaKursInstanca.UposlenikId)].Visible = false;
                 gridInstance.Columns[nameof(MojaKursInstanca.UposlenikIme)].Visible = false;
                 gridInstance.Columns[nameof(MojaKursInstanca.UposlenikPrezime)].Visible = false;
+                gridInstance.Columns[nameof(MojaKursInstanca.KrajDate)].Visible = false;
+                gridInstance.Columns[nameof(MojaKursInstanca.Kapacitet)].Visible = false;
+                gridInstance.Columns[nameof(MojaKursInstanca.BrojCasova)].Visible = false;
+                gridInstance.Columns[nameof(MojaKursInstanca.IspitOrganizovan)].Visible = false;
+                gridInstance.Columns[nameof(MojaKursInstanca.IspitId)].Visible = false;
                 gridInstance.Columns[nameof(MojaKursInstanca.UposlenikImeIPrezime)].HeaderText = "Predavač";
                 gridInstance.Columns[nameof(MojaKursInstanca.Pocetak)].HeaderText = "Datum početka";
                 gridInstance.Columns[nameof(MojaKursInstanca.KrajOpis)].HeaderText = "Datum kraja";
@@ -65,6 +77,11 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
             var idSelected = gridInstance.SelectedRows[0].Cells[gridInstance.Columns[nameof(MojaKursInstanca.KursInstancaId)].Index].Value;
             var frm = new frmInstanca(int.Parse(idSelected.ToString()));
             frm.Show();
+        }
+
+        private async void btnFiltriraj_Click(object sender, EventArgs e)
+        {
+            await LoadInstance();
         }
     }
 }

@@ -21,5 +21,9 @@
     <ProjectReference Include="..\eCourse.Services\eCourse.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\KlijentSpecific\" />
+  </ItemGroup>
+
 
 </Project>

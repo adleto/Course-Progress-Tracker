@@ -2,6 +2,7 @@
 using eCourse.Database.Entities;
 using eCourse.Models.ApplicationUser;
 using eCourse.Models.Cas;
+using eCourse.Models.Ispit;
 using eCourse.Models.Kurs;
 using eCourse.Models.KursInstanca;
 using eCourse.Models.Opcina;
@@ -28,6 +29,9 @@ namespace eCourse.WebAPI.Mappers
             CreateMap<Cas, CasModel>();
             CreateMap<CasUpsertModel, Cas>();
             CreateMap<MojaKursInstanca, MojaKursInstancaProsireniModel>();
+            CreateMap<Ispit, IspitModel>();
+            CreateMap<IspitUpsertModel, Ispit>();
+            CreateMap<Ispit, IspitProsireniModel>();
         }
     }
 }
