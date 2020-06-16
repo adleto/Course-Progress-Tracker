@@ -48,7 +48,7 @@
             this.labelNaslov.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelNaslov.Location = new System.Drawing.Point(261, 9);
             this.labelNaslov.Name = "labelNaslov";
-            this.labelNaslov.Size = new System.Drawing.Size(389, 80);
+            this.labelNaslov.Size = new System.Drawing.Size(466, 80);
             this.labelNaslov.TabIndex = 0;
             this.labelNaslov.Text = "Ispit iz kursa: Linear Algebra";
             // 
@@ -66,8 +66,9 @@
             this.gridPolaznici.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridPolaznici.Location = new System.Drawing.Point(6, 19);
             this.gridPolaznici.Name = "gridPolaznici";
-            this.gridPolaznici.Size = new System.Drawing.Size(766, 430);
+            this.gridPolaznici.Size = new System.Drawing.Size(744, 430);
             this.gridPolaznici.TabIndex = 2;
+            this.gridPolaznici.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridPolaznici_CellValidating);
             // 
             // btnPostavke
             // 

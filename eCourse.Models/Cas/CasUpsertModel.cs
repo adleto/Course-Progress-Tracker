@@ -11,7 +11,6 @@ namespace eCourse.Models.Cas
         public DateTime DatumVrijemeOdrzavanja { get; set; }
         [Required]
         public string Lokacija { get; set; }
-        [Required]
         public string Opis { get; set; }
         [Required]
         public bool Odrzan { get; set; }

@@ -36,7 +36,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
         {
             try
             {
-                var result = await _casService.GetById<CasModel>(casId);
+                var result = await _casService.Get<CasModel>(new { casId = this.casId });
                 dateVrijeme.Value = result.DatumVrijemeOdrzavanja;
                 txtLokacija.Text = result.Lokacija;
                 txtOpis.Text = result.Opis;

@@ -38,6 +38,18 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
+        [HttpGet]
+        public async Task<ActionResult> GetCas([FromQuery] int casId)
+        {
+            try
+            {
+                return Ok(_casService.Get(casId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
         [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
         [HttpPost]
         public async Task<ActionResult> InsertCas([FromBody] CasUpsertModel model)

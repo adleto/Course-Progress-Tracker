@@ -149,8 +149,9 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
                 DataGridViewTextBoxColumn numberCell = new DataGridViewTextBoxColumn()
                 {
                     Name = "Number",
-                    HeaderText = "",
-                    DisplayIndex = 0
+                    HeaderText = "#",
+                    DisplayIndex = 0,
+                    Width = 20
                 };
                 gridCasovi.Columns.Add(numberCell);
             }
@@ -162,7 +163,8 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
                     Name = "Akcija",
                     HeaderText = "Akcija",
                     Text = "Označi kao održan",
-                    UseColumnTextForButtonValue = true
+                    UseColumnTextForButtonValue = true,
+                    Width = 150,
                 };
                 gridCasovi.CellClick += gridCasovi_OdrzanButton_CellClick;
                 gridCasovi.Columns.Add(buttonColumn);
@@ -171,16 +173,17 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
 
             foreach (DataGridViewRow row in gridCasovi.Rows)
             {
-                row.Cells[gridCasovi.Columns["Number"].Index].Value = gridCasovi.Rows.Count - row.Index - 1;
-
+                row.Cells[gridCasovi.Columns["Number"].Index].Value = gridCasovi.Rows.Count - row.Index;
                 MyDataGridViewButtonCell buttonCell = (MyDataGridViewButtonCell)row.Cells[gridCasovi.Columns["Akcija"].Index];
                 bool odrzan = bool.Parse((row.Cells[gridCasovi.Columns[nameof(CasModel.Odrzan)].Index].Value).ToString());
                 if (odrzan)
                 {
+                    gridCasovi.Rows[row.Index].Cells[gridCasovi.Columns["Number"].Index].Style.BackColor = Color.Green;
                     buttonCell.Enabled = false;
                 }
                 else
                 {
+                    gridCasovi.Rows[row.Index].Cells[gridCasovi.Columns["Number"].Index].Style.BackColor = Color.Red;
                     buttonCell.Enabled = true;
                 }
             }
@@ -190,7 +193,8 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
         {
             try 
             {
-                if (e.ColumnIndex == gridCasovi.Columns["Akcija"].Index)
+                bool vecOdrzan = bool.Parse(gridCasovi.Rows[e.RowIndex].Cells[gridCasovi.Columns[nameof(CasModel.Odrzan)].Index].Value.ToString());
+                if (e.ColumnIndex == gridCasovi.Columns["Akcija"].Index && !vecOdrzan)
                 {
                     var selectedCasRow = gridCasovi.Rows[e.RowIndex];
                     DateTime dateOdrzavanja = (DateTime)selectedCasRow.Cells[gridCasovi.Columns[nameof(CasModel.DatumVrijemeOdrzavanja)].Index].Value;

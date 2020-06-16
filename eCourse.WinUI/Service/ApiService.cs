@@ -54,7 +54,8 @@ namespace eCourse.WinUI.Service
             }
             catch (FlurlHttpException ex)
             {
-                if(ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized) {
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized || ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
+                {
                     throw new ApiException(ex.Message, ex.Call.HttpStatus);
                 }
                 else {
@@ -79,7 +80,7 @@ namespace eCourse.WinUI.Service
             }
             catch (FlurlHttpException ex)
             {
-                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized || ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
                 {
                     throw new ApiException(ex.Message, ex.Call.HttpStatus);
                 }
@@ -98,7 +99,7 @@ namespace eCourse.WinUI.Service
             }
             catch (FlurlHttpException ex)
             {
-                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized || ex.Call.HttpStatus == System.Net.HttpStatusCode.Forbidden)
                 {
                     throw new ApiException(ex.Message, ex.Call.HttpStatus);
                 }

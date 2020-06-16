@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label1.Text" xml:space="preserve">
-    <value>Promijenu stanja prisustva vršite klikom na ćeliju koja sadrži trenutno stanje.
-Promijenu bodova vršite odabirom ćelije u koloni sa naslovom bodovi, unosom bodovnog stanja u procentima.
-Sve promijene se evidentiraju klikom na tipku "Spremi"
+    <value>Promjenu stanja prisustva vršite klikom na ćeliju koja sadrži trenutno stanje.
+Promijenu bodova vršite odabirom ćelije u koloni sa naslovom bodovi, a zatim unosom bodovnog stanja u procentima.
+Sve promjene se evidentiraju klikom na tipku "Spremi"
 </value>
   </data>
   <metadata name="errorProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

@@ -1,7 +1,9 @@
 ﻿using eCourse.Models.Cas;
 using eCourse.Models.Ispit;
+using eCourse.Models.IspitKlijent;
 using eCourse.Models.Kurs;
 using eCourse.WinUI.Service;
+using Flurl.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +21,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
         readonly int instancaId;
         private IspitProsireniModel model;
         private readonly ApiService _ispitService = new ApiService("Ispit");
+        private readonly ApiService _ispitKlijentService = new ApiService("IspitKlijent/UpdateKlijentScores");
         public frmIspitView(int instancaId)
         {
             InitializeComponent();
@@ -58,8 +61,9 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
                     DataGridViewTextBoxColumn numberCell = new DataGridViewTextBoxColumn()
                     {
                         Name = "Number",
-                        HeaderText = "",
-                        DisplayIndex = 0
+                        HeaderText = "#",
+                        DisplayIndex = 0,
+                        Width = 20
                     };
                     gridPolaznici.Columns.Add(numberCell);
                 }
@@ -70,11 +74,9 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
                     {
                         HeaderText = "Bodovi (%)",
                         DisplayIndex = 3,
-                        Name = "BodoviColumn",
-                        ValueType = typeof(int)
+                        Name = "BodoviColumn"
                     };
                     gridPolaznici.Columns.Add(bodoviColumn);
-                    //gridPolaznici.Validating += GridPolaznici_CellValidating;
                 }
 
                 foreach (DataGridViewRow row in gridPolaznici.Rows)
@@ -95,55 +97,51 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
             }
         }
 
-        //private void GridPolaznici_CellValidating(object sender, CancelEventArgs e)
-        //{
-        //    if (e.ColumnIndex == gridPolaznici.Columns[nameof(IspitKlijentModel.Bodovi)].Index)
-        //    {
-        //        var value = e.FormattedValue.ToString();
-        //        var parsed = !decimal.TryParse(value, out decimal resultBodovi);
-        //        if (!string.IsNullOrEmpty(value) && !parsed)
-        //        {
-        //            errorProvider1.SetError(gridPolaznici, "Nepravilan unos u ćeliji sa bodovima.");
-        //            e.Cancel = true;
-        //        }
-        //        else if (!string.IsNullOrEmpty(value) && (resultBodovi < 0 || resultBodovi > 100))
-        //        {
-        //            errorProvider1.SetError(gridPolaznici, "Bodovi u postotcima se kreću od minimalno 0 do maksimalno 100.");
-        //            e.Cancel = true;
-        //        }
-        //        else
-        //        {
-        //            errorProvider1.SetError(gridPolaznici, null);
-        //        }
-        //    }
-        //}
-
-        //private void GridPolaznici_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        //{
-        //    if(e.ColumnIndex == gridPolaznici.Columns[nameof(IspitKlijentModel.Bodovi)].Index)
-        //    {
-        //        var value = e.FormattedValue.ToString();
-        //        var parsed = !decimal.TryParse(value, out decimal resultBodovi);
-        //        if (!string.IsNullOrEmpty(value) && !parsed)
-        //        {
-        //            errorProvider1.SetError(gridPolaznici, "Nepravilan unos u ćeliji sa bodovima.");
-        //            e.Cancel = true;
-        //        }
-        //        else if(!string.IsNullOrEmpty(value) && (resultBodovi <0 || resultBodovi > 100))
-        //        {
-        //            errorProvider1.SetError(gridPolaznici, "Bodovi u postotcima se kreću od minimalno 0 do maksimalno 100.");
-        //            e.Cancel = true;
-        //        }
-        //        else
-        //        {
-        //            errorProvider1.SetError(gridPolaznici, null);
-        //        }
-        //    }
-        //}
-
-        private void btnSpremi_Click(object sender, EventArgs e)
+        private async void btnSpremi_Click(object sender, EventArgs e)
         {
-            //api patch request sa sviom datom, treba novi model class
+            if (ValidateChildren())
+            {
+                try
+                {
+                    var postModel = new KlijentScoresModel
+                    {
+                        IspitId = this.model.Id,
+                        KlijentPrisustvoScoreList = FillKlijentScoresList()
+                    };
+                    var result = await _ispitKlijentService.Insert<KlijentScoresModel>(postModel);
+                    if (result != null)
+                    {
+                        MessageBox.Show("Operacija uspjepna.");
+                        await LoadIspit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private List<KlijentIspitScore> FillKlijentScoresList()
+        {
+            var list = new List<KlijentIspitScore>();
+            foreach (DataGridViewRow row in gridPolaznici.Rows)
+            {
+                int id = int.Parse(row.Cells[gridPolaznici.Columns[nameof(IspitKlijentModel.Id)].Index].Value.ToString());
+                bool prisustvo = bool.Parse(row.Cells[gridPolaznici.Columns[nameof(IspitKlijentModel.Prisustvovao)].Index].Value.ToString());
+                decimal? bodovi = null;
+                var bodoviField = row.Cells[gridPolaznici.Columns["BodoviColumn"].Index].Value;
+                if (bodoviField != null && !string.IsNullOrEmpty(bodoviField.ToString()))
+                {
+                    bodovi = decimal.Parse(bodoviField.ToString());
+                }
+                list.Add(new KlijentIspitScore { 
+                    Bodovi = bodovi,
+                    Id = id,
+                    Prisustvo = prisustvo
+                });
+            }
+            return list;
         }
 
         private async void btnPostavke_Click(object sender, EventArgs e)
@@ -153,6 +151,39 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
             if(dialog == DialogResult.OK)
             {
                 await LoadIspit();
+            }
+        }
+
+        private void gridPolaznici_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (gridPolaznici.Columns["BodoviColumn"] != null && e.ColumnIndex == gridPolaznici.Columns["BodoviColumn"].Index)
+            {
+                var value = e.FormattedValue.ToString();
+                var parsed = decimal.TryParse(value, out decimal resultBodovi);
+                bool prisustvo = bool.Parse(gridPolaznici.Rows[e.RowIndex].Cells[gridPolaznici.Columns[nameof(IspitKlijentModel.Prisustvovao)].Index].Value.ToString());
+                if (!string.IsNullOrEmpty(value) && !parsed)
+                {
+                    gridPolaznici.Rows[e.RowIndex].ErrorText = "Nepravilan unos.";
+                    errorProvider1.SetError(gridPolaznici, "Nepravilan unos u ćeliji sa bodovima.");
+                    e.Cancel = true;
+                }
+                else if (!string.IsNullOrEmpty(value) && (resultBodovi < 0 || resultBodovi > 100))
+                {
+                    gridPolaznici.Rows[e.RowIndex].ErrorText = "Bodovi se kreću od 0 do 100.";
+                    errorProvider1.SetError(gridPolaznici, "Bodovi u postotcima se kreću od minimalno 0 do maksimalno 100.");
+                    e.Cancel = true;
+                }
+                else if (!string.IsNullOrEmpty(value) && !prisustvo)
+                {
+                    gridPolaznici.Rows[e.RowIndex].ErrorText = "Polje sa bodovima može biti popunjeno samo ako je klijent označen kao prisutan na ispitu.";
+                    errorProvider1.SetError(gridPolaznici, "Klijent nije prisutan a ima unesene bodove.");
+                    e.Cancel = true;
+                }
+                else
+                {
+                    errorProvider1.SetError(gridPolaznici, null);
+                    gridPolaznici.Rows[e.RowIndex].ErrorText = null;
+                }
             }
         }
     }
