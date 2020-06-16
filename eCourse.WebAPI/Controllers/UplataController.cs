@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using eCourse.Models.Helpers;
 using eCourse.Models.Uplata;
 using eCourse.Services.Interface;
+using eCourse.WebAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace eCourse.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
+    [Authorize]
     public class UplataController : ControllerBase
     {
         private readonly IUplata _uplataService;
@@ -21,6 +22,20 @@ namespace eCourse.WebAPI.Controllers
         {
             _uplataService = uplataService;
         }
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> GetReport([FromBody] UplataFilterModel model)
+        {
+            try
+            {
+                return Ok(await _uplataService.GetReport(UserResolver.GetUserRoles(HttpContext.User), UserResolver.GetUserId(HttpContext.User) ,model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
         [HttpGet]
         public async Task<ActionResult> Get([FromQuery] int? id = null)
         {
@@ -33,6 +48,7 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
+        [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
         [HttpPost]
         public async Task<ActionResult> Insert([FromBody] UplataInsertModel model)
         {

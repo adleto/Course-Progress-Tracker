@@ -111,5 +111,18 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> GetReport([FromBody] KursInstancaFilter model)
+        {
+            try
+            {
+                return Ok(await _kursInstancaService.GetReport(model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
     }
 }

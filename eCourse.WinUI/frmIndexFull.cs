@@ -17,11 +17,11 @@ using System.Windows.Forms;
 
 namespace eCourse.WinUI
 {
-    public partial class frmIndexAdmin : Form
+    public partial class frmIndexFull : Form
     {
         private int childFormNumber = 0;
 
-        public frmIndexAdmin()
+        public frmIndexFull()
         {
             InitializeComponent();
         }

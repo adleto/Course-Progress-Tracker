@@ -280,5 +280,49 @@ namespace eCourse.Services.Service
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<MojaKursInstancaForReport>> GetReport(KursInstancaFilter model)
+        {
+            try
+            {
+                var query = _context.KursInstanca
+                    .Include(ki => ki.Kurs)
+                    .Include(ki => ki.Uposlenik)
+                        .ThenInclude(u => u.ApplicationUser)
+                    .AsQueryable();
+                if (model != null)
+                {
+                    if (model.DateDo != null)
+                    {
+                        var doDatum = (DateTime)model.DateDo;
+                        query = query.Where(u => u.PocetakDatum.Date <= doDatum.Date);
+                    }
+                    if (model.DateOd != null)
+                    {
+                        var odDatum = (DateTime)model.DateOd;
+                        query = query.Where(u => u.PocetakDatum.Date >= odDatum.Date);
+                    }
+                }
+                var result = await query.ToListAsync();
+                var returnModel = new List<MojaKursInstancaForReport>();
+                foreach (var r in result)
+                {
+                    var item = MapKursInstancaToMojaKursInstanca(r);
+                    var insert = _mapper.Map<MojaKursInstancaForReport>(item);
+                    insert.DatePocetak = insert.Pocetak.ToString("dd/MM/yyyy");
+                    returnModel.Add(insert);
+                }
+                returnModel = returnModel.OrderByDescending(k => k.BrojKlijenata).ToList();
+                if (model.TakeThisMany != null)
+                {
+                    returnModel = returnModel.Take((int)model.TakeThisMany).ToList();
+                }
+                return returnModel;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

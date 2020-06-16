@@ -39,7 +39,7 @@ namespace eCourse.WebAPI.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult> GetCas([FromQuery] int casId)
+        public ActionResult GetCas([FromQuery] int casId)
         {
             try
             {

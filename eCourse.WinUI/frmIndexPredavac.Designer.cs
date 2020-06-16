@@ -1,6 +1,6 @@
 ﻿namespace eCourse.WinUI
 {
-    partial class frmIndexAdmin
+    partial class frmIndexPredavac
     {
         /// <summary>
         /// Required designer variable.
@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.osobljeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pregledOsobljaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dodajUposlenikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.klijentiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pregledKlijenataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,50 +42,23 @@
             this.kurseviToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pregledKursevaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dodajKursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.izvještajiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.izvještavanjeOUplatamaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.izvještavanjeOPopularnostiKursevaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ostaloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cijenaČlanarineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mojiKurseviToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pregledMojihKursevaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dodajNovuInstancuKursaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.osobljeToolStripMenuItem,
             this.klijentiToolStripMenuItem,
             this.kurseviToolStripMenuItem,
-            this.izvještajiToolStripMenuItem,
-            this.ostaloToolStripMenuItem});
+            this.mojiKurseviToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1194, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // osobljeToolStripMenuItem
-            // 
-            this.osobljeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pregledOsobljaToolStripMenuItem,
-            this.dodajUposlenikaToolStripMenuItem});
-            this.osobljeToolStripMenuItem.Name = "osobljeToolStripMenuItem";
-            this.osobljeToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.osobljeToolStripMenuItem.Text = "Osoblje";
-            // 
-            // pregledOsobljaToolStripMenuItem
-            // 
-            this.pregledOsobljaToolStripMenuItem.Name = "pregledOsobljaToolStripMenuItem";
-            this.pregledOsobljaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pregledOsobljaToolStripMenuItem.Text = "Pregled osoblja";
-            this.pregledOsobljaToolStripMenuItem.Click += new System.EventHandler(this.pregledOsobljaToolStripMenuItem_Click);
-            // 
-            // dodajUposlenikaToolStripMenuItem
-            // 
-            this.dodajUposlenikaToolStripMenuItem.Name = "dodajUposlenikaToolStripMenuItem";
-            this.dodajUposlenikaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.dodajUposlenikaToolStripMenuItem.Text = "Dodaj uposlenika";
-            this.dodajUposlenikaToolStripMenuItem.Click += new System.EventHandler(this.dodajUposlenikaToolStripMenuItem_Click);
             // 
             // klijentiToolStripMenuItem
             // 
@@ -176,45 +146,30 @@
             this.dodajKursToolStripMenuItem.Text = "Dodaj kurs";
             this.dodajKursToolStripMenuItem.Click += new System.EventHandler(this.dodajKursToolStripMenuItem_Click);
             // 
-            // izvještajiToolStripMenuItem
+            // mojiKurseviToolStripMenuItem
             // 
-            this.izvještajiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.izvještavanjeOUplatamaToolStripMenuItem,
-            this.izvještavanjeOPopularnostiKursevaToolStripMenuItem});
-            this.izvještajiToolStripMenuItem.Name = "izvještajiToolStripMenuItem";
-            this.izvještajiToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.izvještajiToolStripMenuItem.Text = "Izvještaji";
+            this.mojiKurseviToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pregledMojihKursevaToolStripMenuItem,
+            this.dodajNovuInstancuKursaToolStripMenuItem});
+            this.mojiKurseviToolStripMenuItem.Name = "mojiKurseviToolStripMenuItem";
+            this.mojiKurseviToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.mojiKurseviToolStripMenuItem.Text = "Moji kursevi";
             // 
-            // izvještavanjeOUplatamaToolStripMenuItem
+            // pregledMojihKursevaToolStripMenuItem
             // 
-            this.izvještavanjeOUplatamaToolStripMenuItem.Name = "izvještavanjeOUplatamaToolStripMenuItem";
-            this.izvještavanjeOUplatamaToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.izvještavanjeOUplatamaToolStripMenuItem.Text = "Izvještavanje o uplatama";
-            this.izvještavanjeOUplatamaToolStripMenuItem.Click += new System.EventHandler(this.izvještavanjeOUplatamaToolStripMenuItem_Click);
+            this.pregledMojihKursevaToolStripMenuItem.Name = "pregledMojihKursevaToolStripMenuItem";
+            this.pregledMojihKursevaToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.pregledMojihKursevaToolStripMenuItem.Text = "Pregled mojih kurseva";
+            this.pregledMojihKursevaToolStripMenuItem.Click += new System.EventHandler(this.pregledMojihKursevaToolStripMenuItem_Click);
             // 
-            // izvještavanjeOPopularnostiKursevaToolStripMenuItem
+            // dodajNovuInstancuKursaToolStripMenuItem
             // 
-            this.izvještavanjeOPopularnostiKursevaToolStripMenuItem.Name = "izvještavanjeOPopularnostiKursevaToolStripMenuItem";
-            this.izvještavanjeOPopularnostiKursevaToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.izvještavanjeOPopularnostiKursevaToolStripMenuItem.Text = "Izvještavanje o popularnosti kurseva";
-            this.izvještavanjeOPopularnostiKursevaToolStripMenuItem.Click += new System.EventHandler(this.izvještavanjeOPopularnostiKursevaToolStripMenuItem_Click);
+            this.dodajNovuInstancuKursaToolStripMenuItem.Name = "dodajNovuInstancuKursaToolStripMenuItem";
+            this.dodajNovuInstancuKursaToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.dodajNovuInstancuKursaToolStripMenuItem.Text = "Dodaj novu instancu kursa";
+            this.dodajNovuInstancuKursaToolStripMenuItem.Click += new System.EventHandler(this.dodajNovuInstancuKursaToolStripMenuItem_Click);
             // 
-            // ostaloToolStripMenuItem
-            // 
-            this.ostaloToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cijenaČlanarineToolStripMenuItem});
-            this.ostaloToolStripMenuItem.Name = "ostaloToolStripMenuItem";
-            this.ostaloToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.ostaloToolStripMenuItem.Text = "Ostalo";
-            // 
-            // cijenaČlanarineToolStripMenuItem
-            // 
-            this.cijenaČlanarineToolStripMenuItem.Name = "cijenaČlanarineToolStripMenuItem";
-            this.cijenaČlanarineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.cijenaČlanarineToolStripMenuItem.Text = "Cijena članarine";
-            this.cijenaČlanarineToolStripMenuItem.Click += new System.EventHandler(this.cijenaČlanarineToolStripMenuItem_Click);
-            // 
-            // frmIndexAdmin
+            // frmIndexPredavac
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -222,7 +177,7 @@
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "frmIndexAdmin";
+            this.Name = "frmIndexPredavac";
             this.Text = "Course Progress Tracker - Modul za osoblje";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
@@ -237,9 +192,6 @@
         private System.Windows.Forms.ToolStripMenuItem klijentiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dodajUplatuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem osobljeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pregledOsobljaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dodajUposlenikaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pregledKlijenataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem kurseviToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tagoviToolStripMenuItem;
@@ -248,11 +200,9 @@
         private System.Windows.Forms.ToolStripMenuItem kurseviToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem pregledKursevaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dodajKursToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ostaloToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cijenaČlanarineToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem izvještajiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem izvještavanjeOUplatamaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem izvještavanjeOPopularnostiKursevaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mojiKurseviToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pregledMojihKursevaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dodajNovuInstancuKursaToolStripMenuItem;
     }
 }
 

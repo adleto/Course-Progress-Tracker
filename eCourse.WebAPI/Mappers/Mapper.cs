@@ -32,6 +32,7 @@ namespace eCourse.WebAPI.Mappers
             CreateMap<Ispit, IspitModel>();
             CreateMap<IspitUpsertModel, Ispit>();
             CreateMap<Ispit, IspitProsireniModel>();
+            CreateMap<MojaKursInstanca, MojaKursInstancaForReport>();
         }
     }
 }

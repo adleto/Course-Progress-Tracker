@@ -22,17 +22,21 @@ namespace eCourse.WinUI
             var fLogin = new frmLogin();
             if (fLogin.ShowDialog() == DialogResult.OK)
             {
-                if (Roles.Contains("AdministrativnoOsoblje"))
+                if(Roles.Contains("AdministrativnoOsoblje") && Roles.Contains("Predavač"))
+                {
+                    Application.Run(new frmIndexFull());
+                }
+                else if (Roles.Contains("AdministrativnoOsoblje"))
                 {
                     Application.Run(new frmIndexAdmin());
                 }
                 else if (Roles.Contains("Predavač"))
                 {
-                    Application.Run(new frmIndexAdmin());
+                    Application.Run(new frmIndexPredavac());
                 }
                 else
                 {
-                    MessageBox.Show("Please use client application.");
+                    MessageBox.Show("Ova aplikacija je namijenjena samo osoblju. Molimo koristite aplikaciju za klijente.");
                     Application.Exit();
                 }
             }

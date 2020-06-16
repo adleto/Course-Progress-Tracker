@@ -123,6 +123,47 @@ namespace eCourse.Services.Service
                 throw new Exception("Client with that id does not exist.");
             }
         }
+
+        public async Task<List<UplataModel>> GetReport(List<string> listsRoles, int userId, UplataFilterModel model)
+        {
+            try
+            {
+                if(listsRoles.Contains("Klijent") && (model == null || model.KlijentId == null || model.KlijentId != userId))
+                {
+                    throw new Exception("Nemate pristup ovim podacima.");
+                }
+                var query = _context.Uplata
+                    .Include(u => u.TipUplate)
+                    .Include(u => u.Klijent.ApplicationUser)
+                    .AsQueryable();
+                if (model != null)
+                {
+                    if (model.Do != null)
+                    {
+                        var doDatum = (DateTime)model.Do;
+                        query = query.Where(u => u.DatumUplate.Date <= doDatum.Date);
+                    }
+                    if (model.Od != null)
+                    {
+                        var odDatum = (DateTime)model.Od;
+                        query = query.Where(u => u.DatumUplate.Date >= odDatum.Date);
+                    }
+                    if(model.KlijentId != null)
+                    {
+                        query = query.Where(u => u.KlijentId == model.KlijentId);
+                    }
+                }
+                var result = await query.ToListAsync();
+                var returnModel = new List<UplataModel>();
+                result.ForEach(r => returnModel.Add(MapUplataToUplataModel(r)));
+                return returnModel;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         private UplataModel MapUplataToUplataModel(Uplata uplata) 
         {
             var returnModel = new UplataModel

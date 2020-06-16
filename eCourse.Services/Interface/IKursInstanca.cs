@@ -15,5 +15,6 @@ namespace eCourse.Services.Interface
         MojaKursInstancaProsireniModel GetInstanca(int id);
         Task<KursInstancaSimpleModel> UpdateInstanca(int uposlenikId, int id, KursInstancaUpdateModel model);
         Task<KursInstancaSimpleModel> ZavrsiInstancu(int uposlenikId, int id, bool postaviZaKlijenteKaoPolozili = true);
+        Task<List<MojaKursInstancaForReport>> GetReport(KursInstancaFilter model);
     }
 }

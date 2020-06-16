@@ -11,5 +11,6 @@ namespace eCourse.Services.Interface
     {
         Task<List<UplataModel>> Get(int? klijentId = null);
         Task<UplataSimpleModel> Add(UplataInsertModel model);
+        Task<List<UplataModel>> GetReport(List<string> listsRoles, int userId, UplataFilterModel model);
     }
 }

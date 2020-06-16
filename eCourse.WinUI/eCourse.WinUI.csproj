@@ -42,6 +42,24 @@
     <Reference Include="MaterialSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialSkin.Updated.0.2.2\lib\MaterialSkin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -62,6 +80,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmIndexFull.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIndexFull.Designer.cs">
+      <DependentUpon>frmIndexFull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmIndexPredavac.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIndexPredavac.Designer.cs">
+      <DependentUpon>frmIndexPredavac.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIndexAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +106,18 @@
     </Compile>
     <Compile Include="Helpers\MyDataGridViewButtonCell.cs" />
     <Compile Include="Helpers\MyDataGridViewButtonColumn.cs" />
+    <Compile Include="Izvjestaji\frmKursRpt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Izvjestaji\frmKursRpt.Designer.cs">
+      <DependentUpon>frmKursRpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Izvjestaji\frmUplateRpt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Izvjestaji\frmUplateRpt.Designer.cs">
+      <DependentUpon>frmUplateRpt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Klijenti\frmKlijenti.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,12 +223,27 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ApiService.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <EmbeddedResource Include="frmIndexFull.resx">
+      <DependentUpon>frmIndexFull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmIndexPredavac.resx">
+      <DependentUpon>frmIndexPredavac.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmIndexAdmin.resx">
       <DependentUpon>frmIndexAdmin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Izvjestaji\frmKursRpt.resx">
+      <DependentUpon>frmKursRpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Izvjestaji\frmUplateRpt.resx">
+      <DependentUpon>frmUplateRpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Izvjestaji\KursReport.rdlc" />
+    <EmbeddedResource Include="Izvjestaji\UplateReport.rdlc" />
     <EmbeddedResource Include="Klijenti\frmKlijenti.resx">
       <DependentUpon>frmKlijenti.cs</DependentUpon>
     </EmbeddedResource>
@@ -248,6 +305,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\eCourse.Models.KursInstanca.MojaKursInstanca.datasource" />
+    <None Include="Properties\DataSources\eCourse.Models.KursInstanca.MojaKursInstancaForReport.datasource" />
+    <None Include="Properties\DataSources\eCourse.Models.Uplata.UplataModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -267,8 +327,21 @@
       <Name>eCourse.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Izvjestaji\" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
