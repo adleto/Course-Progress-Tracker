@@ -133,11 +133,11 @@ namespace eCourse.Services.Service
                         Id = user.Id,
                         Username = user.Username
                     };
-                    if(rolesModel.Where(r => r.Naziv == "Klijent").Any())
+                    if (rolesModel.Where(r => r.Naziv == "Klijent").Any())
                     {
                         model.KlijentId = _context.Klijent.Where(k => k.ApplicationUserId == model.Id).First().Id;
                     }
-                    else if(rolesModel.Where(r => r.Naziv == "AdministrativnoOsoblje" || r.Naziv == "Predavač").Any())
+                    else if (rolesModel.Where(r => r.Naziv == "AdministrativnoOsoblje" || r.Naziv == "Predavač").Any())
                     {
                         model.UposlenikId = _context.Uposlenik.Where(k => k.ApplicationUserId == model.Id).First().Id;
                     }
@@ -362,7 +362,7 @@ namespace eCourse.Services.Service
 
                 bool isAdmin = roles.Contains("AdministrativnoOsoblje");
                 bool isPredavacOnCourse = false;
-                if(model?.KursInstancaId != null)
+                if (model?.KursInstancaId != null)
                 {
                     isPredavacOnCourse = IsPredavacOnCourse(uposlenikId, (int)model.KursInstancaId);
                 }
@@ -373,16 +373,18 @@ namespace eCourse.Services.Service
                     bool passed = false; //zbog uplate da ne ide ponovo trip na db ako sigurno ne treba
                     if (model?.KursInstancaId != null && model?.KursInstancaId != 0)
                     {
-                        if((isAdmin || isPredavacOnCourse) && IsKlijentOnCourse(r, (int) model.KursInstancaId)) {
+                        if ((isAdmin || isPredavacOnCourse) && IsKlijentOnCourse(r, (int)model.KursInstancaId))
+                        {
                             passed = true;
                         }
                     }
                     else
                     {
-                        if (isAdmin) {
+                        if (isAdmin)
+                        {
                             passed = true;
                         }
-                        else if(IsKlijentOnAnyCourseFromUposlenik(r, uposlenikId))
+                        else if (IsKlijentOnAnyCourseFromUposlenik(r, uposlenikId))
                         {
                             passed = true;
                         }
@@ -435,9 +437,9 @@ namespace eCourse.Services.Service
         }
         private bool IsKlijentOnCourse(Klijent klijent, int kursInstancaId)
         {
-            foreach(var k in klijent.KurseviKlijenta)
+            foreach (var k in klijent.KurseviKlijenta)
             {
-                if(k.KursInstancaId == kursInstancaId)
+                if (k.KursInstancaId == kursInstancaId)
                 {
                     return true;
                 }
@@ -446,9 +448,9 @@ namespace eCourse.Services.Service
         }
         private bool IsKlijentOnAnyCourseFromUposlenik(Klijent klijent, int uposlenikId)
         {
-            foreach(var k in klijent.KurseviKlijenta)
+            foreach (var k in klijent.KurseviKlijenta)
             {
-                if(k.KursInstanca.UposlenikId == uposlenikId)
+                if (k.KursInstanca.UposlenikId == uposlenikId)
                 {
                     return true;
                 }
@@ -481,6 +483,76 @@ namespace eCourse.Services.Service
                 ImeIPrezime = k.ApplicationUser.Ime + " " + k.ApplicationUser.Prezime,
                 KlijentId = k.Id
             };
+        }
+
+        public async Task<KlijentModel> AddKlijent(ApplicationUserInsertModel model)
+        {
+            try
+            {
+                if (model.Password != model.PasswordConfirm)
+                {
+                    throw new Exception("Lozinke nisu iste.");
+                }
+                if (!(IsUsernameUnique(model.Username)))
+                {
+                    throw new Exception("Username je već zauzet.");
+                }
+                var user = new ApplicationUser
+                {
+                    Email = model.Email,
+                    PasswordSalt = UserAuthHelpers.GenerateSalt(),
+                    Username = model.Username,
+                    DatumRodjenja = model.DatumRodjenja,
+                    Ime = model.Ime,
+                    JMBG = model.JMBG,
+                    OpcinaId = model.OpcinaId,
+                    Prezime = model.Prezime,
+                    Spol = model.Spol,
+                    DatumRegistracije = DateTime.Now,
+                    Active = true
+                };
+                if(model.Slika!=null && model.Slika.Length > 0)
+                {
+                    user.Slika = model.Slika;
+                }
+                user.PasswordHash = UserAuthHelpers.GenerateHash(user.PasswordSalt, model.Password);
+                _context.ApplicationUser.Add(user);
+
+                var roleKlijent = _context.Role.Where(r => r.Naziv == "Klijent").First();
+                _context.ApplicationUserRole.Add(new ApplicationUserRole
+                {
+                    ApplicationUser = user,
+                    Role = roleKlijent
+                });
+                var klijent = new Klijent {
+                    ApplicationUser = user
+                };
+                _context.Klijent.Add(klijent);
+                await _context.SaveChangesAsync();
+                var created = new KlijentModel
+                {
+                    DatumRodjenja = user.DatumRodjenja,
+                    Email = user.Email,
+                    Id = user.Id,
+                    Ime = user.Ime,
+                    JMBG = user.JMBG,
+                    OpcinaId = user.OpcinaId,
+                    Prezime = user.Prezime,
+                    Spol = user.Spol,
+                    Slika = user.Slika,
+                    Username = user.Username,
+                    Role = new List<RoleModel> { new RoleModel { Id = roleKlijent.Id, Naziv = roleKlijent.Naziv} },
+                    KlijentId = klijent.Id
+                };
+                created.OpcinaNaziv = _context.Opcina
+                    .Find(created.OpcinaId)
+                    .Naziv;
+                return created;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

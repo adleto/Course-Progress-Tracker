@@ -9,7 +9,7 @@ namespace eCourse.Services.Interface
 {
     public interface IUplata
     {
-        Task<List<UplataModel>> Get(int? klijentId = null);
+        Task<List<UplataModel>> Get(int? klijentId = null, DateTime? datumOd = null, DateTime? datumDo = null);
         Task<UplataSimpleModel> Add(UplataInsertModel model);
         Task<List<UplataModel>> GetReport(List<string> listsRoles, int userId, UplataFilterModel model);
     }

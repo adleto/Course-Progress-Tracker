@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:eCourse.Mobile.ViewModels"
+             mc:Ignorable="d"
+             x:Class="eCourse.Mobile.Views.UplatePage">
+    <ContentPage.BindingContext>
+        <vm:UplateViewModel></vm:UplateViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="3">
+            <Label Text="Moje uplate"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" 
+                FontSize="Title"  />
+            <Label Text="Početni datum" FontSize="13" HorizontalOptions="CenterAndExpand" ></Label>
+            <DatePicker FontSize="13" Date="{Binding DatumOd}"></DatePicker>
+            <Label Text="Krajnji datum" FontSize="13" HorizontalOptions="CenterAndExpand" ></Label>
+            <DatePicker FontSize="13" Date="{Binding DatumDo}"></DatePicker>
+            <Button Text="Filtriraj" FontSize="13" HeightRequest="40" Command="{Binding FiltrirajUplateCommand}"></Button>
+
+            <ListView x:Name="listView" ItemsSource="{Binding UplateList}" Margin="0, 5, 0, 0">
+                <ListView.Header>
+                    <Grid Padding="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Text="Iznos" XAlign="Center" YAlign="Center" TextColor="Black" FontAttributes="Bold"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="Datum" XAlign="Center" YAlign="Center" TextColor="Black" FontAttributes="Bold"/>
+                        <Label Grid.Row="0" Grid.Column="2" Text="Tip uplate" XAlign="Center" YAlign="Center" TextColor="Black" FontAttributes="Bold"/>
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Iznos, StringFormat='{0}KM'}" XAlign="Center" YAlign="Center" TextColor="Black" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding DatumUplate, StringFormat='{0:dd/MM/yyyy}'}" XAlign="Center" YAlign="Center" TextColor="Black" />
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding TipUplate}" XAlign="Center" YAlign="Center" TextColor="Black" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

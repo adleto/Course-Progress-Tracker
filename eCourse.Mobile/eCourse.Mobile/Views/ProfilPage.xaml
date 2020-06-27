@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:eCourse.Mobile.ViewModels" xmlns:converters="clr-namespace:eCourse.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="eCourse.Mobile.Views.ProfilPage">
+    <ContentPage.BindingContext>
+        <vm:ProfilViewModel></vm:ProfilViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="imgConv"></converters:ImageConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="5">
+            <Label Text="Moj profil"
+                   FontSize="Title"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding PodaciOClanarini}"></Label>
+            <Label Text="{Binding ClanarinaAktivnaDo, StringFormat='Članarina aktivna do: {0}'}" IsVisible="{Binding ClanarinaAktivna}"></Label>
+            <Label Text="Email"
+                   FontSize="Large"
+                HorizontalOptions="Start" />
+            <Entry x:Name="Email" Text="{Binding Email}"></Entry>
+            <Label Text="Email mora biti ispravnog formata."
+                   TextColor="Red"
+                   FontSize="13"
+                   IsVisible="{Binding ErrorEmail_IsVisible}"
+                HorizontalOptions="Start" />
+            <Label Text="Općina prebivališta"
+                   FontSize="Large"
+                HorizontalOptions="Start" />
+            <Picker x:Name="Opcina" ItemsSource="{Binding OpcinaList}" ItemDisplayBinding="{Binding Naziv}" SelectedItem="{Binding Opcina}"></Picker>
+            <Label Text="Nova lozinka"
+                   FontSize="Large"
+                HorizontalOptions="Start" />
+            <Entry x:Name="Lozinka" Text="{Binding Lozinka}"></Entry>
+            <Label Text="Lozinka mora sadržavati više od 4 karaktera."
+                   TextColor="Red"
+                   FontSize="13"
+                   IsVisible="{Binding ErrorLozinka_IsVisible}"
+                HorizontalOptions="Start" />
+            <Label Text="Nova lozinka (Potvrda)"
+                   FontSize="Large"
+                HorizontalOptions="Start" />
+            <Entry x:Name="LozinkaPotvrda" Text="{Binding LozinkaPotvrda}"></Entry>
+            <Label Text="Polje mora biti isto kao prethodno."
+                   TextColor="Red"
+                   FontSize="13"
+                   IsVisible="{Binding ErrorLozinkaPotvrda_IsVisible}"
+                HorizontalOptions="Start" />
+            <Label Text="Slika"
+                   FontSize="Large"
+                HorizontalOptions="Start" />
+            <Image Source="{Binding Slika, Converter={StaticResource imgConv}}"></Image>
+            <Label Text="Slika dodata" HorizontalTextAlignment="Center" IsVisible="{Binding SlikaDodataLabel}"></Label>
+            <Button Command="{Binding DodajSlikuCommand}" Text="Dodaj sliku"></Button>
+            <Button Text="Ažuriraj podatke" Command="{Binding AzurirajCommand}"></Button>
+            <Label VerticalOptions="End" FontSize="13" Text="*Nova lozinka ne mora biti unesena da bi se izvršilo ažuriranje ostalih podataka."></Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

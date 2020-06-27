@@ -34,9 +34,9 @@ namespace eCourse.WebAPI.Controllers
                     throw new Exception("Invalid model");
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                throw;
+                return default;
             }
         }
         [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
@@ -54,9 +54,9 @@ namespace eCourse.WebAPI.Controllers
                     throw new Exception("Invalid model");
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                throw;
+                return default;
             }
         }
     }

@@ -15,7 +15,7 @@ namespace eCourse.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
+    
     public class KlijentController : ControllerBase
     {
         private readonly IApplicationUser _userService;
@@ -24,7 +24,7 @@ namespace eCourse.WebAPI.Controllers
         {
             _userService = userService;
         }
-
+        [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
         [HttpGet]
         public async Task<ActionResult> Get([FromQuery] KlijentSearchRequestModel model = null)
         {
@@ -37,6 +37,7 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
+        [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
         [HttpGet]
         [Route("[action]")]
         public async Task<ActionResult> GetKlijentiSimple()

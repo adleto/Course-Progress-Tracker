@@ -76,7 +76,7 @@
             this.Controls.Add(this.labelCijena);
             this.Controls.Add(this.txtCijena);
             this.Name = "frmCijenaClanarine";
-            this.Text = "frmCijenaClanarine";
+            this.Text = "Cijena članarine";
             this.Load += new System.EventHandler(this.frmCijenaClanarine_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);

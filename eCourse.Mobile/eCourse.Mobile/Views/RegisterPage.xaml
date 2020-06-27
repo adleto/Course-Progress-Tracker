@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:eCourse.Mobile.ViewModels"
+             mc:Ignorable="d"
+             x:Class="eCourse.Mobile.Views.RegisterPage">
+    <ContentPage.BindingContext>
+        <vm:RegisterViewModel></vm:RegisterViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout VerticalOptions="Start" Padding="5">
+                <Label Text="Registracija"
+                 FontSize="Title" 
+                   HorizontalOptions="CenterAndExpand" 
+                   Margin="0,0,0,10"/>
+                <Label Text="Korisničko ime" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Entry x:Name="KorisnickoIme" Text="{Binding Username}"></Entry>
+                <Label x:Name="ErrorKorisnickoIme" IsVisible="{Binding ErrorKorisnickoIme_IsVisible}" Text="Korisničko ime mora imati najmanje 4 karaktera." TextColor="Red"></Label>
+                <Label Text="Ime" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Entry x:Name="Ime" Text="{Binding Ime}"></Entry>
+                <Label x:Name="ErrorIme" IsVisible="{Binding ErrorIme_IsVisible}" Text="Polje mora biti popunjeno." TextColor="Red"></Label>
+                <Label Text="Prezime" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Entry x:Name="Prezime" Text="{Binding Prezime}"></Entry>
+                <Label x:Name="ErrorPrezime" IsVisible="{Binding ErrorPrezime_IsVisible}" Text="Polje mora biti popunjeno." TextColor="Red"></Label>
+                <Label Text="Email" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Entry x:Name="Email" Text="{Binding Email}"></Entry>
+                <Label x:Name="ErrorEmail" IsVisible="{Binding ErrorEmail_IsVisible}" Text="Polje mora biti ispravno popunjeno." TextColor="Red"></Label>
+                <Label Text="Datum Rođenja" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <DatePicker x:Name="DatumRodjenja" Date="{Binding DatumRodjenja}" HorizontalOptions="StartAndExpand"></DatePicker>
+                <Label x:Name="ErrorDatum" IsVisible="{Binding ErrorDatum_IsVisible}" Text="Datum ne može biti noviji ili jednak današnjem." TextColor="Red"></Label>
+                <Label Text="Općina prebivališta" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Picker x:Name="Opcina" ItemsSource="{Binding OpcinaList}" ItemDisplayBinding="{Binding Naziv}" SelectedItem="{Binding Opcina}"></Picker>
+                <Label Text="JMBG" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Entry x:Name="JMBG" Text="{Binding JMBG}"></Entry>
+                <Label x:Name="ErrorJMBG" IsVisible="{Binding ErrorJMBG_IsVisible}" Text="Polje mora biti ispravno popunjeno (13 cifara)." TextColor="Red"></Label>
+                <Label Text="Spol" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Picker x:Name="Spol" ItemsSource="{Binding SpolList}" SelectedItem="{Binding Spol}"></Picker>
+                <Label Text="Lozinka" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Entry x:Name="Lozinka" Text="{Binding Lozinka}" IsPassword="True"></Entry>
+                <Label x:Name="ErrorLozinka" IsVisible="{Binding ErrorLozinka_IsVisible}" Text="Polje mora sadržavati najmanje 4 karaktera." TextColor="Red"></Label>
+                <Label Text="Lozinka (potvrda)" FontSize="15" HorizontalOptions="FillAndExpand" />
+                <Entry x:Name="LozinkaPotvrda" Text="{Binding LozinkaPotvrda}" IsPassword="True"></Entry>
+                <Label x:Name="ErrorLozinkaPotvrda" IsVisible="{Binding ErrorLozinkaPotvrda_IsVisible}" Text="Polje mora biti isto kao Lozinka." TextColor="Red"></Label>
+                <Button Command="{Binding RegisterCommand}"  HorizontalOptions="FillAndExpand" Text="Registruj se"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

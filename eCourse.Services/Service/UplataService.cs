@@ -102,7 +102,7 @@ namespace eCourse.Services.Service
             }
         }
 
-        public async Task<List<UplataModel>> Get(int? klijentId = null)
+        public async Task<List<UplataModel>> Get(int? klijentId = null, DateTime? datumOd = null, DateTime? datumDo = null)
         {
             try {
                 var query = _context.Uplata
@@ -113,9 +113,20 @@ namespace eCourse.Services.Service
                 {
                     query = query.Where(u => u.KlijentId == klijentId);
                 }
+                if(datumOd != null)
+                {
+                    var d = (DateTime)datumOd;
+                    query = query.Where(u => u.DatumUplate.Date >= d.Date);
+                }
+                if (datumDo != null)
+                {
+                    var d = (DateTime)datumDo;
+                    query = query.Where(u => u.DatumUplate.Date <= d.Date);
+                }
                 var result = await query.ToListAsync();
                 var returnModel = new List<UplataModel>();
                 result.ForEach(r => returnModel.Add(MapUplataToUplataModel(r)));
+                result = result.OrderByDescending(u => u.DatumUplate).ToList();
                 return returnModel;
             }
             catch

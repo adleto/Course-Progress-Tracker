@@ -23,6 +23,7 @@ namespace eCourse.WebAPI.Controllers
             _uplataService = uplataService;
         }
         [HttpPost]
+        [Authorize(Roles = "AdministrativnoOsoblje, Predavač")]
         [Route("[action]")]
         public async Task<ActionResult> GetReport([FromBody] UplataFilterModel model)
         {
@@ -62,6 +63,20 @@ namespace eCourse.WebAPI.Controllers
                 {
                     return BadRequest(model);
                 }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [Authorize(Roles = "Klijent")]
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult> GetForKlijent([FromQuery] DateTime? datumOd = null, [FromQuery] DateTime? datumDo = null)
+        {
+            try
+            {
+                return Ok(await _uplataService.Get(UserResolver.GetKlijentId(HttpContext.User), datumOd, datumDo));
             }
             catch (Exception ex)
             {

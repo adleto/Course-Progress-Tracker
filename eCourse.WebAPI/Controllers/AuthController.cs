@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using eCourse.Models.ApplicationUser;
@@ -17,6 +19,13 @@ namespace eCourse.WebAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IApplicationUser _userService;
+
+        public AuthController(IApplicationUser userService)
+        {
+            _userService = userService;
+        }
+
         [Authorize]
         [HttpGet]
         public IActionResult Get()
@@ -30,6 +39,20 @@ namespace eCourse.WebAPI.Controllers
             catch
             {
                 return BadRequest();
+            }
+        }
+        [HttpPost]
+        public IActionResult Register([FromBody] ApplicationUserInsertModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest(model);
+                var returnModel = _userService.AddKlijent(model);
+                return Ok(returnModel);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
             }
         }
     }

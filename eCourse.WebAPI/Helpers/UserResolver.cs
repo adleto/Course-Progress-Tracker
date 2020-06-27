@@ -19,6 +19,11 @@ namespace eCourse.WebAPI.Helpers
             var identity = principal.Identity as ClaimsIdentity;
             return int.Parse(identity.FindFirst("UposlenikId").Value);
         }
+        public static int GetKlijentId(ClaimsPrincipal principal)
+        {
+            var identity = principal.Identity as ClaimsIdentity;
+            return int.Parse(identity.FindFirst("KlijentId").Value);
+        }
         public static List<string> GetUserRoles(ClaimsPrincipal principal)
         {
             var identity = principal.Identity as ClaimsIdentity;
