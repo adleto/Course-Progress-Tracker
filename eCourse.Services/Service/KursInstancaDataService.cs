@@ -133,6 +133,7 @@ namespace eCourse.Services.Service
             var result = await _context.KursInstanca
                 .Include(k => k.Kurs)
                 .Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date)
+                .Take(3)
                 .ToListAsync();
             var returnModel = new List<KursInstancaForKlijentListViewModel>();
             foreach(var r in result)
@@ -146,9 +147,21 @@ namespace eCourse.Services.Service
             var returnModel = new KursInstancaForKlijentListViewModel
             {
                 InstancaId = k.Id,
-                Naziv = k.Kurs.Naziv
-            };
+                };
+            if (k.PocetakDatum.Date > DateTime.Now.Date)
+            {
+                returnModel.Naziv = k.Kurs.Naziv + " (Počinje: " + k.PocetakDatum.ToString("dd/MM/yyyy") + ")";
+            }
+            else
+            {
+                returnModel.Naziv = k.Kurs.Naziv + " (Počeo: " + k.PocetakDatum.ToString("dd/MM/yyyy") + ")";
+            }
             return returnModel;
+        }
+
+        public Task<KursDataModel> GetKursData(int instancaId, int klijentId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

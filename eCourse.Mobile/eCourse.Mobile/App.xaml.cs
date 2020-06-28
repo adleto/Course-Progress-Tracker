@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using eCourse.Mobile.Views;
+using eCourse.Mobile.Service;
 
 namespace eCourse.Mobile
 {
@@ -13,8 +14,10 @@ namespace eCourse.Mobile
             InitializeComponent();
 
             //DependencyService.Register<MockDataStore>();
-            //MainPage = new MainPage();
-            MainPage = new LoginPage();
+            ApiService.Username = "mobile2";
+            ApiService.Password = "mobile";
+            MainPage = new MainPage();
+            //MainPage = new LoginPage();
         }
 
         protected override void OnStart()

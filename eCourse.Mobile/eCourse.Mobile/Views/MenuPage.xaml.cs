@@ -20,6 +20,8 @@ namespace eCourse.Mobile.Views
 
             menuItems = new List<HomeMenuItem>
             {
+                new HomeMenuItem {Id = MenuItemType.Katalog, Title="Katalog" },
+                new HomeMenuItem {Id = MenuItemType.MojiKursevi, Title="Moji kursevi" },
                 new HomeMenuItem {Id = MenuItemType.Uplate, Title="Moje uplate" },
                 new HomeMenuItem {Id = MenuItemType.Profil, Title="Profil" },
                 new HomeMenuItem {Id = MenuItemType.Logout, Title="Logout" }

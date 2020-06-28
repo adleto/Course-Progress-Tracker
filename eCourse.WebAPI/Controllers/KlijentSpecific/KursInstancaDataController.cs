@@ -37,12 +37,25 @@ namespace eCourse.WebAPI.Controllers.KlijentSpecific
             }
         }
         [HttpGet]
-        [Route("[action")]
+        [Route("[action]")]
         public async Task<ActionResult> GetRecommended()
         {
             try
             {
                 return Ok(await _kursInstancaDataService.GetRecommendedInstance(UserResolver.GetKlijentId(HttpContext.User)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult> GetKursData([FromQuery] int instancaId)
+        {
+            try
+            {
+                return Ok(await _kursInstancaDataService.GetKursData(instancaId, UserResolver.GetKlijentId(HttpContext.User)));
             }
             catch (Exception ex)
             {

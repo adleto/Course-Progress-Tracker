@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:eCourse.Mobile.ViewModels"
+             mc:Ignorable="d"
+             x:Class="eCourse.Mobile.Views.MojiKurseviPage">
+    <ContentPage.BindingContext>
+        <vm:MojiKurseviViewModel></vm:MojiKurseviViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="4">
+
+                <Label FontSize="Title" Text="Moji kursevi" Margin="25, 0, 0, 0"></Label>
+                <Entry Text="{Binding Pretraga}" Placeholder="Pretraga..."></Entry>
+                <Picker Title="Filter po vrsti" ItemsSource="{Binding TypeList}" ItemDisplayBinding="{Binding Naziv}" SelectedItem="{Binding MyType}">
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                </Picker>
+                <Button Text="Filtriraj" Command="{Binding FiltrirajCommand}"></Button>
+                <BoxView HeightRequest="2" BackgroundColor="Gray" Margin="0, 5, 0, 0"></BoxView>
+                <ListView HeightRequest="{Binding KatalogHeight}" x:Name="listViewPonuda" ItemsSource="{Binding KurseviList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding Naziv}" FontSize="18" Padding="15"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <BoxView HeightRequest="2" BackgroundColor="Gray" Margin="0, 0, 0, 0"></BoxView>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

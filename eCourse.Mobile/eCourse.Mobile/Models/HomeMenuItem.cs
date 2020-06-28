@@ -6,6 +6,8 @@ namespace eCourse.Mobile.Models
 {
     public enum MenuItemType
     {
+        Katalog,
+        MojiKursevi,
         Uplate,
         Profil,
         Logout

@@ -10,5 +10,6 @@ namespace eCourse.Services.Interface
     {
         Task<List<KursInstancaForKlijentListViewModel>> GetInstance(int klijentId, KursInstancaDataFilter model);
         Task<List<KursInstancaForKlijentListViewModel>> GetRecommendedInstance(int klijentId);
+        Task<KursDataModel> GetKursData(int instancaId, int klijentId);
     }
 }

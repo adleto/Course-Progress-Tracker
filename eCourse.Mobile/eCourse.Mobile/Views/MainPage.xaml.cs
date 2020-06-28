@@ -21,7 +21,7 @@ namespace eCourse.Mobile.Views
 
             MasterBehavior = MasterBehavior.Popover;
 
-            MenuPages.Add((int)MenuItemType.Uplate, (NavigationPage)Detail); //bio samo browse znaci ovdje samo first page?
+            MenuPages.Add((int)MenuItemType.Katalog, (NavigationPage)Detail); //bio samo browse znaci ovdje samo first page?
         }
 
         public async Task NavigateFromMenu(int id)
@@ -30,6 +30,12 @@ namespace eCourse.Mobile.Views
             {
                 switch (id)
                 {
+                    case (int)MenuItemType.Katalog:
+                        MenuPages.Add(id, new NavigationPage(new KatalogPage()));
+                        break;
+                    case (int)MenuItemType.MojiKursevi:
+                        MenuPages.Add(id, new NavigationPage(new MojiKurseviPage()));
+                        break;
                     case (int)MenuItemType.Uplate:
                         MenuPages.Add(id, new NavigationPage(new UplatePage()));
                         break;
