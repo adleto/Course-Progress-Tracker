@@ -83,6 +83,7 @@ namespace eCourse.WebAPI
             services.AddScoped<IIspitKlijent, IspitKlijentService>();
 
             services.AddScoped<IKlijentData, KlijentDataService>();
+            services.AddScoped<IKursInstancaData, KursInstancaDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

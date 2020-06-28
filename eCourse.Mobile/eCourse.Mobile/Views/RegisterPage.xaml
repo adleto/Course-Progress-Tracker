@@ -9,6 +9,9 @@
     <ContentPage.BindingContext>
         <vm:RegisterViewModel></vm:RegisterViewModel>
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="cancel.png" Text="BACK" Priority="0" Command="{Binding GoBackCommand}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout VerticalOptions="Start" Padding="5">
@@ -33,16 +36,18 @@
                 <Label x:Name="ErrorDatum" IsVisible="{Binding ErrorDatum_IsVisible}" Text="Datum ne može biti noviji ili jednak današnjem." TextColor="Red"></Label>
                 <Label Text="Općina prebivališta" FontSize="15" HorizontalOptions="FillAndExpand" />
                 <Picker x:Name="Opcina" ItemsSource="{Binding OpcinaList}" ItemDisplayBinding="{Binding Naziv}" SelectedItem="{Binding Opcina}"></Picker>
+                <Label x:Name="ErrorOpcina" IsVisible="{Binding ErrorOpcina_IsVisible}" Text="Općina mora biti odabrana." TextColor="Red"></Label>
                 <Label Text="JMBG" FontSize="15" HorizontalOptions="FillAndExpand" />
                 <Entry x:Name="JMBG" Text="{Binding JMBG}"></Entry>
                 <Label x:Name="ErrorJMBG" IsVisible="{Binding ErrorJMBG_IsVisible}" Text="Polje mora biti ispravno popunjeno (13 cifara)." TextColor="Red"></Label>
                 <Label Text="Spol" FontSize="15" HorizontalOptions="FillAndExpand" />
                 <Picker x:Name="Spol" ItemsSource="{Binding SpolList}" SelectedItem="{Binding Spol}"></Picker>
+                <Label x:Name="ErrorSpol" IsVisible="{Binding ErrorSpol_IsVisible}" Text="Spol mora biti odabran." TextColor="Red"></Label>
                 <Label Text="Lozinka" FontSize="15" HorizontalOptions="FillAndExpand" />
-                <Entry x:Name="Lozinka" Text="{Binding Lozinka}" IsPassword="True"></Entry>
+                <Entry x:Name="Lozinka" Text="{Binding Password}" IsPassword="True"></Entry>
                 <Label x:Name="ErrorLozinka" IsVisible="{Binding ErrorLozinka_IsVisible}" Text="Polje mora sadržavati najmanje 4 karaktera." TextColor="Red"></Label>
                 <Label Text="Lozinka (potvrda)" FontSize="15" HorizontalOptions="FillAndExpand" />
-                <Entry x:Name="LozinkaPotvrda" Text="{Binding LozinkaPotvrda}" IsPassword="True"></Entry>
+                <Entry x:Name="LozinkaPotvrda" Text="{Binding PasswordConfirm}" IsPassword="True"></Entry>
                 <Label x:Name="ErrorLozinkaPotvrda" IsVisible="{Binding ErrorLozinkaPotvrda_IsVisible}" Text="Polje mora biti isto kao Lozinka." TextColor="Red"></Label>
                 <Button Command="{Binding RegisterCommand}"  HorizontalOptions="FillAndExpand" Text="Registruj se"></Button>
             </StackLayout>

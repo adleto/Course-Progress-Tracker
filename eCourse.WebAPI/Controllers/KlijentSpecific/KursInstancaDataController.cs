@@ -15,34 +15,34 @@ namespace eCourse.WebAPI.Controllers.KlijentSpecific
     [Authorize(Roles = "Klijent")]
     [Route("api/[controller]")]
     [ApiController]
-    public class KlijentDataController : ControllerBase
+    public class KursInstancaDataController : ControllerBase
     {
-        private readonly IKlijentData _klijentDataService;
+        private readonly IKursInstancaData _kursInstancaDataService;
 
-        public KlijentDataController(IKlijentData klijentDataService)
+        public KursInstancaDataController(IKursInstancaData kursInstancaDataService)
         {
-            _klijentDataService = klijentDataService;
+            _kursInstancaDataService = kursInstancaDataService;
         }
-
         [HttpGet]
-        public async Task<ActionResult> GetKlijentData()
+        public async Task<ActionResult> Get([FromQuery] KursInstancaDataFilter model)
         {
             try
             {
-                return Ok(await _klijentDataService.GetKlijentData(UserResolver.GetKlijentId(HttpContext.User)));
+                if (!ModelState.IsValid) throw new Exception("Neispravna pretraga.");
+                return Ok(await _kursInstancaDataService.GetInstance(UserResolver.GetKlijentId(HttpContext.User), model));
             }
             catch (Exception ex)
             {
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
-        [HttpPost]
-        public async Task<ActionResult> UpdateKlijentData([FromBody] KlijentDataUpdateModel model)
+        [HttpGet]
+        [Route("[action")]
+        public async Task<ActionResult> GetRecommended()
         {
             try
             {
-                if (!ModelState.IsValid) return BadRequest(model);
-                return Ok(await _klijentDataService.UpdateKlijentData(UserResolver.GetKlijentId(HttpContext.User), model));
+                return Ok(await _kursInstancaDataService.GetRecommendedInstance(UserResolver.GetKlijentId(HttpContext.User)));
             }
             catch (Exception ex)
             {

@@ -37,7 +37,8 @@
             <Label Text="Nova lozinka"
                    FontSize="Large"
                 HorizontalOptions="Start" />
-            <Entry x:Name="Lozinka" Text="{Binding Lozinka}"></Entry>
+            <Entry x:Name="Lozinka" Text="{Binding Lozinka}"
+                   IsPassword="True"></Entry>
             <Label Text="Lozinka mora sadržavati više od 4 karaktera."
                    TextColor="Red"
                    FontSize="13"
@@ -46,7 +47,8 @@
             <Label Text="Nova lozinka (Potvrda)"
                    FontSize="Large"
                 HorizontalOptions="Start" />
-            <Entry x:Name="LozinkaPotvrda" Text="{Binding LozinkaPotvrda}"></Entry>
+            <Entry x:Name="LozinkaPotvrda" Text="{Binding LozinkaPotvrda}"
+                   IsPassword="True"></Entry>
             <Label Text="Polje mora biti isto kao prethodno."
                    TextColor="Red"
                    FontSize="13"

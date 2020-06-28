@@ -15,9 +15,16 @@ namespace eCourse.Mobile.ViewModels
 {
     public class RegisterViewModel : BaseViewModel
     {
+        public ICommand GoBackCommand { get; set; }
+        public ICommand GetOpcineDataCommand { get; set; }
         private readonly ApiService _userService = new ApiService("Auth");
         private readonly ApiService _opcinaService = new ApiService("Opcina");
-        public ObservableCollection<OpcinaModel> OpcinaList = null;
+        private ObservableCollection<OpcinaModel> opcinaList = null;
+        public ObservableCollection<OpcinaModel> OpcinaList 
+        { 
+            get { return opcinaList; }
+            set { SetProperty(ref opcinaList, value); }
+        }
         public INavigation Navigation;
         public RegisterViewModel()
         {
@@ -42,14 +49,21 @@ namespace eCourse.Mobile.ViewModels
                     if (korisnik != null)
                     {
                         await Application.Current.MainPage.DisplayAlert("", "Uspješno ste izvršili registraciju, sada se možete logirati.", "OK");
-                        Application.Current.MainPage = new LoginPage();
+                        //Application.Current.MainPage = new LoginPage();
+                        await Navigation.PopModalAsync();
                     }
                 }
-                catch(Exception ex)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Greška", ex.Message, "OK");
-                }
+                catch {}
             });
+            GetOpcineDataCommand = new Command(async () =>
+            {
+                await GetOpcine();
+            });
+            GoBackCommand = new Command(async () =>
+            {
+                await Navigation.PopModalAsync();
+            });
+            GetOpcineDataCommand.Execute(null);
         }
 
         private bool FormNotValid()
@@ -127,6 +141,24 @@ namespace eCourse.Mobile.ViewModels
             {
                 ErrorLozinkaPotvrda_IsVisible = false;
             }
+            if(Opcina == null)
+            {
+                errorsFound = true;
+                ErrorOpcina_IsVisible = true;
+            }
+            else
+            {
+                ErrorOpcina_IsVisible = false;
+            }
+            if (Spol == null)
+            {
+                errorsFound = true;
+                ErrorSpol_IsVisible = true;
+            }
+            else
+            {
+                ErrorSpol_IsVisible = false;
+            }
 
             return errorsFound;
         }
@@ -142,7 +174,7 @@ namespace eCourse.Mobile.ViewModels
                 return false;
             }
         }
-        internal async Task GetOpcine()
+        public async Task GetOpcine()
         {
             try
             {
@@ -152,7 +184,18 @@ namespace eCourse.Mobile.ViewModels
             catch
             { }
         }
-
+        bool errorSpol_IsVisible = false;
+        public bool ErrorSpol_IsVisible
+        {
+            get { return errorSpol_IsVisible; }
+            set { SetProperty(ref errorSpol_IsVisible, value); }
+        }
+        bool errorOpcina_IsVisible = false;
+        public bool ErrorOpcina_IsVisible
+        {
+            get { return errorOpcina_IsVisible; }
+            set { SetProperty(ref errorOpcina_IsVisible, value); }
+        }
         public ICommand RegisterCommand { get; set; }
         string username = string.Empty;
         public string Username
@@ -196,7 +239,7 @@ namespace eCourse.Mobile.ViewModels
             get { return jmbg; }
             set { SetProperty(ref jmbg, value); }
         }
-        string spol = string.Empty;
+        string spol = null;
         public string Spol
         {
             get { return spol; }
@@ -262,7 +305,14 @@ namespace eCourse.Mobile.ViewModels
             get { return errorLozinkaPotvrda_IsVisible; }
             set { SetProperty(ref errorLozinkaPotvrda_IsVisible, value); }
         }
-
-        public ObservableCollection<string> SpolList = new ObservableCollection<string> { "M", "Z", "Other" };
+        private List<string> spolList = new List<string> { "M", "Z", "Other" };
+        public List<string> SpolList
+        {
+            get { return spolList; }
+            set
+            {
+                SetProperty(ref spolList, value);
+            }
+        }
     }
 }

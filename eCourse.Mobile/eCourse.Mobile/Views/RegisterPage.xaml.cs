@@ -16,14 +16,9 @@ namespace eCourse.Mobile.Views
         RegisterViewModel viewModel;
         public RegisterPage()
         {
+            InitializeComponent();
             BindingContext = viewModel = new RegisterViewModel();
             viewModel.Navigation = Navigation;
-            InitializeComponent();
-        }
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            await viewModel.GetOpcine();
         }
     }
 }

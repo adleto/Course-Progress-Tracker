@@ -79,21 +79,29 @@ namespace eCourse.Services.Service
             {
                 Email = klijent.ApplicationUser.Email,
                 OpcinaId = klijent.ApplicationUser.OpcinaId,
-                OpcinaNaziv = klijent.ApplicationUser.Opcina.Naziv,
                 Slika = null
             };
-            var clanarinaOrderedList = klijent.ClanarineKlijenta
-                .OrderByDescending(c => c.DatumIsteka)
+
+            var clanarine = klijent.ClanarineKlijenta
                 .ToList();
-            if (clanarinaOrderedList[0].DatumIsteka.Date > DateTime.Now.Date)
+            if(clanarine != null && clanarine.Count > 0)
             {
-                returnModel.ClanarinaAktivna = true;
-                returnModel.ClanarinaAktivnaDo = clanarinaOrderedList[0].DatumIsteka.Date.ToString("dd/MM/yyyy");
+                var zadnjiDatumIsteka = clanarine.Max(cl => cl.DatumIsteka);
+                if (zadnjiDatumIsteka.Date > DateTime.Now.Date)
+                {
+                    returnModel.ClanarinaAktivna = true;
+                    returnModel.ClanarinaAktivnaDo = zadnjiDatumIsteka.Date.ToString("dd/MM/yyyy");
+                }
+                else
+                {
+                    returnModel.ClanarinaAktivna = false;
+                }
             }
             else
             {
                 returnModel.ClanarinaAktivna = false;
             }
+
             if (klijent.ApplicationUser.Slika != null && klijent.ApplicationUser.Slika.Length > 0)
             {
                 returnModel.Slika = klijent.ApplicationUser.Slika;

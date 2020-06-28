@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using eCourse.Models.ApplicationUser;
+using eCourse.Models.Helpers;
 using eCourse.Services.Interface;
 using eCourse.Services.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -42,17 +43,17 @@ namespace eCourse.WebAPI.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Register([FromBody] ApplicationUserInsertModel model)
+        public async Task<IActionResult> Register([FromBody] ApplicationUserInsertModel model)
         {
             try
             {
-                if (!ModelState.IsValid) return BadRequest(model);
-                var returnModel = _userService.AddKlijent(model);
+                if (!ModelState.IsValid) return BadRequest(new Exception("Neispravan unos podataka."));
+                var returnModel = await _userService.AddKlijent(model);
                 return Ok(returnModel);
             }
             catch(Exception ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new ApiException(ex.Message, HttpStatusCode.BadRequest));
             }
         }
     }

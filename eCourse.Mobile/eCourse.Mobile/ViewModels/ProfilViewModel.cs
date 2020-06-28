@@ -4,6 +4,7 @@ using eCourse.Models.Klijent;
 using eCourse.Models.Opcina;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -95,11 +96,17 @@ namespace eCourse.Mobile.ViewModels
                 SetProperty(ref clanarinaAktivnaDo, value);
             }
         }
-        public ICommand AzurirajCommand;
-        public ICommand DodajSlikuCommand;
+        public ICommand AzurirajCommand { get; set; }
+        public ICommand DodajSlikuCommand { get; set; }
+        public ICommand GetOpcinaData { get; set; }
         private readonly ApiService _opcinaService = new ApiService("Opcina");
         private readonly ApiService _korisnikService = new ApiService("KlijentData");
-        public List<OpcinaModel> OpcinaList { get; set; }
+        private ObservableCollection<OpcinaModel> opcinaList = null;
+        public ObservableCollection<OpcinaModel> OpcinaList 
+        {
+            get { return opcinaList; }
+            set { SetProperty(ref opcinaList, value); }
+        }
         public ProfilViewModel()
         {
             AzurirajCommand = new Command(async () =>
@@ -124,6 +131,11 @@ namespace eCourse.Mobile.ViewModels
                     if (updatedKorisnik != null)
                     {
                         await Application.Current.MainPage.DisplayAlert("", "Ažuriranje podataka uspješno.", "OK");
+                        if (!string.IsNullOrEmpty(noviKorisnik.Password))
+                        {
+                            //Promijenjena je lozinka pa je stavi i u ApiService
+                            ApiService.Password = noviKorisnik.Password;
+                        }
                     }
                     else
                     {
@@ -147,6 +159,11 @@ namespace eCourse.Mobile.ViewModels
                 catch
                 {}
             });
+            GetOpcinaData = new Command(async () =>
+            {
+                await GetOpcine();
+            });
+            GetOpcinaData.Execute(null);
         }
 
         private async Task<bool> AddImage()
@@ -226,7 +243,8 @@ namespace eCourse.Mobile.ViewModels
         {
             try
             {
-                OpcinaList = await _opcinaService.Get<List<OpcinaModel>>(null);
+                var result = await _opcinaService.Get<List<OpcinaModel>>(null);
+                OpcinaList = new ObservableCollection<OpcinaModel>(result);
             }
             catch
             { }

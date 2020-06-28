@@ -51,6 +51,11 @@ namespace eCourse.Mobile.Service
                 {
                     await Application.Current.MainPage.DisplayAlert("Greška", "Problem sa konekcijom.", "OK");
                 }
+                else
+                {
+                    var err = await ex.GetResponseJsonAsync<ApiException>();
+                    await Application.Current.MainPage.DisplayAlert("Greška", err.Message, "OK");
+                }
                 throw;
             }
         }
@@ -65,16 +70,9 @@ namespace eCourse.Mobile.Service
             }
             catch (FlurlHttpException ex)
             {
-                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
-
-                var stringBuilder = new StringBuilder();
-                foreach (var error in errors)
-                {
-                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
-                }
-
-                await Application.Current.MainPage.DisplayAlert("Greška", stringBuilder.ToString(), "OK");
-                return default(T);
+                var err = await ex.GetResponseJsonAsync<ApiException>();
+                await Application.Current.MainPage.DisplayAlert("Greška", err.Message, "OK");
+                throw;
             }
 
         }
@@ -89,16 +87,18 @@ namespace eCourse.Mobile.Service
             }
             catch (FlurlHttpException ex)
             {
-                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+                var err = await ex.GetResponseJsonAsync<ApiException>();
+                //var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
 
-                var stringBuilder = new StringBuilder();
-                foreach (var error in errors)
-                {
-                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
-                }
+                //var stringBuilder = new StringBuilder();
+                //foreach (var error in errors)
+                //{
+                //    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
+                //}
 
-                await Application.Current.MainPage.DisplayAlert("Greška", stringBuilder.ToString(), "OK");
-                return default(T);
+                await Application.Current.MainPage.DisplayAlert("Greška", /*stringBuilder.ToString()*/err.Message, "OK");
+                //return default(T);
+                throw;
             }
 
         }
@@ -113,18 +113,10 @@ namespace eCourse.Mobile.Service
             }
             catch (FlurlHttpException ex)
             {
-                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
-
-                var stringBuilder = new StringBuilder();
-                foreach (var error in errors)
-                {
-                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
-                }
-
-                await Application.Current.MainPage.DisplayAlert("Greška", stringBuilder.ToString(), "OK");
-                return default(T);
+                var err = await ex.GetResponseJsonAsync<ApiException>();
+                await Application.Current.MainPage.DisplayAlert("Greška", err.Message, "OK");
+                throw;
             }
-
         }
     }
 }
