@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCourse.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,12 @@ namespace eCourse.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class KursPage : ContentPage
     {
+        KursViewModel viewModel;
         public KursPage()
         {
             InitializeComponent();
+            BindingContext = viewModel = new KursViewModel();
+            viewModel.Navigation = Navigation;
         }
     }
 }

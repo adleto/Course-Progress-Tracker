@@ -62,5 +62,18 @@ namespace eCourse.WebAPI.Controllers.KlijentSpecific
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> PrijaviSeZaKurs([FromBody] int instancaId)
+        {
+            try
+            {
+                return Ok(await _kursInstancaDataService.PrijaviSeZaKurs(instancaId, UserResolver.GetKlijentId(HttpContext.User)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
     }
 }

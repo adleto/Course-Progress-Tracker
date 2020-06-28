@@ -83,7 +83,8 @@ namespace eCourse.Mobile.ViewModels
                     Pretraga = null,
                     TagId = null
                 };
-                if (MyType.MyTypeEnum == MyTypeEnum.MojiAktivni) filter.GetMojiAktivni = true;
+                if(MyType == null) filter.GetMojiAktivni = true;
+                else if (MyType.MyTypeEnum == MyTypeEnum.MojiAktivni) filter.GetMojiAktivni = true;
                 else if (MyType.MyTypeEnum == MyTypeEnum.MojiUspjesnoZavrseni) filter.GetMojiUspjesnoZavrseni = true;
                 else if (MyType.MyTypeEnum == MyTypeEnum.MojiZavrseni) filter.GetMojiZavrseni = true;
                 if (!string.IsNullOrEmpty(Pretraga))

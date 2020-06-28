@@ -1,5 +1,7 @@
-﻿using eCourse.Database.Context;
+﻿using AutoMapper;
+using eCourse.Database.Context;
 using eCourse.Database.Entities;
+using eCourse.Models.Cas;
 using eCourse.Models.Klijent;
 using eCourse.Services.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -14,57 +16,66 @@ namespace eCourse.Services.Service
     public class KursInstancaDataService : IKursInstancaData
     {
         private readonly CourseContext _context;
-        public KursInstancaDataService(CourseContext context)
+        private readonly IMapper _mapper;
+        public KursInstancaDataService(CourseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<List<KursInstancaForKlijentListViewModel>> GetInstance(int klijentId, KursInstancaDataFilter model)
         {
-            var query = _context.KursInstanca
+            try
+            {
+                var query = _context.KursInstanca
                 .Include(k => k.Kurs)
                     .ThenInclude(kk => kk.TagoviKursa)
                 .AsQueryable();
-            if (!string.IsNullOrEmpty(model.Pretraga))
-            {
-                query = query
-                    .Where(k => k.Kurs.Naziv.StartsWith(model.Pretraga) ||
-                    k.Kurs.SkraceniNaziv.StartsWith(model.Pretraga));
-            }
-            if (model.GetSve)
-            {
-                query = query.Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date);
-            }
+                if (!string.IsNullOrEmpty(model.Pretraga))
+                {
+                    query = query
+                        .Where(k => k.Kurs.Naziv.StartsWith(model.Pretraga) ||
+                        k.Kurs.SkraceniNaziv.StartsWith(model.Pretraga));
+                }
+                if (model.GetSve)
+                {
+                    query = query.Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date);
+                }
 
-            var result = await query.ToListAsync();
-            if (model.TagId != null)
-            {
-                result = FiltrirajPoTagu((int)model.TagId, result);
-            }
-            if (model.GetSve == false)
-            {
-                var instanceKlijenta = await _context.KlijentKursInstanca
-                    .Where(k => k.KlijentId == klijentId)
-                    .ToListAsync();
-                if (model.GetMojiAktivni)
+                var result = await query.ToListAsync();
+                if (model.TagId != null)
                 {
-                    result = FiltrirajPoMojiAktivni(instanceKlijenta, result);
+                    result = FiltrirajPoTagu((int)model.TagId, result);
                 }
-                else if (model.GetMojiUspjesnoZavrseni)
+                if (model.GetSve == false)
                 {
-                    result = FiltrirajMojiUspjesnoZavrseni(instanceKlijenta, result);
+                    var instanceKlijenta = await _context.KlijentKursInstanca
+                        .Where(k => k.KlijentId == klijentId)
+                        .ToListAsync();
+                    if (model.GetMojiAktivni)
+                    {
+                        result = FiltrirajPoMojiAktivni(instanceKlijenta, result);
+                    }
+                    else if (model.GetMojiUspjesnoZavrseni)
+                    {
+                        result = FiltrirajMojiUspjesnoZavrseni(instanceKlijenta, result);
+                    }
+                    else if (model.GetMojiZavrseni)
+                    {
+                        result = FiltrirajPoMojiZavrseni(instanceKlijenta, result);
+                    }
                 }
-                else if (model.GetMojiZavrseni)
+
+                var returnModel = new List<KursInstancaForKlijentListViewModel>();
+                foreach (var r in result)
                 {
-                    result = FiltrirajPoMojiZavrseni(instanceKlijenta, result);
+                    returnModel.Add(MapToKursInstancaForKlijentListViewModel(r));
                 }
+                return returnModel;
             }
-            
-            var returnModel = new List<KursInstancaForKlijentListViewModel>();
-            foreach (var r in result)
+            catch (Exception ex)
             {
-                returnModel.Add(MapToKursInstancaForKlijentListViewModel(r));
+                throw new Exception(ex.Message);
             }
-            return returnModel;
         }
 
         private List<KursInstanca> FiltrirajPoMojiZavrseni(List<KlijentKursInstanca> instanceKlijenta, List<KursInstanca> result)
@@ -129,25 +140,32 @@ namespace eCourse.Services.Service
 
         public async Task<List<KursInstancaForKlijentListViewModel>> GetRecommendedInstance(int klijentId)
         {
-            //Recommender napravit
-            var result = await _context.KursInstanca
-                .Include(k => k.Kurs)
-                .Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date)
-                .Take(3)
-                .ToListAsync();
-            var returnModel = new List<KursInstancaForKlijentListViewModel>();
-            foreach(var r in result)
+            try
             {
-                returnModel.Add(MapToKursInstancaForKlijentListViewModel(r));
+                //Recommender napravit
+                var result = await _context.KursInstanca
+                    .Include(k => k.Kurs)
+                    .Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date)
+                    .Take(3)
+                    .ToListAsync();
+                var returnModel = new List<KursInstancaForKlijentListViewModel>();
+                foreach (var r in result)
+                {
+                    returnModel.Add(MapToKursInstancaForKlijentListViewModel(r));
+                }
+                return returnModel;
             }
-            return returnModel;
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         private KursInstancaForKlijentListViewModel MapToKursInstancaForKlijentListViewModel(KursInstanca k)
         {
             var returnModel = new KursInstancaForKlijentListViewModel
             {
                 InstancaId = k.Id,
-                };
+            };
             if (k.PocetakDatum.Date > DateTime.Now.Date)
             {
                 returnModel.Naziv = k.Kurs.Naziv + " (Počinje: " + k.PocetakDatum.ToString("dd/MM/yyyy") + ")";
@@ -159,9 +177,104 @@ namespace eCourse.Services.Service
             return returnModel;
         }
 
-        public Task<KursDataModel> GetKursData(int instancaId, int klijentId)
+        public async Task<KursDataModel> GetKursData(int instancaId, int klijentId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var instanca = _context.KursInstanca
+                    .Include(k => k.Kurs)
+                    .Include(k => k.Uposlenik)
+                        .ThenInclude(u => u.ApplicationUser)
+                    .Where(k => k.Id == instancaId)
+                    .FirstOrDefault();
+                var klijentInstanca = _context.KlijentKursInstanca
+                    .Where(k => k.KursInstancaId == instancaId && k.KlijentId == klijentId)
+                    .FirstOrDefault();
+
+                var returnModel = new KursDataModel
+                {
+                    BrojCasova = instanca.BrojCasova,
+                    Cijena = instanca.Cijena,
+                    DatumKraja = instanca.KrajDatum,
+                    DatumPocetka = instanca.PocetakDatum,
+                    DatumPrijaveDo = instanca.PrijaveDoDatum,
+                    KursInstancaId = instanca.Id,
+                    Naziv = instanca.Kurs.Naziv,
+                    Kapacitet = instanca.Kapacitet,
+                    Opis = instanca.Kurs.Opis,
+                    Predavac = instanca.Uposlenik.ApplicationUser.Ime + " " + instanca.Uposlenik.ApplicationUser.Prezime
+                };
+                if (klijentInstanca != null)
+                {
+                    var ispitKlijent = _context.IspitKlijentKursInstanca
+                        .Include(i => i.Ispit)
+                        .Where(i => i.KlijentKursInstancaId == klijentInstanca.Id)
+                        .FirstOrDefault();
+                    returnModel.Casovi = _mapper.Map<List<CasModel>>(instanca.Casovi);
+                    returnModel.KlijentKursInstancaId = klijentInstanca.Id;
+                    returnModel.Ocjena = klijentInstanca.Rejting;
+                    returnModel.Polozen = klijentInstanca.Polozen;
+                    returnModel.UplataIzvrsena = klijentInstanca.UplataIzvrsena;
+                    if (ispitKlijent != null)
+                    {
+                        returnModel.VrijemeIspit = ispitKlijent.Ispit.DatumVrijemeIspita;
+                        returnModel.PrisustvovoIspitu = ispitKlijent.Prisustvovao;
+                        returnModel.LokacijaIspit = ispitKlijent.Ispit.Lokacija;
+                        returnModel.IspitPoeni = ispitKlijent.Bodovi;
+                    }
+                }
+                return returnModel;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<KursDataModel> PrijaviSeZaKurs(int instancaId, int klijentId)
+        {
+            try
+            {
+                var klijentInstanca = _context.KlijentKursInstanca
+                    .Where(k => k.KursInstancaId == instancaId && k.KlijentId == klijentId)
+                    .FirstOrDefault();
+                if (klijentInstanca != null) throw new Exception("Već ste prijavljeni na ovaj kurs.");
+                var instanca = _context.KursInstanca.Find(instancaId);
+                if (instanca.PrijaveDoDatum.Date < DateTime.Now.Date) throw new Exception("Prijave za ovaj kurs su završene.");
+                var klijent = _context.Klijent
+                    .Include(k => k.ClanarineKlijenta)
+                    .Where(k => k.Id == klijentId)
+                    .FirstOrDefault();
+                if (instanca.Cijena == null)
+                {
+                    if (klijent.ClanarineKlijenta == null ||
+                        klijent.ClanarineKlijenta.Count == 0 ||
+                        klijent.ClanarineKlijenta.Max(c => c.DatumIsteka) < DateTime.Now.Date)
+                    {
+
+                        throw new Exception("Članarina vam je istekla, ne možete se prijaviti na ovaj kurs.");
+                    }
+                }
+
+                var novaKlijentInstanca = new KlijentKursInstanca
+                {
+                    Active = false,
+                    KlijentId = klijentId,
+                    KursInstancaId = instanca.Id,
+                    Polozen = false,
+                    Rejting = null,
+                    UplataIzvrsena = null
+                };
+                if (instanca.Cijena == null) novaKlijentInstanca.Active = true;
+                else novaKlijentInstanca.UplataIzvrsena = false;
+                _context.KlijentKursInstanca.Add(novaKlijentInstanca);
+                await _context.SaveChangesAsync();
+                return await GetKursData(instancaId, klijentId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

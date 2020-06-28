@@ -17,8 +17,14 @@ namespace eCourse.Models.Klijent
         public DateTime DatumPocetka { get; set; }
         public DateTime? DatumKraja { get; set; }
         public DateTime DatumPrijaveDo { get; set; }
-        public bool Polozen { get; set; }
+        public bool? Polozen { get; set; }
         public List<CasModel> Casovi { get; set; }
         public decimal? Cijena { get; set; }
+        public DateTime? VrijemeIspit { get; set; }
+        public string LokacijaIspit { get; set; }
+        public decimal? IspitPoeni { get; set; }
+        public int? Kapacitet { get; set; }
+        public bool? UplataIzvrsena { get; set; }
+        public bool? PrisustvovoIspitu { get; set; }
     }
 }
