@@ -42,6 +42,21 @@ namespace eCourse.WebAPI.Controllers
                 return BadRequest();
             }
         }
+        [Authorize]
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult GetKlijent()
+        {
+            try
+            {
+                var claimClanarina = User.Claims.Where(c => c.Type == "ClanarinaAktivna").First();
+                return Ok(claimClanarina.Value);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] ApplicationUserInsertModel model)
         {

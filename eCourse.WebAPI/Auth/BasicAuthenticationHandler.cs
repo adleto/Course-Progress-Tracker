@@ -61,8 +61,12 @@ namespace eCourse.WebAPI.Auth
             {
                 claims.Add(new Claim(ClaimTypes.Role, role.Naziv));
             }
-            if(user.UposlenikId!=null) claims.Add(new Claim("UposlenikId", user.UposlenikId.ToString()));
-            else if (user.KlijentId != null) claims.Add(new Claim("KlijentId", user.KlijentId.ToString()));
+            if (user.UposlenikId != null) claims.Add(new Claim("UposlenikId", user.UposlenikId.ToString()));
+            else if (user.KlijentId != null)
+            {
+                claims.Add(new Claim("KlijentId", user.KlijentId.ToString()));
+                claims.Add(new Claim("ClanarinaAktivna", _userService.GetClanarinaAktivna((int)user.KlijentId).ToString()));
+            }
 
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

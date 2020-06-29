@@ -6,10 +6,30 @@
              mc:Ignorable="d"
              x:Class="eCourse.Mobile.Views.KursPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout HorizontalOptions="CenterAndExpand" Padding="5">
+            <Label Text="{Binding Naziv, FallbackValue='Naziv Kursa'}" FontSize="Title" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding Predavac, StringFormat='Predavač: {0}',FallbackValue='Predavač'}" HorizontalTextAlignment="Center"></Label>
+            <Frame BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
+                <Label Text="{Binding Opis, FallbackValue='Opis'}" HorizontalTextAlignment="Center"></Label>
+            </Frame>
+            <Frame BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
+                <Label Text="{Binding BrojCasova, StringFormat='Ukupan broj časova: {0}', FallbackValue='Ukupan broj časova'}" HorizontalTextAlignment="Center"></Label>
+            </Frame>
+            <Frame IsVisible="{Binding PrikaziKapacitet}" BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
+                <Label Text="{Binding Kapacitet, StringFormat='Kapacitet: {0}', FallbackValue='Kapacitet'}" HorizontalTextAlignment="Center"></Label>
+            </Frame>
+            <Frame IsVisible="{Binding PrikaziCijenu}" BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
+                <Label Text="{Binding Cijena, StringFormat='Cijena ovog kursa je: {0:#,#.00}', FallbackValue='Cijena'}" HorizontalTextAlignment="Center"></Label>
+            </Frame>
+            <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
+                <Label Text="{Binding DatumPrijaveDo, StringFormat='Prijave moguće do: {0:dd/MM/yyyy}', FallbackValue='Prijave'}" HorizontalTextAlignment="Center"></Label>
+            </Frame>
+            <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="White" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="40">
+                <Button Text="Prijavi se" HorizontalOptions="FillAndExpand" Command="{Binding PrijavaCommand}"></Button>
+            </Frame>
+
+            <Label IsVisible="{Binding Error_PrijavaNijeMoguca}" Text="Prijava nije moguća jer vaša članarina nije aktivna" TextColor="Red" HorizontalTextAlignment="Center"></Label>
+            <Label IsVisible="{Binding PrijavljenAliNeUplacen}" Text="Kurs je prijavljen ali uplata još nije izvršena." TextColor="Red" HorizontalTextAlignment="Center"></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace eCourse.Mobile.ViewModels
@@ -23,14 +24,14 @@ namespace eCourse.Mobile.ViewModels
                 await Navigation.PushModalAsync(new NavigationPage(new RegisterPage()));
             });
         }
-        string _username = string.Empty;
+        string _username = "mobile2";//string.Empty;
         public string Username
         {
             get { return _username; }
             set { SetProperty(ref _username, value); }
         }
 
-        string _password = string.Empty;
+        string _password = "mobile";//string.Empty;
         public string Password
         {
             get { return _password; }
@@ -53,7 +54,8 @@ namespace eCourse.Mobile.ViewModels
 
             try
             {
-                await _service.Get<dynamic>(null);
+                var clanarinaAktivna = await _service.Get<bool>(null);
+                Preferences.Set("ClanarinaAktivna", clanarinaAktivna);
                 Application.Current.MainPage = new MainPage();
             }
             catch

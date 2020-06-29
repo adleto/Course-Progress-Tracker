@@ -554,5 +554,23 @@ namespace eCourse.Services.Service
                 throw new Exception(ex.Message);
             }
         }
+
+        public bool GetClanarinaAktivna(int klijentId)
+        {
+            try
+            {
+                var klijentClanarine = _context.Clanarina
+                    .Where(c => c.KlijentId == klijentId)
+                    .ToList();
+                if (klijentClanarine == null || klijentClanarine.Count == 0) return false;
+                var max = klijentClanarine.Max(c => c.DatumIsteka);
+                if (max.Date < DateTime.Now.Date) return false;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

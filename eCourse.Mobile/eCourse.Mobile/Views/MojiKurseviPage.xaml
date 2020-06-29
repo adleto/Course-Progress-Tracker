@@ -19,7 +19,7 @@
                 </Picker>
                 <Button Text="Filtriraj" Command="{Binding FiltrirajCommand}"></Button>
                 <!--<BoxView HeightRequest="2" BackgroundColor="Gray" Margin="0, 5, 0, 0"></BoxView>-->
-                <ListView HeightRequest="{Binding KatalogHeight}" x:Name="listViewPonuda" ItemsSource="{Binding KurseviList}">
+                <ListView HeightRequest="{Binding KatalogHeight}" x:Name="listViewPonuda" ItemsSource="{Binding KurseviList}" ItemTapped="listViewPonuda_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

@@ -202,10 +202,25 @@ namespace eCourse.Services.Service
                     Naziv = instanca.Kurs.Naziv,
                     Kapacitet = instanca.Kapacitet,
                     Opis = instanca.Kurs.Opis,
-                    Predavac = instanca.Uposlenik.ApplicationUser.Ime + " " + instanca.Uposlenik.ApplicationUser.Prezime
+                    Predavac = instanca.Uposlenik.ApplicationUser.Ime + " " + instanca.Uposlenik.ApplicationUser.Prezime,
+                    Ocijenjen = false,
+                    Zavrsen = false,
+                    PrijavljenIAktivan = false,
+                    PrijavljenAliNeUplacen = false,
+                    NijePrijavljen = true
                 };
+                if (instanca.KrajDatum != null) returnModel.Zavrsen = true;
                 if (klijentInstanca != null)
                 {
+                    returnModel.NijePrijavljen = false;
+                    if (klijentInstanca.Active)
+                    {
+                        returnModel.PrijavljenIAktivan = true;
+                    }
+                    else if(klijentInstanca.UplataIzvrsena!=null && klijentInstanca.UplataIzvrsena == false)
+                    {
+                        returnModel.PrijavljenAliNeUplacen = true;
+                    }
                     var ispitKlijent = _context.IspitKlijentKursInstanca
                         .Include(i => i.Ispit)
                         .Where(i => i.KlijentKursInstancaId == klijentInstanca.Id)
@@ -213,6 +228,7 @@ namespace eCourse.Services.Service
                     returnModel.Casovi = _mapper.Map<List<CasModel>>(instanca.Casovi);
                     returnModel.KlijentKursInstancaId = klijentInstanca.Id;
                     returnModel.Ocjena = klijentInstanca.Rejting;
+                    if (klijentInstanca.Rejting != null) returnModel.Ocijenjen = true;
                     returnModel.Polozen = klijentInstanca.Polozen;
                     returnModel.UplataIzvrsena = klijentInstanca.UplataIzvrsena;
                     if (ispitKlijent != null)

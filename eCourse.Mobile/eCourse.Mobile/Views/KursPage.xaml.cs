@@ -14,10 +14,10 @@ namespace eCourse.Mobile.Views
     public partial class KursPage : ContentPage
     {
         KursViewModel viewModel;
-        public KursPage()
+        public KursPage(int instancaId)
         {
             InitializeComponent();
-            BindingContext = viewModel = new KursViewModel();
+            BindingContext = viewModel = new KursViewModel(instancaId);
             viewModel.Navigation = Navigation;
         }
     }

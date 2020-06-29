@@ -26,5 +26,11 @@ namespace eCourse.Models.Klijent
         public int? Kapacitet { get; set; }
         public bool? UplataIzvrsena { get; set; }
         public bool? PrisustvovoIspitu { get; set; }
+
+        public bool NijePrijavljen { get; set; }
+        public bool PrijavljenIAktivan { get; set; }
+        public bool PrijavljenAliNeUplacen { get; set; }
+        public bool Ocijenjen { get; set; }
+        public bool Zavrsen { get; set; }
     }
 }
