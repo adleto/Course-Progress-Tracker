@@ -1,5 +1,6 @@
 ﻿using eCourse.Mobile.Service;
 using eCourse.Mobile.Views;
+using eCourse.Models.Klijent;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -14,7 +15,7 @@ namespace eCourse.Mobile.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         public INavigation Navigation { get; set; }
-        private readonly ApiService _service = new ApiService("Auth");
+        private readonly ApiService _service = new ApiService("Auth/GetKlijent");
 
         public LoginViewModel()
         {
@@ -54,13 +55,14 @@ namespace eCourse.Mobile.ViewModels
 
             try
             {
-                var clanarinaAktivna = await _service.Get<bool>(null);
-                Preferences.Set("ClanarinaAktivna", clanarinaAktivna);
+                var clanarinaAktivna = await _service.Get<ClanarinaModel>(null);
+                Preferences.Set("ClanarinaAktivna", clanarinaAktivna.ClanarinaAktivna);
                 Application.Current.MainPage = new MainPage();
             }
             catch
             {
             }
+            IsBusy = false;
         }
     }
 }

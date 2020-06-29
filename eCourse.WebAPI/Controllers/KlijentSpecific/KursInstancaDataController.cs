@@ -75,5 +75,20 @@ namespace eCourse.WebAPI.Controllers.KlijentSpecific
                 return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
             }
         }
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> OstaviRejting([FromBody] RejtingModel model)
+        {
+            try
+            {
+                if (model.Rejting < 1 || model.Rejting > 5) ModelState.AddModelError(nameof(RejtingModel.Rejting), "Rejting može imati vrijednost od 1 do 5.");
+                if (!ModelState.IsValid) return BadRequest(model);
+                return Ok(await _kursInstancaDataService.OstaviRejting(model, UserResolver.GetKlijentId(HttpContext.User)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiException(ex.Message, System.Net.HttpStatusCode.BadRequest));
+            }
+        }
     }
 }

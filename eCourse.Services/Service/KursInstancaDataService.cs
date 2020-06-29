@@ -142,7 +142,8 @@ namespace eCourse.Services.Service
         {
             try
             {
-                //Recommender napravit
+                //TODO :: upali recommender
+                //var result = RecommenderService.GetRecommended(klijentId);
                 var result = await _context.KursInstanca
                     .Include(k => k.Kurs)
                     .Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date)
@@ -286,6 +287,24 @@ namespace eCourse.Services.Service
                 _context.KlijentKursInstanca.Add(novaKlijentInstanca);
                 await _context.SaveChangesAsync();
                 return await GetKursData(instancaId, klijentId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<int?> OstaviRejting(RejtingModel model, int klijentId)
+        {
+            try
+            {
+                var klijentInstanca = _context.KlijentKursInstanca
+                    .Where(k => k.KlijentId == klijentId && k.KursInstancaId == model.InstancaId)
+                    .FirstOrDefault();
+                if (klijentInstanca == null) throw new Exception("Ne možete ostaviti rejting na ovaj kurs.");
+                klijentInstanca.Rejting = model.Rejting;
+                await _context.SaveChangesAsync();
+                return model.Rejting;
             }
             catch (Exception ex)
             {

@@ -6,30 +6,117 @@
              mc:Ignorable="d"
              x:Class="eCourse.Mobile.Views.KursPage">
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="CenterAndExpand" Padding="5">
-            <Label Text="{Binding Naziv, FallbackValue='Naziv Kursa'}" FontSize="Title" HorizontalTextAlignment="Center" />
-            <Label Text="{Binding Predavac, StringFormat='Predavač: {0}',FallbackValue='Predavač'}" HorizontalTextAlignment="Center"></Label>
-            <Frame BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
-                <Label Text="{Binding Opis, FallbackValue='Opis'}" HorizontalTextAlignment="Center"></Label>
-            </Frame>
-            <Frame BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
-                <Label Text="{Binding BrojCasova, StringFormat='Ukupan broj časova: {0}', FallbackValue='Ukupan broj časova'}" HorizontalTextAlignment="Center"></Label>
-            </Frame>
-            <Frame IsVisible="{Binding PrikaziKapacitet}" BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
-                <Label Text="{Binding Kapacitet, StringFormat='Kapacitet: {0}', FallbackValue='Kapacitet'}" HorizontalTextAlignment="Center"></Label>
-            </Frame>
-            <Frame IsVisible="{Binding PrikaziCijenu}" BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
-                <Label Text="{Binding Cijena, StringFormat='Cijena ovog kursa je: {0:#,#.00}', FallbackValue='Cijena'}" HorizontalTextAlignment="Center"></Label>
-            </Frame>
-            <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="Black" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="20">
-                <Label Text="{Binding DatumPrijaveDo, StringFormat='Prijave moguće do: {0:dd/MM/yyyy}', FallbackValue='Prijave'}" HorizontalTextAlignment="Center"></Label>
-            </Frame>
-            <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="White" Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="40">
-                <Button Text="Prijavi se" HorizontalOptions="FillAndExpand" Command="{Binding PrijavaCommand}"></Button>
-            </Frame>
+        <ScrollView>
+            <StackLayout HorizontalOptions="Fill" Padding="5">
+                <Label Text="{Binding Naziv, FallbackValue='Naziv Kursa'}" FontSize="Title" HorizontalTextAlignment="Center" />
+                <Label Text="{Binding Predavac, StringFormat='Predavač: {0}',FallbackValue='Predavač'}" HorizontalTextAlignment="Center"></Label>
+                <Frame BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding Opis, FallbackValue='Opis'}" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding BrojCasova, StringFormat='Ukupan broj časova: {0}', FallbackValue='Ukupan broj časova'}" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame IsVisible="{Binding PrikaziKapacitet}" BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding Kapacitet, StringFormat='Kapacitet: {0}', FallbackValue='Kapacitet'}" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame IsVisible="{Binding PrikaziCijenu}" BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding Cijena, StringFormat='Cijena ovog kursa je: {0:#,#.00}', FallbackValue='Cijena'}" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding DatumPocetka, StringFormat='Datum početka kursa: {0:dd/MM/yyyy}', FallbackValue='Datum Početak'}" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding DatumPrijaveDo, StringFormat='Prijave moguće do: {0:dd/MM/yyyy}', FallbackValue='Datum Prijave'}" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame IsVisible="{Binding Zavrsen}" BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
+                    <StackLayout>
+                        <Label Text="{Binding DatumKraja, StringFormat='Kurs je završen.', FallbackValue='Kurs je završen'}" HorizontalTextAlignment="Center"></Label>
+                        <Label IsVisible ="{Binding Polozen}" Text="Ovaj kurs ste uspješno položili!" HorizontalTextAlignment="Center"></Label>
+                        <Label IsVisible ="{Binding NijePolozen}" Text="Kurs nije položen." HorizontalTextAlignment="Center"></Label>
+                    </StackLayout>
+                </Frame>
+                <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="White" Padding="8" HorizontalOptions="FillAndExpand">
+                    <Button Text="Prijavi se!" HorizontalOptions="FillAndExpand" Command="{Binding PrijavaCommand}"></Button>
+                </Frame>
+                <Label IsVisible="{Binding Error_PrijavaNijeMoguca}" Text="Prijava nije moguća jer vaša članarina nije aktivna" TextColor="Red" HorizontalTextAlignment="Center"></Label>
+                <Label IsVisible="{Binding PrijavljenAliNeUplacen}" Text="Kurs je prijavljen ali uplata još nije izvršena." TextColor="Red" HorizontalTextAlignment="Center"></Label>
+                <Frame x:Name="IspitFrameNadolazeci" IsVisible="{Binding PrikaziNadolazeciIspit}" BorderColor="Gray" Padding="10">
+                    <StackLayout>
+                        <Label Text="{Binding VrijemeIspit, StringFormat='Ispit će se održat: {0}.', FallbackValue='Ispit će se održat x'}" HorizontalTextAlignment="Center"></Label>
+                        <Label Text="{Binding LokacijaIspit, StringFormat='Lokacija za testiranje je: {0}.', FallbackValue='Lokacija za testiranje je x'}" HorizontalTextAlignment="Center"></Label>
+                    </StackLayout>
+                </Frame>
+                <Frame x:Name="IspitFrameZavrsen" IsVisible="{Binding PrikaziZavrsenIspit}" BorderColor="Gray" Padding="10">
+                    <StackLayout>
+                        <Label Text="{Binding VrijemeIspit, StringFormat='Ispit je održan: {0}.', FallbackValue='Ispit je održan x.'}" HorizontalTextAlignment="Center"></Label>
+                        <Label IsVisible="{Binding NemaPrisustvoNaIspitu}" Text="Niste prisustvovali ispitu!" HorizontalTextAlignment="Center"></Label>
+                        <Label IsVisible="{Binding ImaPrisustvoNaIspitu}" Text="{Binding IspitPoeni, StringFormat='Vaš rezultat je: {0:#.00}% osvjenih bodova.', FallbackValue='Vaš rezultat je x bodova.'}" HorizontalTextAlignment="Center"></Label>
+                    </StackLayout>
+                </Frame>
+                <Frame x:Name="Casovi" IsVisible="{Binding PrijavljenIAktivan}" BorderColor="White" Padding="3">
+                    <StackLayout>
+                        <Label Text="{Binding Progres_Value,StringFormat='{0}% časova održano' }" HorizontalTextAlignment="Center"></Label>
+                        <ProgressBar Progress="{Binding Progres}" ProgressColor="Orange" />
+                        <Label Text="Najavljeni časovi" HorizontalTextAlignment="Center"></Label>
+                        <ListView ItemsSource="{Binding NadolazeciList}" HeightRequest="150">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Padding="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="20"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
 
-            <Label IsVisible="{Binding Error_PrijavaNijeMoguca}" Text="Prijava nije moguća jer vaša članarina nije aktivna" TextColor="Red" HorizontalTextAlignment="Center"></Label>
-            <Label IsVisible="{Binding PrijavljenAliNeUplacen}" Text="Kurs je prijavljen ali uplata još nije izvršena." TextColor="Red" HorizontalTextAlignment="Center"></Label>
-        </StackLayout>
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding DatumVrijemeOdrzavanja}" XAlign="Center" YAlign="Center" TextColor="Black" />
+                                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Lokacija}" XAlign="Center" YAlign="Center" TextColor="Black" />
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Label Text="Održani časovi" HorizontalTextAlignment="Center"></Label>
+                        <ListView ItemsSource="{Binding OdrzaniList}"  HeightRequest="150">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Padding="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="20"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding DatumVrijemeOdrzavanja}" XAlign="Center" YAlign="Center" TextColor="Black" />
+                                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Lokacija}" XAlign="Center" YAlign="Center" TextColor="Black" />
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </Frame>
+                <Frame x:Name="RejtingFrame" BorderColor="White" IsVisible="{Binding MozeOstavitOcjenu}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"></RowDefinition>
+                            <RowDefinition Height="33"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Text="Rejting kursa" XAlign="Center" YAlign="Center" TextColor="Black" />
+                        <Entry Grid.Row="1" Grid.Column="0" Text="{Binding Ocjena}" HorizontalOptions="Center"></Entry>
+                        <Button Text="Ostavi rejting" Grid.Row="1" Grid.Column="1" Command="{Binding OstaviRejtingCommand}"></Button>
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

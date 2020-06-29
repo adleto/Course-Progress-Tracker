@@ -1,0 +1,31 @@
+version: "3"
+services:
+    api:
+        restart: unless-stopped
+        build:
+          context: .
+        environment:
+            - ConnectionStrings:MyConnection=Server=db,1433;Database=170222;User=sa;Password=MasterFancyPw24;
+        ports:
+            - "62312:62312"
+        depends_on:
+            - db
+        links:
+            - db
+        networks:
+            - mynet
+
+    db:
+        restart: unless-stopped
+        image: "mcr.microsoft.com/mssql/server:2017-latest-ubuntu"
+        environment:
+            SA_PASSWORD: "MasterFancyPw24"
+            ACCEPT_EULA: "Y"
+            MSSQL_PID: "Developer"
+        ports:
+            - 1403:1433
+        networks:
+            - mynet
+networks:
+  mynet:
+    driver: bridge

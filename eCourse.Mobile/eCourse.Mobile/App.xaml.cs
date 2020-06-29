@@ -14,10 +14,10 @@ namespace eCourse.Mobile
             InitializeComponent();
 
             //DependencyService.Register<MockDataStore>();
-            ApiService.Username = "mobile2";
-            ApiService.Password = "mobile";
-            MainPage = new MainPage();
-            //MainPage = new LoginPage();
+            //ApiService.Username = "mobile2";
+            //ApiService.Password = "mobile";
+            //MainPage = new MainPage();
+            MainPage = new LoginPage();
         }
 
         protected override void OnStart()

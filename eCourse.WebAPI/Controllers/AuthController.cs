@@ -50,7 +50,8 @@ namespace eCourse.WebAPI.Controllers
             try
             {
                 var claimClanarina = User.Claims.Where(c => c.Type == "ClanarinaAktivna").First();
-                return Ok(claimClanarina.Value);
+                //return Ok(claimClanarina.Value);
+                return Ok(new { claimClanarina.Value });
             }
             catch
             {

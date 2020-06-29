@@ -12,5 +12,6 @@ namespace eCourse.Services.Interface
         Task<List<KursInstancaForKlijentListViewModel>> GetRecommendedInstance(int klijentId);
         Task<KursDataModel> GetKursData(int instancaId, int klijentId);
         Task<KursDataModel> PrijaviSeZaKurs(int instancaId, int klijentId);
+        Task<int?> OstaviRejting(RejtingModel model, int klijentId);
     }
 }
