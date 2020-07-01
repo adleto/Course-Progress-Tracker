@@ -142,13 +142,12 @@ namespace eCourse.Services.Service
         {
             try
             {
-                //TODO :: upali recommender
-                //var result = RecommenderService.GetRecommended(klijentId);
-                var result = await _context.KursInstanca
-                    .Include(k => k.Kurs)
-                    .Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date)
-                    .Take(3)
-                    .ToListAsync();
+                var result = RecommenderService.GetRecommended(_context, klijentId);
+                //var result = await _context.KursInstanca
+                //    .Include(k => k.Kurs)
+                //    .Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date)
+                //    .Take(3)
+                //    .ToListAsync();
                 var returnModel = new List<KursInstancaForKlijentListViewModel>();
                 foreach (var r in result)
                 {

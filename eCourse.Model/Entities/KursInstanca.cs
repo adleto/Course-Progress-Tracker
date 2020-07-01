@@ -21,5 +21,6 @@ namespace eCourse.Database.Entities
         public int UposlenikId { get; set; }
         public int BrojCasova { get; set; }
         public virtual List<Cas> Casovi { get; set; }
+        public virtual List<KlijentKursInstanca> KlijentiNaKursu { get; set; }
     }
 }

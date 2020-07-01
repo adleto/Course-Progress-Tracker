@@ -50,7 +50,7 @@
                     <StackLayout>
                         <Label Text="{Binding VrijemeIspit, StringFormat='Ispit je održan: {0}.', FallbackValue='Ispit je održan x.'}" HorizontalTextAlignment="Center"></Label>
                         <Label IsVisible="{Binding NemaPrisustvoNaIspitu}" Text="Niste prisustvovali ispitu!" HorizontalTextAlignment="Center"></Label>
-                        <Label IsVisible="{Binding ImaPrisustvoNaIspitu}" Text="{Binding IspitPoeni, StringFormat='Vaš rezultat je: {0:#.00}% osvjenih bodova.', FallbackValue='Vaš rezultat je x bodova.'}" HorizontalTextAlignment="Center"></Label>
+                        <Label IsVisible="{Binding ImaPrisustvoNaIspitu}" Text="{Binding IspitPoeni, StringFormat='Vaš rezultat je: {0:#.00}% osvjenih bodova.', FallbackValue='Vaš rezultat još nije unesen.'}" HorizontalTextAlignment="Center"></Label>
                     </StackLayout>
                 </Frame>
                 <Frame x:Name="Casovi" IsVisible="{Binding PrijavljenIAktivan}" BorderColor="White" Padding="3">

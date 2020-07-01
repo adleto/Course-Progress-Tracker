@@ -16,4 +16,10 @@ namespace eCourse.Models.Recommender
         [LoadColumn(2)]
         public float Label;
     }
+
+    public class KursRatingPrediction
+    {
+        public float Label;
+        public float Score;
+    }
 }
