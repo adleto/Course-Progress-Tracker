@@ -29,5 +29,11 @@
     <ProjectReference Include="..\eCourse.Services\eCourse.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Scripts\sql_script.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

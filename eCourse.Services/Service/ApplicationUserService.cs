@@ -111,7 +111,6 @@ namespace eCourse.Services.Service
             var user = await _context.ApplicationUser
                 .Include(au => au.ApplicationUserRoles)
                     .ThenInclude(r => r.Role)
-                .Include(o => o.Opcina)
                 .FirstOrDefaultAsync(x => x.Username == username && x.Active == true);
             if (user != null)
             {
@@ -278,8 +277,8 @@ namespace eCourse.Services.Service
                 var returnModel = new OsobljeModel
                 {
                     Active = model.ApplicationUser.Active,
-                    DatumRodjenja = model.ApplicationUser.DatumRodjenja,
-                    DatumZaposlenja = model.DatumZaposlenja,
+                    DatumRodjenja = model.ApplicationUser.DatumRodjenja.Date,
+                    DatumZaposlenja = model.DatumZaposlenja.Date,
                     Email = model.ApplicationUser.Email,
                     Id = model.ApplicationUser.Id,
                     Ime = model.ApplicationUser.Ime,
@@ -314,7 +313,7 @@ namespace eCourse.Services.Service
             {
                 var returnModel = new KlijentModel
                 {
-                    DatumRodjenja = model.ApplicationUser.DatumRodjenja,
+                    DatumRodjenja = model.ApplicationUser.DatumRodjenja.Date,
                     Email = model.ApplicationUser.Email,
                     Id = model.ApplicationUser.Id,
                     Ime = model.ApplicationUser.Ime,

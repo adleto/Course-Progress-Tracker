@@ -40,6 +40,7 @@ namespace eCourse.Services.Service
                 }
                 await _context.SaveChangesAsync();
                 var returnModel = _mapper.Map<KursProsireniModel>(noviKurs);
+                returnModel.Tagovi = new List<TagModel>();
                 model.Tagovi.ForEach(t => returnModel.Tagovi.Add(new TagModel
                 {
                     Id = t.Id,

@@ -17,12 +17,11 @@ namespace eCourse.WebAPI
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
             using (var scope = host.Services.CreateScope())
             {
                 var service = scope.ServiceProvider.GetRequiredService<CourseContext>();
                 SetupService.MigrateDatabase(service);
-                SetupService.SeedDatabase(service);
+                //SetupService.SeedDatabase(service); //<- Zakomentarisano jer se puni preko sql scripte. NE KORISTIT!
             }
 
             host.Run();

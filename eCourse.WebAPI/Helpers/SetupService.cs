@@ -3,6 +3,7 @@ using eCourse.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 
@@ -55,7 +56,7 @@ namespace eCourse.WebAPI.Helpers
                     new TipUplate
                     {
                         Naziv = "Članarina",
-                        Cijena = 200 //mjesečna cijena
+                        Cijena = 200 //inicijalna mjesečna cijena (admin je može mijenjati kasnije)
                     },
                     new TipUplate
                     {
@@ -78,7 +79,7 @@ namespace eCourse.WebAPI.Helpers
                         Email = "osoblje@user.com",
                         Username = "administrativnoOsoblje",
                         PasswordSalt = "4MDzEbW7FZxGG0kEoSy8dg==",
-                        PasswordHash = "4gGIxxpc5KbSa78rD0Mf9/0GusmDxEThMXG/XqmT6Zc=",
+                        PasswordHash = "Qx+8APMxTi+3z7rAi4cr7w==",
                         DatumRodjenja = new System.DateTime(1995,1,1),
                         Ime = "Charlie",
                         OpcinaId = 1,
@@ -92,8 +93,8 @@ namespace eCourse.WebAPI.Helpers
                     {
                         Email = "user1@user.com",
                         Username = "predavac",
-                        PasswordSalt = "/rDyKmixi4V+mLEHYl6ZnQ==",
-                        PasswordHash = "4vyRimmwsTtpKwDT/p4X52wzBG7mQXHJf1k79d847GA=",
+                        PasswordSalt = "4MDzEbW7FZxGG0kEoSy8dg==",
+                        PasswordHash = "Qx+8APMxTi+3z7rAi4cr7w==",
                         DatumRodjenja = new System.DateTime(1995,1,1),
                         Ime = "Emma",
                         OpcinaId = 1,
@@ -107,8 +108,8 @@ namespace eCourse.WebAPI.Helpers
                     {
                         Email = "user2@user.com",
                         Username = "predavac2",
-                        PasswordSalt = "/rDyKmixi4V+mLEHYl6ZnQ==",
-                        PasswordHash = "4vyRimmwsTtpKwDT/p4X52wzBG7mQXHJf1k79d847GA=",
+                        PasswordSalt = "4MDzEbW7FZxGG0kEoSy8dg==",
+                        PasswordHash = "Qx+8APMxTi+3z7rAi4cr7w==",
                         DatumRodjenja = new System.DateTime(1995,1,1),
                         Ime = "Jason",
                         OpcinaId = 1,
@@ -122,8 +123,8 @@ namespace eCourse.WebAPI.Helpers
                     {
                         Email = "mobile@user.com",
                         Username = "mobile",
-                        PasswordSalt = "m3drxJcDcSrIlAHloDVKWg==",
-                        PasswordHash = "tXuFA6coobuIii4KtqAJOzY5+7xeRloTU0JI8FZsH7E=",
+                        PasswordSalt = "4MDzEbW7FZxGG0kEoSy8dg==",
+                        PasswordHash = "Qx+8APMxTi+3z7rAi4cr7w==",
                         DatumRodjenja = new System.DateTime(1995,1,1),
                         Ime = "Michael",
                         OpcinaId = 1,
@@ -137,8 +138,8 @@ namespace eCourse.WebAPI.Helpers
                     {
                         Email = "mobile2@user.com",
                         Username = "mobile2",
-                        PasswordSalt = "m3drxJcDcSrIlAHloDVKWg==",
-                        PasswordHash = "tXuFA6coobuIii4KtqAJOzY5+7xeRloTU0JI8FZsH7E=",
+                        PasswordSalt = "4MDzEbW7FZxGG0kEoSy8dg==",
+                        PasswordHash = "Qx+8APMxTi+3z7rAi4cr7w==",
                         DatumRodjenja = new System.DateTime(1995,1,1),
                         Ime = "Ricky",
                         OpcinaId = 1,
@@ -152,8 +153,8 @@ namespace eCourse.WebAPI.Helpers
                     {
                         Email = "mobile3@user.com",
                         Username = "mobile3",
-                        PasswordSalt = "m3drxJcDcSrIlAHloDVKWg==",
-                        PasswordHash = "tXuFA6coobuIii4KtqAJOzY5+7xeRloTU0JI8FZsH7E=",
+                        PasswordSalt = "4MDzEbW7FZxGG0kEoSy8dg==",
+                        PasswordHash = "Qx+8APMxTi+3z7rAi4cr7w==",
                         DatumRodjenja = new System.DateTime(1995,1,1),
                         Ime = "Edie",
                         OpcinaId = 1,

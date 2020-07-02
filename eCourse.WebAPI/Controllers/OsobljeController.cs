@@ -50,7 +50,7 @@ namespace eCourse.WebAPI.Controllers
             }
             catch
             {
-                return NotFound(new ApiException("Object with that id was not found.", System.Net.HttpStatusCode.NotFound));
+                return NotFound(new ApiException("Ne postoji objekat sa tim ID-om.", System.Net.HttpStatusCode.NotFound));
             }
         }
         [HttpGet]

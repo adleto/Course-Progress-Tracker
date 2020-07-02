@@ -131,7 +131,7 @@ namespace eCourse.Services.Service
             }
             catch
             {
-                throw new Exception("Client with that id does not exist.");
+                throw new Exception("Klijent sa tim ID-om ne postoji.");
             }
         }
 

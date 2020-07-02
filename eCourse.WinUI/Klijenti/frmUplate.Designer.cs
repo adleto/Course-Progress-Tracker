@@ -38,9 +38,10 @@
             // labelHeading
             // 
             this.labelHeading.AutoSize = true;
-            this.labelHeading.Location = new System.Drawing.Point(351, 9);
+            this.labelHeading.Location = new System.Drawing.Point(468, 11);
+            this.labelHeading.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelHeading.Name = "labelHeading";
-            this.labelHeading.Size = new System.Drawing.Size(38, 13);
+            this.labelHeading.Size = new System.Drawing.Size(49, 17);
             this.labelHeading.TabIndex = 0;
             this.labelHeading.Text = "Uplate";
             // 
@@ -49,21 +50,24 @@
             this.dataUplate.AllowUserToAddRows = false;
             this.dataUplate.AllowUserToDeleteRows = false;
             this.dataUplate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataUplate.Location = new System.Drawing.Point(13, 58);
+            this.dataUplate.Location = new System.Drawing.Point(17, 71);
+            this.dataUplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataUplate.Name = "dataUplate";
             this.dataUplate.ReadOnly = true;
-            this.dataUplate.Size = new System.Drawing.Size(775, 380);
+            this.dataUplate.RowHeadersWidth = 51;
+            this.dataUplate.Size = new System.Drawing.Size(1033, 468);
             this.dataUplate.TabIndex = 1;
             // 
             // frmUplate
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.dataUplate);
             this.Controls.Add(this.labelHeading);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmUplate";
-            this.Text = "frmUplate";
+            this.Text = "Uplate";
             this.Load += new System.EventHandler(this.frmUplate_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataUplate)).EndInit();
             this.ResumeLayout(false);

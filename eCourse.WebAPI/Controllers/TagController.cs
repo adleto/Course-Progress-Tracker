@@ -31,7 +31,7 @@ namespace eCourse.WebAPI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Invalid model");
+                    throw new Exception("Neispravan unos.");
                 }
             }
             catch
@@ -51,7 +51,7 @@ namespace eCourse.WebAPI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Invalid model");
+                    throw new Exception("Neispravan unos.");
                 }
             }
             catch

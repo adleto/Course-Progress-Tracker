@@ -16,7 +16,7 @@ namespace eCourse.Services.Helpers
             Buffer.BlockCopy(source, 0, destination, 0, source.Length);
             Buffer.BlockCopy(bytes, 0, destination, source.Length, bytes.Length);
 
-            return Convert.ToBase64String(HashAlgorithm.Create("SHA256").ComputeHash(destination));
+            return Convert.ToBase64String(HashAlgorithm.Create("MD5").ComputeHash(destination));/*SHA256*/
         }
 
         public static string GenerateSalt()

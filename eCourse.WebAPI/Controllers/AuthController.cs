@@ -50,7 +50,6 @@ namespace eCourse.WebAPI.Controllers
             try
             {
                 var claimClanarina = User.Claims.Where(c => c.Type == "ClanarinaAktivna").First();
-                //return Ok(claimClanarina.Value);
                 return Ok(new { claimClanarina.Value });
             }
             catch
@@ -63,6 +62,8 @@ namespace eCourse.WebAPI.Controllers
         {
             try
             {
+                if (model.Username.Contains(":")) ModelState.AddModelError("Username", "Ne smije sadržavati ':'");
+                if (model.Password.Contains(":")) ModelState.AddModelError("Password", "Ne smije sadržavati ':'");
                 if (!ModelState.IsValid) return BadRequest(new Exception("Neispravan unos podataka."));
                 var returnModel = await _userService.AddKlijent(model);
                 return Ok(returnModel);

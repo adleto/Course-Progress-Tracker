@@ -25,14 +25,14 @@ namespace eCourse.Mobile.ViewModels
                 await Navigation.PushModalAsync(new NavigationPage(new RegisterPage()));
             });
         }
-        string _username = "mobile2";//string.Empty;
+        string _username = /*"mobile2";//*/string.Empty;
         public string Username
         {
             get { return _username; }
             set { SetProperty(ref _username, value); }
         }
 
-        string _password = "mobile";//string.Empty;
+        string _password = /*"mobile";//*/string.Empty;
         public string Password
         {
             get { return _password; }

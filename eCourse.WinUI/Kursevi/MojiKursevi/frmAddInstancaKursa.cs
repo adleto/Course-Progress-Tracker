@@ -84,7 +84,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
             try
             {
                 var item = datePocetak.Value;
-                if (item.Date<DateTime.Now.Date)
+                if (item.Date<=DateTime.Now.Date)
                 {
                     throw new Exception();
                 }
@@ -95,7 +95,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
             }
             catch
             {
-                errorProvider1.SetError(datePocetak, "Datum mora biti noviji ili jednak današnjem.");
+                errorProvider1.SetError(datePocetak, "Datum mora biti noviji od današnjeg.");
                 e.Cancel = true;
             }
         }
@@ -106,7 +106,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
             {
                 var item = datePrijave.Value;
                 var pocetak = datePocetak.Value;
-                if (item.Date < DateTime.Now.Date || item.Date > pocetak.Date)
+                if (!(pocetak.Date == DateTime.Now.Date) &&(item.Date <= DateTime.Now.Date || item.Date > pocetak.Date))
                 {
                     throw new Exception();
                 }
@@ -117,7 +117,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
             }
             catch
             {
-                errorProvider1.SetError(datePrijave, "Datum mora biti noviji ili jednak današnjem i stariji od datuma početka.");
+                errorProvider1.SetError(datePrijave, "Datum mora biti noviji od današnjeg i stariji od datuma početka.");
                 e.Cancel = true;
             }
         }

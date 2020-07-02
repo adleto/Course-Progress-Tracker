@@ -60,7 +60,7 @@ namespace eCourse.Services.Service
                     .Where(ki => ki.UposlenikId == uposlenikId)
                     .OrderByDescending(ki => ki.PocetakDatum)
                     .AsQueryable();
-                if (model != null) 
+                if (model != null)
                 {
                     if (model.Zavrseni && !model.NisuZavrseni)
                     {
@@ -70,7 +70,7 @@ namespace eCourse.Services.Service
                     {
                         query = query.Where(r => r.KrajDatum == null);
                     }
-                    else if(!model.Zavrseni && !model.NisuZavrseni)
+                    else if (!model.Zavrseni && !model.NisuZavrseni)
                     {
                         query = query.Take(0);
                     }
@@ -100,15 +100,20 @@ namespace eCourse.Services.Service
                     KursInstancaId = model.Id,
                     KursNaziv = model.Kurs.Naziv,
                     KursSkraceniNaziv = model.Kurs.SkraceniNaziv,
-                    Pocetak = model.PocetakDatum,
+                    Pocetak = model.PocetakDatum.Date,
                     UposlenikId = model.UposlenikId,
                     UposlenikIme = model.Uposlenik.ApplicationUser.Ime,
                     UposlenikPrezime = model.Uposlenik.ApplicationUser.Prezime,
-                    PrijaveDo = model.PrijaveDoDatum,
+                    PrijaveDo = model.PrijaveDoDatum.Date,
                     Kapacitet = model.Kapacitet,
                     KrajDate = model.KrajDatum,
                     BrojCasova = model.BrojCasova
                 };
+                if (model.KrajDatum != null)
+                {
+                    DateTime k = (DateTime) model.KrajDatum;
+                    returnModel.KrajDate = k.Date;
+                }
                 var ispit = _context.Ispit
                     .Where(i => i.KursInstancaId == model.Id)
                     .FirstOrDefault();
@@ -225,8 +230,8 @@ namespace eCourse.Services.Service
                 if (instanca.UposlenikId != uposlenikId) throw new Exception("Instanca ne pripada uposleniku.");
                 if (instanca.KrajDatum?.Date <= DateTime.Now.Date) throw new Exception("Kurs je već završen.");
                 if (instanca.PocetakDatum.Date < DateTime.Now.Date) throw new Exception("Kurs je već započeo.");
-                if(model.PocetakDatum.Date < DateTime.Now.Date) throw new Exception("Datum početka ne može biti manji od današnjeg.");
-                if(model.PrijaveDoDatum.Date > model.PocetakDatum.Date) throw new Exception("Krajnji rok za prijave ne može biti noviji od datuma početka.");
+                if (model.PocetakDatum.Date < DateTime.Now.Date) throw new Exception("Datum početka ne može biti manji od današnjeg.");
+                if (model.PrijaveDoDatum.Date > model.PocetakDatum.Date) throw new Exception("Krajnji rok za prijave ne može biti noviji od datuma početka.");
                 var brojStudenata = _context.KlijentKursInstanca.Where(k => k.KursInstancaId == instanca.Id).Count();
                 if (model.Kapacitet != null && brojStudenata > model.Kapacitet) throw new Exception("Kapacitet ne može biti niži od trenutnog broja upisanih studenata.");
                 if (model.Kapacitet != null && model.Kapacitet <= 0) throw new Exception("Kapacitet ne može biti manji ili jednak nuli.");
@@ -252,16 +257,16 @@ namespace eCourse.Services.Service
             {
                 var instanca = _context.KursInstanca.Find(id);
                 if (instanca.UposlenikId != uposlenikId) throw new Exception("Instanca ne pripada uposleniku.");
-                if (instanca.KrajDatum!=null) throw new Exception("Kurs je već završen.");
+                if (instanca.KrajDatum != null) throw new Exception("Kurs je već završen.");
                 instanca.KrajDatum = DateTime.Now;
-                if (instanca.BrojCasova >= _context.Cas.Where(c=>c.KursInstanca == instanca).Count() || postaviZaKlijenteKaoPolozili)
+                if (instanca.BrojCasova >= _context.Cas.Where(c => c.KursInstanca == instanca).Count() || postaviZaKlijenteKaoPolozili)
                 {
                     var klijentiInstance = await _context.KlijentKursInstanca
                         .Where(k => k.KursInstanca == instanca)
                         .ToListAsync();
                     klijentiInstance.ForEach(k =>
                     {
-                        if(k.UplataIzvrsena == null || k.UplataIzvrsena == true)
+                        if (k.UplataIzvrsena == null || k.UplataIzvrsena == true)
                         {
                             k.Polozen = true;
                             k.Active = false;

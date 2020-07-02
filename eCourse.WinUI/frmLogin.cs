@@ -35,7 +35,7 @@ namespace eCourse.WinUI
             {
                 if(ex.HttpStatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    MessageBox.Show("Invalid username or password.");
+                    MessageBox.Show("Neispravan username ili password.");
                 }
                 else
                 {

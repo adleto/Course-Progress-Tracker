@@ -19,7 +19,7 @@
 
             <Button Command="{Binding LoginCommand}"  HorizontalOptions="FillAndExpand" Text="Login"></Button>
             <Button Command="{Binding RegisterPageCommand}"  HorizontalOptions="FillAndExpand" Text="Register"></Button>
-            <Label IsVisible="{Binding IsBusy}" Text="..."></Label>
+            <Label HorizontalTextAlignment="Center" IsVisible="{Binding IsBusy}" Text="..."></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
