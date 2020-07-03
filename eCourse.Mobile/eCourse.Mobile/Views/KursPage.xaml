@@ -20,7 +20,7 @@
                     <Label Text="{Binding Kapacitet, StringFormat='Kapacitet: {0}', FallbackValue='Kapacitet'}" HorizontalTextAlignment="Center"></Label>
                 </Frame>
                 <Frame IsVisible="{Binding PrikaziCijenu}" BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
-                    <Label Text="{Binding Cijena, StringFormat='Cijena ovog kursa je: {0:#,#.00}', FallbackValue='Cijena'}" HorizontalTextAlignment="Center"></Label>
+                    <Label Text="{Binding Cijena, StringFormat='Cijena ovog kursa je: {0:#,#.00}KM', FallbackValue='Cijena'}" HorizontalTextAlignment="Center"></Label>
                 </Frame>
                 <Frame IsVisible="{Binding NijePrijavljen}" BackgroundColor="White" BorderColor="Black" Padding="8" HorizontalOptions="FillAndExpand">
                     <Label Text="{Binding DatumPocetka, StringFormat='Datum početka kursa: {0:dd/MM/yyyy}', FallbackValue='Datum Početak'}" HorizontalTextAlignment="Center"></Label>
@@ -50,7 +50,7 @@
                     <StackLayout>
                         <Label Text="{Binding VrijemeIspit, StringFormat='Ispit je održan: {0}.', FallbackValue='Ispit je održan x.'}" HorizontalTextAlignment="Center"></Label>
                         <Label IsVisible="{Binding NemaPrisustvoNaIspitu}" Text="Niste prisustvovali ispitu!" HorizontalTextAlignment="Center"></Label>
-                        <Label IsVisible="{Binding ImaPrisustvoNaIspitu}" Text="{Binding IspitPoeni, StringFormat='Vaš rezultat je: {0:#.00}% osvjenih bodova.', FallbackValue='Vaš rezultat još nije unesen.'}" HorizontalTextAlignment="Center"></Label>
+                        <Label IsVisible="{Binding ImaPrisustvoNaIspitu}" Text="{Binding IspitPoeni, StringFormat='Vaš rezultat je: {0:#.00}% osvojenih bodova.', FallbackValue='Vaš rezultat još nije unesen.'}" HorizontalTextAlignment="Center"></Label>
                     </StackLayout>
                 </Frame>
                 <Frame x:Name="Casovi" IsVisible="{Binding PrijavljenIAktivan}" BorderColor="White" Padding="3">

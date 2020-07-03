@@ -4,6 +4,7 @@ using eCourse.Models.Tag;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -32,9 +33,9 @@ namespace eCourse.Mobile.ViewModels
             get { return tagList; }
             set { SetProperty(ref tagList, value); }
         }
-        public ICommand FiltrirajCommand { get; set; }
-        public ICommand LoadTagsCommand { get; set; }
-        public ICommand LoadPreporuceniCommand { get; set; }
+        //public ICommand FiltrirajCommand { get; set; }
+        //public ICommand LoadTagsCommand { get; set; }
+        //public ICommand LoadPreporuceniCommand { get; set; }
         private string pretraga = string.Empty;
         public string Pretraga
         {
@@ -62,24 +63,24 @@ namespace eCourse.Mobile.ViewModels
         private readonly ApiService _recommenderService = new ApiService("KursInstancaData/GetRecommended");
         public KatalogViewModel()
         {
-            LoadTagsCommand = new Command(async () =>
-            {
-                await LoadTags();
-            });
-            FiltrirajCommand = new Command(async () =>
-            {
-                await LoadData();
-            });
-            LoadPreporuceniCommand = new Command(async () =>
-            {
-                await LoadPreporuceni();
-            });
-            LoadTagsCommand.Execute(null);
-            FiltrirajCommand.Execute(null);
-            LoadPreporuceniCommand.Execute(null);
+            //LoadTagsCommand = new Command(async () =>
+            //{
+            //    await LoadTags();
+            //});
+            //FiltrirajCommand = new Command(async () =>
+            //{
+            //    await LoadData();
+            //});
+            //LoadPreporuceniCommand = new Command(async () =>
+            //{
+            //    await LoadPreporuceni();
+            //});
+            //LoadTagsCommand.Execute(null);
+            //FiltrirajCommand.Execute(null);
+            //LoadPreporuceniCommand.Execute(null);
         }
 
-        private async Task LoadPreporuceni()
+        public async Task LoadPreporuceni()
         {
             try
             {
@@ -89,7 +90,7 @@ namespace eCourse.Mobile.ViewModels
             catch { }
         }
 
-        private async Task LoadTags()
+        public async Task LoadTags()
         {
             try
             {
@@ -103,7 +104,7 @@ namespace eCourse.Mobile.ViewModels
             }
             catch { }
         }
-        private async Task LoadData()
+        public async Task LoadData()
         {
             try
             {

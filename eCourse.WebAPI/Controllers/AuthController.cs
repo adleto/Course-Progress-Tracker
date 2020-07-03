@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using eCourse.Models.ApplicationUser;
 using eCourse.Models.Helpers;
+using eCourse.Models.Klijent;
 using eCourse.Services.Interface;
 using eCourse.Services.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -50,7 +51,9 @@ namespace eCourse.WebAPI.Controllers
             try
             {
                 var claimClanarina = User.Claims.Where(c => c.Type == "ClanarinaAktivna").First();
-                return Ok(new { claimClanarina.Value });
+                bool aktivna = false;
+                if (claimClanarina.Value == "True") aktivna = true; 
+                return Ok(new ClanarinaModel { ClanarinaAktivna = aktivna });
             }
             catch
             {

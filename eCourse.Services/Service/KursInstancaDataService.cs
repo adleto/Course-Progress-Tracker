@@ -27,9 +27,9 @@ namespace eCourse.Services.Service
             try
             {
                 var query = _context.KursInstanca
-                .Include(k => k.Kurs)
+                    .Include(k => k.Kurs)
                     .ThenInclude(kk => kk.TagoviKursa)
-                .AsQueryable();
+                    .AsQueryable();
                 if (!string.IsNullOrEmpty(model.Pretraga))
                 {
                     query = query
@@ -38,7 +38,7 @@ namespace eCourse.Services.Service
                 }
                 if (model.GetSve)
                 {
-                    query = query.Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date);
+                    query = query.Where(k => k.PrijaveDoDatum.Date > DateTime.Now.Date && k.KrajDatum == null);
                 }
 
                 var result = await query.ToListAsync();
@@ -166,14 +166,9 @@ namespace eCourse.Services.Service
             {
                 InstancaId = k.Id,
             };
-            if (k.PocetakDatum.Date > DateTime.Now.Date)
-            {
-                returnModel.Naziv = k.Kurs.Naziv + " (Počinje: " + k.PocetakDatum.ToString("dd/MM/yyyy") + ")";
-            }
-            else
-            {
-                returnModel.Naziv = k.Kurs.Naziv + " (Počeo: " + k.PocetakDatum.ToString("dd/MM/yyyy") + ")";
-            }
+
+            returnModel.Naziv = k.Kurs.Naziv + " (Početak: " + k.PocetakDatum.ToString("dd/MM/yyyy") + ")";
+
             return returnModel;
         }
 
@@ -185,6 +180,7 @@ namespace eCourse.Services.Service
                     .Include(k => k.Kurs)
                     .Include(k => k.Uposlenik)
                         .ThenInclude(u => u.ApplicationUser)
+                    .Include(k => k.Casovi)
                     .Where(k => k.Id == instancaId)
                     .FirstOrDefault();
                 var klijentInstanca = _context.KlijentKursInstanca
@@ -217,7 +213,7 @@ namespace eCourse.Services.Service
                     {
                         returnModel.PrijavljenIAktivan = true;
                     }
-                    else if(klijentInstanca.UplataIzvrsena!=null && klijentInstanca.UplataIzvrsena == false)
+                    else if (klijentInstanca.UplataIzvrsena != null && klijentInstanca.UplataIzvrsena == false)
                     {
                         returnModel.PrijavljenAliNeUplacen = true;
                     }

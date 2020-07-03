@@ -127,7 +127,7 @@ namespace eCourse.WinUI.Klijenti
 
         private void gridKlijenti_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var idSelected = gridKlijenti.SelectedRows[0].Cells[0].Value;
+            var idSelected = gridKlijenti.SelectedRows[0].Cells[gridKlijenti.Columns[nameof(KlijentModel.KlijentId)].Index].Value;
             var frm = new frmUplate(int.Parse(idSelected.ToString()));
             frm.Show();
         }

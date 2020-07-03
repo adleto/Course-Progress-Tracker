@@ -44,7 +44,7 @@ namespace eCourse.Services.Service
                     if (model.Iznos != kursInstanca.Cijena) throw new Exception("Netačan uplaćeni iznos.");
 
                     //cool sve obavi poso
-                    novaUplata.KursInstancaId = model.KursInstancaKlijentId;
+                    novaUplata.KursInstancaId = kursInstanca.Id;
                     novaUplata.TipUplateId = model.TipUplate;
                     kursInstancaKlijenta.UplataIzvrsena = true;
                     kursInstancaKlijenta.Active = true; // Pazi na upotrebu ovog
@@ -202,7 +202,7 @@ namespace eCourse.Services.Service
                 .ToList();
             if (clanarina.Count > 0)
             {
-                returnModel.ProduzenaClanarinaDo = clanarina[0].DatumIsteka;
+                returnModel.ProduzenaClanarinaDo = clanarina[0].DatumIsteka.Date;
             }
             return returnModel;
         }

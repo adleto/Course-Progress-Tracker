@@ -49,7 +49,7 @@ namespace eCourse.WinUI.Klijenti
                 errorProvider1.SetError(textIznos, "Iznos ne može biti manji od cijene članarine.");
                 e.Cancel = true;
             }
-            else if (selectedKurs !=null && result != selectedKurs.Cijena)
+            else if ((selectedKurs !=null && selectedKurs.KlijentKursInstancaId!=-1) &&result != selectedKurs.Cijena)
             {
                 errorProvider1.SetError(textIznos, "Uplata za kurs mora biti jednaka cijeni kursa.");
                 e.Cancel = true;
@@ -113,6 +113,11 @@ namespace eCourse.WinUI.Klijenti
                 errorProvider1.SetError(comboTip, "Tip uplate mora biti odabran.");
                 e.Cancel = true;
             }
+            else if (comboTip.SelectedValue.ToString() == "1" && comboKursInstancaKlijenta.Items.Count <= 1)
+            {
+                errorProvider1.SetError(comboTip, "Nema kursa koji zatjeva uplatu.");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(comboTip, null);
@@ -124,7 +129,11 @@ namespace eCourse.WinUI.Klijenti
             {
                 var id = comboKlijent.SelectedValue.ToString();
                 var result = await _klijentKursInstancaService.GetById<List<KlijentKursInstancaForUplataModel>>(id);
-                if (result.Count == 0) MessageBox.Show("Klijent nije prijavio niti jedan kurs koji zahtjeva uplatu.");
+                if (result.Count == 0)
+                {
+                    MessageBox.Show("Klijent nije prijavio niti jedan kurs koji zahtjeva uplatu.");
+                    errorProvider1.SetError(comboTip, "Klijent nije prijavio niti jedan kurs koji zahtjeva uplatu.");
+                }
                 result.Add(new KlijentKursInstancaForUplataModel
                 {
                     NazivInstance = "",
@@ -199,6 +208,7 @@ namespace eCourse.WinUI.Klijenti
                     if (uplata != null)
                     {
                         MessageBox.Show("Uplata dodata.");
+                        this.Close();
                     }
                 }
             }
@@ -224,7 +234,11 @@ namespace eCourse.WinUI.Klijenti
 
         private void comboKursInstancaKlijenta_Validating(object sender, CancelEventArgs e)
         {
-            if (comboTip.SelectedValue.ToString() == "1")
+            if (errorProvider1.GetError(comboTip) != null)
+            {
+                return;
+            }
+            else if (comboTip.SelectedValue.ToString() == "1")
             {
                 var selectedKurs = comboKursInstancaKlijenta.SelectedItem as KlijentKursInstancaForUplataModel;
                 if(selectedKurs == null || selectedKurs.KlijentKursInstancaId == -1)

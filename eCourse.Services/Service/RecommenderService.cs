@@ -39,7 +39,6 @@ namespace eCourse.Services.Service
                             .ThenInclude(kk => kk.Kurs)
                         .Where(k => k.Rejting != null)
                         .ToList();
-
                     //IDataView trainingDataView = mlContext.Data.LoadFromTextFile<KursRejting>(TrainingDataLocation, hasHeader: true, ar: ',');
                     var dataList = new List<KursRejting>();
                     foreach(var x in tmpData)
@@ -79,11 +78,18 @@ namespace eCourse.Services.Service
                 }
                 var sviNadolazeciKursevi = _context.KursInstanca
                     .Include(k => k.Kurs) // Includan jer treba nakon obrade u servicu zbog naziv kursa
-                    .Where(k => k.PrijaveDoDatum.Date >= DateTime.Now.Date)
+                    .Where(k => k.PrijaveDoDatum.Date >= DateTime.Now.Date && k.KrajDatum==null)
                     .ToList();
+                var prijavljeniKursevi = _context
+                    .KlijentKursInstanca
+                    .Where(k => k.KlijentId == klijentId)
+                    .Select(p => p.KursInstancaId)
+                    .ToList();
+
                 var scoreData = new List<Tuple<KursInstanca, float>>();
                 foreach(var kursInstaca in sviNadolazeciKursevi)
                 {
+                    if (prijavljeniKursevi.Contains(kursInstaca.Id)) continue; // Izbjegavam već prijavljene kurseve
                     var predictionEngine = mlContext.Model.CreatePredictionEngine<KursRejting, KursRatingPrediction>(model);
                     var prediction = predictionEngine.Predict(new KursRejting
                     {

@@ -34,6 +34,11 @@ namespace eCourse.Mobile.ViewModels
                 try
                 {
                     if (Ocjena == null) return;
+                    if(Ocjena < 0 || Ocjena > 5)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Greška", "Vrijednost rejtinga može biti najviše 5 i najmanje 1.", "OK");
+                        return;
+                    }
                     int? i = await _rejtingService.Insert<int?>(new RejtingModel
                     {
                         InstancaId = _instancaId,
@@ -116,7 +121,8 @@ namespace eCourse.Mobile.ViewModels
                 NemaPrisustvoNaIspitu = false;
                 if (VrijemeIspit != null)
                 {
-                    if(PrisustvovoIspitu != null)
+                    var vi = (DateTime)VrijemeIspit;
+                    if(PrisustvovoIspitu != null && vi.Date<=DateTime.Now.Date)
                     {
                         if ((bool)PrisustvovoIspitu) ImaPrisustvoNaIspitu = true;
                         else NemaPrisustvoNaIspitu = true;
@@ -129,6 +135,7 @@ namespace eCourse.Mobile.ViewModels
                 }
 
                 Polozen = model.Polozen;
+                NijePolozen = !Polozen;
 
                 var zavrseniCasovi = model.Casovi
                     .Where(c => c.Odrzan == true)
@@ -138,7 +145,8 @@ namespace eCourse.Mobile.ViewModels
                     .Where(c => c.Odrzan == false)
                     .OrderByDescending(c => c.DatumVrijemeOdrzavanja)
                     .ToList();
-                Progres = zavrseniCasovi.Count / BrojCasova;
+                Progres = zavrseniCasovi.Count / (float)BrojCasova;
+                Progres_Value = (Progres * 100).ToString("F0");
                 NadolazeciList = new ObservableCollection<CasModel>(neodrzaniCasovi);
                 OdrzaniList = new ObservableCollection<CasModel>(zavrseniCasovi);
 
@@ -204,10 +212,12 @@ namespace eCourse.Mobile.ViewModels
         public bool? PrisustvovoIspitu { get { return prisustvovoIspitu; } set { SetProperty(ref prisustvovoIspitu, value); } }
         private bool? polozen;
         public bool? Polozen { get { return polozen; } set { SetProperty(ref polozen, value); } }
-        public bool? NijePolozen { get { return !polozen; } }
+        private bool? nijePolozen;
+        public bool? NijePolozen { get { return nijePolozen; } set { SetProperty(ref nijePolozen, value); } }
         private float progres;
         public float Progres { get { return progres; } set { SetProperty(ref progres, value); } }
-        public string Progres_Value { get { return (progres * 100).ToString("F0"); }  }
+        private string progres_value = null;
+        public string Progres_Value { get { return progres_value; } set { SetProperty(ref progres_value, value); } }
         private int? ocjena;
         public int? Ocjena { get { return ocjena; } set { SetProperty(ref ocjena, value); } }
         private bool mozeOstavitOcjenu;

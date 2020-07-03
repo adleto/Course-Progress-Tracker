@@ -14,6 +14,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout Padding="5">
             <Label Text="Moj profil"
                    FontSize="Title"
@@ -63,5 +64,6 @@
             <Button Text="Ažuriraj podatke" Command="{Binding AzurirajCommand}"></Button>
             <Label VerticalOptions="End" FontSize="13" Text="*Nova lozinka ne mora biti unesena da bi se izvršilo ažuriranje ostalih podataka."></Label>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

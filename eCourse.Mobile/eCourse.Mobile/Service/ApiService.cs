@@ -2,6 +2,7 @@
 using Flurl.Http;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -15,15 +16,15 @@ namespace eCourse.Mobile.Service
 
         private readonly string _route;
 
-
-#if __ANDROID__
-    private string _apiUrl = "http://10.0.2.2:62312/api";
-#else
         private string _apiUrl = "http://localhost:62312/api";
-#endif
 
         public ApiService(string route)
         {
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                _apiUrl = "http://10.0.2.2:62312/api";
+            }
+
             _route = route;
         }
 
@@ -43,7 +44,12 @@ namespace eCourse.Mobile.Service
             }
             catch (FlurlHttpException ex)
             {
-                if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
+                if (ex.Call.HttpStatus == null)
+                {
+                    var uri = ex.Call.Request.RequestUri;
+                    await Application.Current.MainPage.DisplayAlert("Greška", $"Problem sa konekcijom. Adresa \"{uri}\" nije dostupna.", "OK");
+                }
+                else if (ex.Call.HttpStatus == System.Net.HttpStatusCode.Unauthorized)
                 {
                     await Application.Current.MainPage.DisplayAlert("Greška", "Niste authentificirani.", "OK");
                 }
@@ -70,6 +76,12 @@ namespace eCourse.Mobile.Service
             }
             catch (FlurlHttpException ex)
             {
+                if (ex.Call.HttpStatus == null)
+                {
+                    var uri = ex.Call.Request.RequestUri;
+                    await Application.Current.MainPage.DisplayAlert("Greška", $"Problem sa konekcijom. Adresa \"{uri}\" nije dostupna.", "OK");
+                    throw;
+                }
                 var err = await ex.GetResponseJsonAsync<ApiException>();
                 await Application.Current.MainPage.DisplayAlert("Greška", err.Message, "OK");
                 throw;
@@ -87,6 +99,12 @@ namespace eCourse.Mobile.Service
             }
             catch (FlurlHttpException ex)
             {
+                if (ex.Call.HttpStatus == null)
+                {
+                    var uri = ex.Call.Request.RequestUri;
+                    await Application.Current.MainPage.DisplayAlert("Greška", $"Problem sa konekcijom. Adresa \"{uri}\" nije dostupna.", "OK");
+                    throw;
+                }
                 var err = await ex.GetResponseJsonAsync<ApiException>();
                 //var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
 
@@ -113,6 +131,12 @@ namespace eCourse.Mobile.Service
             }
             catch (FlurlHttpException ex)
             {
+                if (ex.Call.HttpStatus == null)
+                {
+                    var uri = ex.Call.Request.RequestUri;
+                    await Application.Current.MainPage.DisplayAlert("Greška", $"Problem sa konekcijom. Adresa \"{uri}\" nije dostupna.", "OK");
+                    throw;
+                }
                 var err = await ex.GetResponseJsonAsync<ApiException>();
                 await Application.Current.MainPage.DisplayAlert("Greška", err.Message, "OK");
                 throw;

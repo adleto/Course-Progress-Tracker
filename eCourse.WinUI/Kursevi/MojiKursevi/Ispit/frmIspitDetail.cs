@@ -17,11 +17,16 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
         private readonly int instancaId;
         int? ispitId = null;
         private readonly ApiService _ispitService = new ApiService("Ispit");
-        public frmIspitDetail(int instancaId, int? ispitId = null)
+        DateTime datumPocetka;
+        public frmIspitDetail(int instancaId, DateTime datumPocetka, int? ispitId = null)
         {
             InitializeComponent();
             this.instancaId = instancaId;
             this.ispitId = ispitId;
+            this.datumPocetka = datumPocetka;
+
+            vrijemePicker.Format = DateTimePickerFormat.Time;
+            vrijemePicker.ShowUpDown = true;
         }
 
         private async void frmIspitDetail_Load(object sender, EventArgs e)
@@ -53,6 +58,11 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
                 errorProvider1.SetError(dateVrijeme, "Ne može biti u prošlosti.");
                 e.Cancel = true;
             }
+            else if (dateVrijeme.Value.Date < datumPocetka.Date)
+            {
+                errorProvider1.SetError(dateVrijeme, "Ne može biti prije datuma početka kursa.");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(dateVrijeme, null);
@@ -78,10 +88,12 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
             {
                 try
                 {
+                    DateTime myDate = dateVrijeme.Value.Date +
+                    vrijemePicker.Value.TimeOfDay;
                     IspitModel result = null;
                     var request = new IspitUpsertModel
                     {
-                        DatumVrijemeIspita = dateVrijeme.Value,
+                        DatumVrijemeIspita = myDate,
                         KursInstancaId = instancaId,
                         Lokacija = txtLokacija.Text
                     };

@@ -135,7 +135,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
 
         private void LoadCasovi(MojaKursInstancaProsireniModel result)
         {
-            gridCasovi.DataSource = result.Casovi;
+            gridCasovi.DataSource = result.Casovi.OrderBy(c => c.DatumVrijemeOdrzavanja).ToList();
             gridCasovi.Columns[nameof(CasModel.Id)].Visible = false;
             gridCasovi.Columns[nameof(CasModel.Opis)].Visible = false;
             gridCasovi.Columns[nameof(CasModel.Odrzan)].Visible = false;
@@ -173,7 +173,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
 
             foreach (DataGridViewRow row in gridCasovi.Rows)
             {
-                row.Cells[gridCasovi.Columns["Number"].Index].Value = gridCasovi.Rows.Count - row.Index;
+                row.Cells[gridCasovi.Columns["Number"].Index].Value = row.Index+1/*gridCasovi.Rows.Count - row.Index*/;
                 MyDataGridViewButtonCell buttonCell = (MyDataGridViewButtonCell)row.Cells[gridCasovi.Columns["Akcija"].Index];
                 bool odrzan = bool.Parse((row.Cells[gridCasovi.Columns[nameof(CasModel.Odrzan)].Index].Value).ToString());
                 if (odrzan)
@@ -198,6 +198,11 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
                 {
                     var selectedCasRow = gridCasovi.Rows[e.RowIndex];
                     DateTime dateOdrzavanja = (DateTime)selectedCasRow.Cells[gridCasovi.Columns[nameof(CasModel.DatumVrijemeOdrzavanja)].Index].Value;
+                    if(dateOdrzavanja.Date > DateTime.Now.Date)
+                    {
+                        MessageBox.Show("Ne može biti označen kao održan ukoliko datum održavanja nije jednak današnjem ili već prošao.");
+                        return;
+                    }
                     var model = new CasUpsertModel
                     {
                         DatumVrijemeOdrzavanja = dateOdrzavanja,
@@ -269,7 +274,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
 
         private async void btnUgovoriCas_Click(object sender, EventArgs e)
         {
-            var frmNoviCas = new frmCasDetalji(id);
+            var frmNoviCas = new frmCasDetalji(id, instanca.Pocetak.Date);
             var dialog = frmNoviCas.ShowDialog();
             if(dialog == DialogResult.OK)
             {
@@ -280,7 +285,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
         private async void gridCasovi_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int casId = (int)gridCasovi.SelectedRows[0].Cells[gridCasovi.Columns[nameof(CasModel.Id)].Index].Value;
-            var frmCasEdit = new frmCasDetalji(id, casId);
+            var frmCasEdit = new frmCasDetalji(id, instanca.Pocetak.Date, casId);
             var dialog = frmCasEdit.ShowDialog();
             if (dialog == DialogResult.OK)
             {
@@ -292,12 +297,12 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
         {
             if (instanca.IspitOrganizovan)
             {
-                var frm = new frmIspitView(id);
+                var frm = new frmIspitView(id, instanca.Pocetak);
                 frm.Show();
             }
             else
             {
-                var frm = new frmIspitDetail(id);
+                var frm = new frmIspitDetail(id, instanca.Pocetak);
                 var dialog = frm.ShowDialog();
                 if(dialog == DialogResult.OK)
                 {

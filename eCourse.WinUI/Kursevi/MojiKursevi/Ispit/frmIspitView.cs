@@ -22,10 +22,12 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
         private IspitProsireniModel model;
         private readonly ApiService _ispitService = new ApiService("Ispit");
         private readonly ApiService _ispitKlijentService = new ApiService("IspitKlijent/UpdateKlijentScores");
-        public frmIspitView(int instancaId)
+        DateTime datePocetak;
+        public frmIspitView(int instancaId, DateTime datePocetak)
         {
             InitializeComponent();
             this.instancaId = instancaId;
+            this.datePocetak = datePocetak;
         }
 
         private async void frmIspitView_Load(object sender, EventArgs e)
@@ -111,7 +113,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
                     var result = await _ispitKlijentService.Insert<KlijentScoresModel>(postModel);
                     if (result != null)
                     {
-                        MessageBox.Show("Operacija uspjepna.");
+                        MessageBox.Show("Operacija usješna.");
                         await LoadIspit();
                     }
                 }
@@ -146,7 +148,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi.Ispit
 
         private async void btnPostavke_Click(object sender, EventArgs e)
         {
-            var frmPostavke = new frmIspitDetail(instancaId, model.Id);
+            var frmPostavke = new frmIspitDetail(instancaId, datePocetak, model.Id);
             var dialog = frmPostavke.ShowDialog();
             if(dialog == DialogResult.OK)
             {

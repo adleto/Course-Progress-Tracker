@@ -17,11 +17,16 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
         int? casId = null;
         int kursInstancaId;
         private readonly ApiService _casService = new ApiService("Cas");
-        public frmCasDetalji(int kursInstancaId, int? casId = null)
+        DateTime _datumPocetkaKursa;
+        public frmCasDetalji(int kursInstancaId, DateTime datumPocetkaKursa, int? casId = null)
         {
             InitializeComponent();
             this.casId = casId;
             this.kursInstancaId = kursInstancaId;
+            _datumPocetkaKursa = datumPocetkaKursa;
+
+            vrijemePicker.Format = DateTimePickerFormat.Time;
+            vrijemePicker.ShowUpDown = true;
         }
 
         private async void frmCasDetalji_Load(object sender, EventArgs e)
@@ -61,9 +66,11 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
             {
                 try
                 {
+                    DateTime myDate = dateVrijeme.Value.Date +
+                    vrijemePicker.Value.TimeOfDay;
                     var model = new CasUpsertModel
                     {
-                        DatumVrijemeOdrzavanja = dateVrijeme.Value,
+                        DatumVrijemeOdrzavanja = myDate,
                         KursInstancaId = kursInstancaId,
                         Lokacija = txtLokacija.Text,
                         Odrzan = checkOdrzan.Checked,
@@ -111,6 +118,11 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
             if (dateVrijeme.Value.Date < DateTime.Now.Date)
             {
                 errorProvider1.SetError(dateVrijeme, "Ne može biti prije današnjeg datuma.");
+                e.Cancel = true;
+            }
+            else if(dateVrijeme.Value.Date < _datumPocetkaKursa.Date)
+            {
+                errorProvider1.SetError(dateVrijeme, "Ne može biti prije datuma početka kursa.");
                 e.Cancel = true;
             }
             else

@@ -27,5 +27,13 @@ namespace eCourse.Mobile.Views
             var item = e.Item as KursInstancaForKlijentListViewModel;
             await Navigation.PushAsync(new KursPage(item.InstancaId));
         }
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await viewModel.LoadTags();
+            await viewModel.LoadData();
+            await viewModel.LoadPreporuceni();
+        }
     }
 }
