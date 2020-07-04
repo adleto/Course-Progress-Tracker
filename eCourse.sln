@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCourse.Mobile.Android", "e
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCourse.Mobile.iOS", "eCourse.Mobile\eCourse.Mobile.iOS\eCourse.Mobile.iOS.csproj", "{E06E07F8-DCF8-4B7F-B65A-10ACE3B0E2CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCourse.Mobile", "eCourse.Mobile\eCourse.Mobile\eCourse.Mobile.csproj", "{631FD81E-7201-4CF8-89B4-250B020BE99F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCourse.Mobile", "eCourse.Mobile\eCourse.Mobile\eCourse.Mobile.csproj", "{631FD81E-7201-4CF8-89B4-250B020BE99F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
