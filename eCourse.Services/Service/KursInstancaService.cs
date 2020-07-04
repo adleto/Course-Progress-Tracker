@@ -111,7 +111,7 @@ namespace eCourse.Services.Service
                 };
                 if (model.KrajDatum != null)
                 {
-                    DateTime k = (DateTime) model.KrajDatum;
+                    DateTime k = (DateTime)model.KrajDatum;
                     returnModel.KrajDate = k.Date;
                 }
                 var ispit = _context.Ispit
@@ -259,20 +259,22 @@ namespace eCourse.Services.Service
                 if (instanca.UposlenikId != uposlenikId) throw new Exception("Instanca ne pripada uposleniku.");
                 if (instanca.KrajDatum != null) throw new Exception("Kurs je već završen.");
                 instanca.KrajDatum = DateTime.Now;
-                if (instanca.BrojCasova >= _context.Cas.Where(c => c.KursInstanca == instanca).Count() || postaviZaKlijenteKaoPolozili)
+
+                var klijentiInstance = await _context.KlijentKursInstanca
+                    .Where(k => k.KursInstanca == instanca)
+                    .ToListAsync();
+                klijentiInstance.ForEach(k =>
                 {
-                    var klijentiInstance = await _context.KlijentKursInstanca
-                        .Where(k => k.KursInstanca == instanca)
-                        .ToListAsync();
-                    klijentiInstance.ForEach(k =>
+                    k.Active = false;
+                    if (instanca.BrojCasova >= _context.Cas.Where(c => c.KursInstanca == instanca).Count() || postaviZaKlijenteKaoPolozili)
                     {
-                        if (k.UplataIzvrsena == null || k.UplataIzvrsena == true)
-                        {
-                            k.Polozen = true;
-                            k.Active = false;
-                        }
-                    });
-                }
+                        k.Polozen = true;
+                    }
+                    else
+                    {
+                        k.Polozen = false;
+                    }
+                });
                 await _context.SaveChangesAsync();
                 return new KursInstancaSimpleModel
                 {

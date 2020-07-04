@@ -122,7 +122,8 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
                     btnUgovoriCas.Enabled = true;
                 }
                 labelStudenataNaKursu.Text = $"Broj klijenta na kursu: {result.BrojKlijenata}";
-                labelOdrzanoCasova.Text = $"Održano časova: {result.Casovi.Count}";
+                var odrzano = result.Casovi.Where(c => c.Odrzan == true).Count();
+                labelOdrzanoCasova.Text = $"Održano časova: {odrzano}";
                 labelUkupnoCasova.Text = $"Ukupno časova: {result.BrojCasova}";
 
                 LoadCasovi(result);
@@ -243,9 +244,10 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
 
         private async void btnZavrsiKurs_Click(object sender, EventArgs e)
         {
-            bool poloziliSvi = false;
+            bool postaviZaKlijenteKaoPolozili = true;
             if(instanca.BrojCasova > instanca.Casovi.Where(c => c.Odrzan == true).Count())
             {
+                postaviZaKlijenteKaoPolozili = false;
                 var confirmResult = MessageBox.Show("Svi časovi nisu održani. Da li i dalje želite završiti ovaj kurs?",
                     "Upozorenje",
                     MessageBoxButtons.YesNo);
@@ -256,7 +258,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
                     MessageBoxButtons.YesNo);
                     if(confirmResult2 == DialogResult.Yes)
                     {
-                        poloziliSvi = true;
+                        postaviZaKlijenteKaoPolozili = true;
                     }
                 }
                 else
@@ -264,7 +266,7 @@ namespace eCourse.WinUI.Kursevi.MojiKursevi
                     return;
                 }
             }
-            var result = await _kursInstancaService.UpdatePatch<KursInstancaSimpleModel>(id, poloziliSvi);
+            var result = await _kursInstancaService.UpdatePatch<KursInstancaSimpleModel>(id, postaviZaKlijenteKaoPolozili);
             if (result != null)
             {
                 await LoadKurs();

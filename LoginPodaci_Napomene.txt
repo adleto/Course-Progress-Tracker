@@ -27,11 +27,10 @@ NAPOMENE:
 	-Na nekim pregledima su datumi čudni (jer su u budućnosti) zbog demo-a, 
 		inače ne dozvoljava da se ubaci npr. da čas bude održan a da datum nije prošao
 	-Zbog prethodno navedenog (blokiranje funkcionalnosti zbog datuma) 
-		nećete moći isprobati sve funkcionalnosti, ja sam popunio 
-		bazu sa već "obavljenim" stvarima: npr odrzan ispit, 
+		će blokirati unos određenih stvari, ja sam popunio 
+		bazu sa već "obavljenim" stvarima kako bi mogli pregledati funkcionalnosti: npr odrzan ispit, 
 		odrzani casovi... itd. Ovo ponašanje je "as intended"!
-		Sve radi ako se postuju redosljed i datumi! Aplikacija namjerno blokira
-		da se npr kreira ispit prije pocetka kursa!
+		Aplikacija namjerno blokira da se npr kreira ispit prije pocetka kursa!
 	-Da bi funkcionalnosti mogli pregledat ja sam napravio sljedece:
 		-npr na kurs instanci "Statistika (Početak: 11/07/2020)" se može vidjeti već organizovani ispit 
 			i mogu se mijenjati ocjene i prisustva za studente. Kurs nije završen 
