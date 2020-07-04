@@ -46,4 +46,5 @@ NAPOMENE:
 		site binding address ne bude isti, a to su postavke u .vs folderu a ne postavke projekta tako
 		da na vasem kompjuteru mozda nije isto kao na mom. Npr sad sam morao prebaciti da iz androida
 		ide na "127.0.0.1" a ne na "localhost" (iz androida 10.0.2.2 naravno, ali opet binding vani je drugaciji).
-	-ukoliko se nadjete na useru "predavac" i odete na "Pregled klijenata", prikaz SAMO onih klijenata koji su na nekom od kurseva tog predavaca je INTENDED BEHAVIOR.
+	-Ukoliko se nadjete na useru "predavac" i odete na "Pregled klijenata", prikaz SAMO onih klijenata koji su na nekom od kurseva tog predavaca je INTENDED BEHAVIOR.
+	-Nekad solucija ne želi pokrenuti odjednom UWP i WinForms, ne znam zašto. Riješenje je jedanput ih upaliti pojedinačno, a onda može i zajedno.
