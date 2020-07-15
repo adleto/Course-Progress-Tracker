@@ -33,7 +33,7 @@ namespace eCourse.Mobile.ViewModels
             get { return tagList; }
             set { SetProperty(ref tagList, value); }
         }
-        //public ICommand FiltrirajCommand { get; set; }
+        public ICommand FiltrirajCommand { get; set; }
         //public ICommand LoadTagsCommand { get; set; }
         //public ICommand LoadPreporuceniCommand { get; set; }
         private string pretraga = string.Empty;
@@ -67,10 +67,10 @@ namespace eCourse.Mobile.ViewModels
             //{
             //    await LoadTags();
             //});
-            //FiltrirajCommand = new Command(async () =>
-            //{
-            //    await LoadData();
-            //});
+            FiltrirajCommand = new Command(async () =>
+            {
+                await LoadData();
+            });
             //LoadPreporuceniCommand = new Command(async () =>
             //{
             //    await LoadPreporuceni();
